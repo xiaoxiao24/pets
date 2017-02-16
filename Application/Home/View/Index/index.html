@@ -1,0 +1,212 @@
+<extend name="Public:base"/>
+
+<block name='main'>
+
+<div class="top_block col-md-8 col-xs-12">
+ 	<div class="slider-relative">
+	    <div class="slider-block">
+		    <div class="slider">
+		        <ul class="items">
+		        	<foreach name="data" item="vo" >
+			        <li><img src="__UPLOAD__/img/carousel-thumb/<{$vo.picname}>" alt="">
+			            <div class="banner"> 宠物之家 <span>公 告</span><p><{$notice.content}></p></div>
+			        </li>
+			        </foreach>
+		        </ul>
+		    </div>
+	    </div> 
+  	</div>
+
+ </div> 
+ <div class="page1_block">
+   	<div class="container_12">
+	    <div class="grid_6">
+	      	<h2>欢迎来到领养中心</h2><br>
+	      	<foreach name='info' item='v'>
+	      	<div>
+		      	<img src="__UPLOAD__/img/pets-thumb/<{$v.picname}>" width=150 height=80 alt="" class="img_inner fleft">
+		      	<div class="extra_wrapper style1">
+		      	<table>
+		      		<tr>
+		      			<td> 昵 称 : </td>
+		      			<td><{$v.name}></td>
+		      		</tr>
+		      		<tr>
+		      			<td> 性 别 : </td>
+		      			<td>
+			      			<if condition='$v.sex eq 0'>母
+			      			<elseif condition='$v.sex eq 1'/>公
+			      			<elseif condition='$v.sex eq 2'/>保密
+			      			</if>	
+		      			</td>
+		      		</tr>
+		      		<tr>
+		      			<td> 类 型 : </td>
+		      			<td><{$v.tname}></td>
+		      		</tr>
+		      		<tr>
+		      			<td> 发布时间: </td>
+		      			<td><{$v.ctime|date='Y-m-d',###}></td>
+		      		</tr>
+		      	</table>
+
+		      	</div>
+		      	<div class="clear"></div>
+	      	</div>
+	      	</foreach>
+		      	
+
+	      <a href="#" class="btn">More</a>
+	    </div>
+	    <div class="grid_5 prefix_1">
+	       	<h2 class="ic1">Latest News</h2>
+	       	<ul class="list">
+	         	<li>
+	           		<span><time datetime="2013-01-01">27<span>APR</span></time></span>
+	             	<div class="extra_wrapper">
+	           			<div class="col1"><a href="#">Duis posuere consectetur pellentesqe;</a><time datetime="2013-01-01">April 27.03.13</time>
+	           			</div>
+	           			Sed nisi turpis, pellentesque at ultrices in dapibus in magna. Nunc easi diam risus,placerat ut scelerisque  suscipit eu ante. Nullam vitae dolor ullcper felises
+	           		</div>
+	         	</li>
+	         	<li>
+	           	<span class="cnt">
+	            	<time datetime="2013-01-01">28<span>APR</span></time></span> 
+	            	<div class="extra_wrapper">
+	           			<div class="col1"><a href="#">Kuuis posuere consectetur pellentes;</a><time datetime="2013-01-01">April 28.03.13</time></div>
+	           			Eed nisi turpis, pellentesque at ultrices in dapibus in magna. Nunc easi diam risulacerat ut scelerisque et suscipit eu ante. Nullam vitae dolor ullcper felises. 
+	           		</div>
+	         	</li>
+	         	<li>
+	           		<span><time datetime="2013-01-01">29<span>APR</span></time></span> 
+	           		<div class="extra_wrapper">
+	       				<div class="col1"><a href="#">Opuis posuere honsectetur pellentesyt;</a><time datetime="2013-01-01">April 29.03.13</time></div>
+	       				Koed nisi turpis, pellentesque at ultrices in dapibus in magna. Nunc easi diam risujo placerat ut scelerisque et suscipit eu ante. Ullam vitae dolor ullcper felises. 
+	       			</div>
+	         	</li>
+	       	</ul>
+	     	</div>
+	    </div>
+	</div>
+
+
+	<div class="content page1"><div class="ic">More Website Templates @ TemplateMonster.com - June 10, 2013!</div>
+	  	<div class="container_12">
+	  		<div class="grid_12">
+	    		<a href="#" class="next"></a><a href="#" class="prev"></a>
+	    		<h2> 爱 宠 达 人 </h2>
+	  		</div>
+	  	<div class="clear"></div>
+	<ul class="carousel1">
+		<foreach name='user' item='v'>
+			<li class="grid_4">
+				<img src="__UPLOAD__/img/avatar-thumb/<{$v.picname}>" alt="" class="img_inner fleft">
+				<div class="extra_wrapper pad1">
+					<table>
+		      		<tr>
+		      			<td> 昵 称 : </td>
+		      			<td><{$v.name}></td>
+		      		</tr>
+		      		<tr>
+		      			<td> 性 别 : </td>
+		      			<td>
+			      			<if condition='$v.sex eq 0'>女
+			      			<elseif condition='$v.sex eq 1'/>男
+			      			</if>	
+		      			</td>
+		      		</tr>
+		      		<tr>
+		      			<td> 等 级 : </td>
+		      			<td><{$v.exp|grade}></td>
+		      		</tr>
+		      	</table>
+				</div>
+			</li>
+		</foreach>
+	</ul>
+	</div>
+</div>
+<div class="bottom_block">
+  	<div class="container_12">
+	    <div class="grid_6">
+	      <h2>养宠小知识</h2><br>
+	      <foreach name='tips' item='v'>
+	      <div>
+	      <{$v.content}>
+	      </div> <br>
+	      </foreach>
+	      <a href="#" class="btn">More</a>
+	    </div>
+	    <div class="grid_4 prefix_2">
+	      	<h2 class="ic1">Any Question?</h2>
+	      	<img src="__PUBLIC__/imgs/images/page1_img4.jpg" alt="" class="fleft img_inner">
+	       	<div class="extra_wrapper">
+	         	<div class="cont">
+	           	Call Us Free:  
+	           	<span>+1 800 559 6580</span>
+	         	</div>
+	        </div>
+	        <div class="clear"></div>
+	        Nunc fringilla, diam sit amet adipi scing bibendum turpis velit feugiat urna, et pharetra neque nisi ac nunc. Viv amus est quam dapibus ullamco rper imperdiet nec euismod ut arcu. Nulla facilisi. Etiam mauris. 
+	    </div>
+  	</div>
+</div>
+
+</block>
+
+<block name="myjs">
+
+    <script src="__PUBLIC__/js/jquery.js"></script>
+    <script src="__PUBLIC__/js/jquery-migrate-1.1.1.js"></script>
+    <script src="__PUBLIC__/js/superfish.js"></script>
+    <script src="__PUBLIC__/js/jquery.carouFredSel-6.1.0-packed.js"></script>
+     
+    <script src="__PUBLIC__/js/jquery.equalheights.js"></script>
+    <script src="__PUBLIC__/js/jquery.easing.1.3.js"></script>
+    <script src="__PUBLIC__/js/tms-0.4.1.js"></script>
+    <script src="__PUBLIC__/js/jquery.ui.totop.js"></script>
+
+    <script>
+    $(window).load(function(){
+	    $('.slider')._TMS({
+	        show:0,
+	        pauseOnHover:false,
+	        prevBu:'.prev',
+	        nextBu:'.next',
+	        playBu:false,
+	        duration:800,
+	        preset:'fade', 
+	        pagination:true,//'.pagination',true,'<ul></ul>'
+	        pagNums:false,
+	        slideshow:8000,
+	        numStatus:false,
+	        banners:true,
+	        waitBannerAnimation:false,
+	        progressBar:false
+        })  
+    });
+      
+    $(window).load (
+    function(){$('.carousel1').carouFredSel({auto: false,prev: '.prev',next: '.next', width: 960, items: {
+        visible : {min: 3,
+        max: 3},
+		height: 'auto',
+		width: 300,
+
+    }, responsive: true, 
+    
+    scroll: 1, 
+    
+    mousewheel: false,
+    
+    swipe: {onMouse: true, onTouch: true}});
+    
+    
+    } );   
+    
+    jQuery(document).ready(function() {
+    $().UItoTop({ easingType: 'easeOutQuart' });
+    });
+
+    </script>
+</block>

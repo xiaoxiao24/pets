@@ -1,0 +1,46 @@
+<extend name="Public:base"/>
+
+<block name='head'>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="">
+    <meta name="author" content="">
+    
+    <title>发送新密码到邮箱</title>
+    <link rel="icon" href="__PUBLIC__/imgs/images/favicon.ico">
+    <link rel="shortcut icon" href="__PUBLIC__/imgs/images/favicon.ico" />
+    <link rel="stylesheet" href="__PUBLIC__/css/style.css">
+    <link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet">
+</block>
+
+<block name='main'>
+    <center>
+        <div id="page-content" class="archive-page container">
+            <div class="row">
+                <div class="col-md-2">
+                    
+                </div>
+                <div id="main-content" class="col-md-8">
+                    <div class="box">
+                        <center>
+                            <div class="box-header">
+                                <h3 class="center">发送新密码到邮箱</h3>
+                            </div>
+                        </center>
+                        <div class="box-content">
+                            <div id="contact_form">
+        	                    <form action="<{:U('Login/dofindwd')}>" method="post" class="form-horizontal" role="form" id="form-register">
+                                    <input type="radio" name="type" value="email" checked/>邮件
+        		                    <input type="submit" value="下一步" />
+        		                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </center>
+
+</block>

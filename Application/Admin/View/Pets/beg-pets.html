@@ -1,0 +1,142 @@
+<extend name='Pets:index'/>
+<block name='main'>
+<div class="page-container">
+    <div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="<{:U('Pets:petsBeg',array('option'=>'agreebtn'))}>"  class="btn btn-primary radius" >已同意</a>  <a href="<{:U('Pets:petsBeg',array('option'=>'refusebtn'))}>" class="btn btn-primary radius"  >已拒绝</a>  <a href="<{:U('Pets:petsBeg',array('option'=>'ingbtn'))}>" class="btn btn-primary radius"  ">请求中</a>   <a href="<{:U('Pets:petsBeg',array('option'=>'allbtn'))}>" class="btn btn-primary radius"  >全部</a>  </span> <span class="r">共有数据：<strong><{$data|count=###}></strong> 条</span> </div>
+    <div class="mt-20">
+	<table class="table table-border table-bordered table-hover table-bg table-sort">
+        <thead>
+            <tr class="text-c">
+                
+                <th width="80">ID</th>
+                <th width="80">申请人</th>
+                <th width="100">宠物类别</th>
+                <th width="110">宠物昵称</th>
+                <th width="25">宠物性别</th>
+                <th width="150" style='display: none'>描述</th>
+                <th width="120">宠物头像</th>
+                <th width="150">申请时间</th>
+                <th width="50">状态</th>
+                <th width="100">操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <volist name='data' id='v'>
+            <tr class="text-c">
+                <td style='display: none;'></td>
+                <td><{$v.id}></td>
+                <td><u style="cursor:pointer" class="text-primary" onclick="member_show('<{$v.uname}>','<{:U(\'User/info\')}>?id=<{$v.uid}>','<{$v.uid}>','360','400')"><{$v.uname}></td>
+                <td><{$v.tname}></td>
+                <td><{$v.name}></u></td>
+                <td>
+                    <if condition='$v.sex eq 0'>母
+                    <elseif condition='$v.sex eq 1'/>公
+                    <elseif condition='$v.sex eq 2'/>保密
+                    </if>                    
+                </td>
+                <td class="text-l" style='display: none'><{$v.descr}></td>
+                <td><img src="__UPLOAD__/img/pets-thumb/<{$v.picname}>" width=60 height=60></td>
+                <td class="text-l"><{$v.atime|date="Y-m-d H:i:s",###}></td>
+                <td class="td-status">
+                    <if condition='$v.begstate eq 0'><span class="label label-primary radius">请求中</span>
+                    <elseif condition='$v.begstate eq 1'/><span class="label label-error radius">已拒绝</span>
+                    <elseif condition='$v.begstate eq 2'/><span class="label label-success radius">已同意</span>
+                    </if>
+                </td>
+                <td class="td-manage">
+                    <if condition='$v.begstate eq 0'>
+                        <a style="text-decoration:none" onClick="pets_start(this,<{$v.id}>)" href="javascript:;" title="同意"><i class="Hui-iconfont">&#xe6e1;</i></a>
+                        <a style="text-decoration:none" onClick="pets_stop(this,<{$v.id}>)" href="javascript:;" title="拒绝"><i class="Hui-iconfont">&#xe631;</i></a>
+                    <else/><span class="label label-defaunt radius">无操作</span>
+                    </if> 
+                </td>
+            </tr>
+            </volist>
+        </tbody>
+    </table>
+    </div>
+</div><!--page-container-->
+</block>
+<block name='js'>
+<script type="text/javascript">
+$(function(){
+    $('.table-sort').dataTable({
+        "aaSorting": [[ 1, "desc" ]],//默认第几个排序
+        "bStateSave": true,//状态保存
+        "aoColumnDefs": [
+          //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
+          {"orderable":false,"aTargets":[0,8,9]}// 制定列不参与排序
+        ]
+    });
+    $('.table-sort tbody').on( 'click', 'tr', function () {
+        if ( $(this).hasClass('selected') ) {
+            $(this).removeClass('selected');
+        }
+        else {
+            $('tr:selected').removeClass('selected');
+            $(this).addClass('selected');
+        }
+    });
+});
+
+/*用户-查看*/
+function member_show(title,url,id,w,h){
+    layer_show(title,url,w,h);
+}
+
+/*请求-拒绝*/
+function pets_stop(obj,id){
+    layer.confirm('确认要拒绝吗？',function(index){
+        
+        $.ajax({
+            type: 'POST',
+            url: "<{:U('Pets/refusePets')}>",
+            data: "id="+id,
+            success: function(data){
+                if (data) { 
+                    $(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">已拒绝</span>');
+                    $(obj).parents("tr").find(".td-manage").html('<span class="label label-defaunt radius">无操作</span>');
+                    $(obj).remove();
+                    layer.msg('已拒绝!',{icon: 6,time:1000});
+                } else {
+                    layer.msg('拒绝失败!',{icon: 5,time:1000});
+
+                }
+            }
+        });
+
+    });
+
+}
+
+/*请求-同意*/
+function pets_start(obj,id,uid,bid){
+    layer.confirm('确认要同意吗？',function(index){
+        $.ajax({
+            type: 'POST',
+            url: "<{:U('Pets/agreePets')}>",
+            data: "id="+id,
+            success: function(data){
+                if (data) {
+                    $(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已同意</span>');
+                    $(obj).parents("tr").find(".td-manage").html('<span class="label label-defaunt radius">无操作</span>');
+                    $(obj).remove();
+                    layer.msg('已同意!',{icon: 6,time:1000});
+                } else {
+                    layer.msg('同意失败!',{icon: 5,time:1000});
+
+                }
+            }
+        });
+
+        
+    });
+
+    
+}
+
+</script> 
+</block>
+
+
+
+

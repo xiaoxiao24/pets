@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+	<title><{$title}></title>
+<!-- 	<link rel="stylesheet" href="__PUBLIC__/css/bootstrap.min.css">
+	<link rel="stylesheet" href="__PUBLIC__/assets/css/ace.min.css" />
+	<link rel="stylesheet" href="__PUBLIC__/assets/css/ace-rtl.min.css" />
+	<link rel="stylesheet" href="__PUBLIC__/assets/css/ace-skins.min.css" /> -->
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/H-ui/static/h-ui/css/H-ui.min.css" />
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/H-ui/static/h-ui.admin/css/H-ui.admin.css" />
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/H-ui/lib/Hui-iconfont/1.0.7/iconfont.css" />
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/H-ui/lib/icheck/icheck.css" />
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/H-ui/static/h-ui.admin/skin/default/skin.css" id="skin" />
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/H-ui/static/h-ui.admin/css/style.css" />
+</head>
+<body>
+	<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> <{$title}> <span class="c-gray en">&gt;</span> <{$part}> <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="member_add('添加分类','<{:U('Type/add')}>','','510')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加分类</a></span> <span class="r">共有数据：<strong><{$num}></strong> 条</span> </div>
+	<div class="mt-20">
+	<table class="table table-border table-bordered table-hover table-bg table-sort">
+<thead>
+	<tr class="text-c">
+		<th width="25" style="display: none;"><input type="checkbox" name="" value=""></th>
+		<th width="25" style="display: none;"><input type="text" name="" value=""></th>
+		<th width="25" style="display: none;"><input type="text" name="" value=""></th>
+		<th width="25" style="display: none;"><input type="text" name="" value=""></th>
+		<th width="25" style="display: none;"><input type="text" name="" value=""></th>
+		<th width="25" style="display: none;"><input type="text" name="" value=""></th>
+		<th>id</th>
+		<th>类别名</th>
+		<th>父id</th>
+		<th>path</th>
+		<th>操作</th>
+		
+	</tr>
+</thead>
+<tbody>
+	<foreach name="list" item="vo" >
+		<tr class="text-c">
+			<td style="display: none;"><input type="checkbox" value="1" name=""></td>
+			<td style="display: none;"><input type="text" value="1" name=""></td>
+			<td style="display: none;"><input type="text" value="1" name=""></td>
+			<td style="display: none;"><input type="text" value="1" name=""></td>
+			<td style="display: none;"><input type="text" value="1" name=""></td>
+			<td style="display: none;"><input type="text" value="1" name=""></td>
+			<td><{$vo.id}></td>
+			<td><{$vo.html}><{$vo.name}></td>
+			<td><{$vo.pid}></td>
+			<td><{$vo.path}></td>
+			<td>
+				<!-- <a href="<{:U('Type/add',array('pid'=>$vo['id']))}>">添加子分类</a> -->
+				<a href="javascript:;" onclick="member_add('添加分类','<{:U('Type/add')}>?pid=<{$vo.id}>','','510')" >添加子分类</a>
+				<a href="<{:U('Type/del',array('id'=>$vo['id']))}>">删除</a>
+				<a href="javascript:;" onclick="member_edit('修改分类名','<{:U('Type/edit')}>?id=<{$vo.id}>','','510')" >修改分类名</a>
+				<!-- <a title="编辑" href="javascript:;" onclick="member_edit('编辑','<{:U('Type/edit')}>?id=<{$vo.id}>','<{$vo.id}>','','510')" class="ml-5" style="text-decoration:none">修改分类名</a> -->
+				
+			</td>
+			
+		</tr>
+	</foreach>
+</tbody>
+	</table>
+    </div>
+</div>
+<script type="text/javascript" src="__PUBLIC__/H-ui/lib/jquery/1.9.1/jquery.min.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/H-ui/lib/layer/2.1/layer.js"></script>
+<script type="text/javascript" src="__PUBLIC__/H-ui/lib/laypage/1.2/laypage.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/H-ui/lib/My97DatePicker/WdatePicker.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/H-ui/lib/datatables/1.10.0/jquery.dataTables.min.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/H-ui/static/h-ui/js/H-ui.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/H-ui/static/h-ui.admin/js/H-ui.admin.js"></script> 
+<script type="text/javascript">
+	$(function(){
+	$('.table-sort').dataTable({
+		"aaSorting": [[ 1, "desc" ]],//默认第几个排序
+		"bStateSave": true,//状态保存
+		"aoColumnDefs": [
+		  //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
+		  {"orderable":false,"aTargets":[0,8,9]}// 制定列不参与排序
+		]
+	});
+	$('.table-sort tbody').on( 'click', 'tr', function () {
+		if ( $(this).hasClass('selected') ) {
+			$(this).removeClass('selected');
+		}
+		else {
+			$('tr:selected').removeClass('selected');
+			$(this).addClass('selected');
+		}
+	});
+});
+/*分类-添加*/
+function member_add(title,url,w,h){
+	layer_show(title,url,w,h);
+}
+/*分类-修改*/
+function member_edit(title,url,w,h){
+	layer_show(title,url,w,h);
+}
+
+</script>
+</body>
+</html>
