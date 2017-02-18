@@ -351,11 +351,11 @@ ul.list.l2 li {
 
 header {
 	display: block;
-	padding-top: 34px;
+	padding-top: 10px;
 	position: relative;
 	z-index: 999;
 	background: #000;
-	padding-bottom: 48px;
+	padding-bottom: 20px;
 }
 
 

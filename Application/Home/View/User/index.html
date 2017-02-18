@@ -1,0 +1,244 @@
+<extend name="Public:base"/>
+
+<block name='head'>
+    <meta charset="utf-8" />
+	<meta name="description" content="app, web app, responsive, responsive layout, admin, admin panel, admin dashboard, flat, flat ui, ui kit, AngularJS, ui route, charts, widgets, components" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+	<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+	<title>宠物天地</title>
+    <link rel="icon" href="__PUBLIC__/imgs/images/favicon.ico">
+    <link rel="shortcut icon" href="__PUBLIC__/imgs/images/favicon.ico" />
+    <link rel="stylesheet" href="__PUBLIC__/css/style.css">
+	<link rel="stylesheet" href="__PUBLIC__/css/bootstrap.css" type="text/css" />
+	<link rel="stylesheet" href="__PUBLIC__/css/app.css" type="text/css" />
+</block>
+
+<block name="main">
+	
+    
+	<!-- content -->
+	<div class="app-content">
+	  <!-- <div ui-butterbar></div> -->
+	  <a href class="off-screen-toggle hide" data-toggle="class:off-screen" data-target=".app-aside" ></a>
+	  <div class="app-content-body fade-in-up">
+	    <!-- COPY the content from "tpl/" -->
+	      <div class="hbox hbox-auto-xs hbox-auto-sm">
+	        <div class="col">
+	          <div>
+	            <div class="wrapper-lg bg-white-opacity">
+	              <div class="row m-t">
+	                <div class="col-sm-7">
+	                  <a href class="thumb-lg pull-left m-r">
+	                    <img src="__UPLOAD__/img/avatar_thumb/<{$Think.session.home_user.picname}>" class="img-circle">
+	                  </a>
+	                  <div class="clear m-b">
+	                    <div class="m-b m-t-sm">
+	                      <span class="h3 text-black"><{$Think.session.home_user.name}></span>
+	                      <small class="m-l"><{$Think.session.home_user.exp|grade}></small>
+	                    </div>
+	                    
+	                  </div>
+	                </div>
+	                <div class="col-sm-5">
+	                  <div class="pull-right pull-none-xs text-center">
+	                    <a href class="m-b-md inline m">
+	                      <span class="h3 block font-bold"><{$fans_count}></span>
+	                      <small>Fans</small>
+	                    </a>
+	                    <a href class="m-b-md inline m">
+	                      <span class="h3 block font-bold"><{$post_count}></span>
+	                      <small>Post</small>
+	                    </a>
+	                  </div>
+	                </div>
+	              </div>
+	            </div>
+	          </div>
+	          <div class="wrapper bg-white b-b">
+	            <ul class="nav nav-pills nav-sm">
+	              <li class="active"><a href>动态</a></li>
+	              <li><a href>相册</a></li>
+	              <li><a href>好友</a></li>
+	            </ul>
+	          </div>
+	          <div class="padder">      
+	            <div class="streamline b-l b-info m-l-lg m-b padder-v">
+	              <foreach name='post' item='v'>
+	              <div>
+	                <a class="pull-left thumb-sm avatar m-l-n-md">
+	                  <img src="__UPLOAD__/img/avatar_thumb/<{$Think.session.home_user.picname}>" alt="...">
+	                </a>          
+	                <div class="m-l-lg panel b-a">
+	                  <div class="panel-heading pos-rlt b-b b-light">
+	                    <span class="arrow left glyphicon glyphicon-star"></span>
+	                    <a href><{$v.collect_count}></a>
+	                    <label class="label bg-light m-l-xs glyphicon glyphicon-comment"><{$v.reply_count}></label> 
+	                    <span class="text-muted m-l-sm pull-right">
+	                      <{$v.ctime}>
+	                    </span>
+	                  </div>
+	                  <div class="panel-body">
+	                    <blockquote>
+	                      <small><{$v.content}></small>
+	                    </blockquote>
+	                    <div>Lorem ipsum dolor sit amet, consecteter adipiscing elit...</div>
+	                  </div>
+	                </div>
+	              </div>
+	            </div>
+	          </div>
+	        </div>d
+	        <div class="col w-lg bg-light lter b-l bg-auto">
+	          <div class="wrapper">
+	            <div class="">
+	              <h4 class="m-t-xs m-b-xs">Who to follow</h4>
+	              <ul class="list-group no-bg no-borders pull-in">
+	                <li class="list-group-item">
+	                  <a herf class="pull-left thumb-sm avatar m-r">
+	                    <img src="img/a4.jpg" alt="..." class="img-circle">
+	                    <i class="on b-white bottom"></i>
+	                  </a>
+	                  <div class="clear">
+	                    <div><a href>Chris Fox</a></div>
+	                    <small class="text-muted">Designer, Blogger</small>
+	                  </div>
+	                </li>
+	                <li class="list-group-item">
+	                  <a herf class="pull-left thumb-sm avatar m-r">
+	                    <img src="img/a5.jpg" alt="..." class="img-circle">
+	                    <i class="on b-white bottom"></i>
+	                  </a>
+	                  <div class="clear">
+	                    <div><a href>Mogen Polish</a></div>
+	                    <small class="text-muted">Writter, Mag Editor</small>
+	                  </div>
+	                </li>
+	                <li class="list-group-item">
+	                  <a herf class="pull-left thumb-sm avatar m-r">
+	                    <img src="img/a6.jpg" alt="..." class="img-circle">
+	                    <i class="busy b-white bottom"></i>
+	                  </a>
+	                  <div class="clear">
+	                    <div><a href>Joge Lucky</a></div>
+	                    <small class="text-muted">Art director, Movie Cut</small>
+	                  </div>
+	                </li>
+	                <li class="list-group-item">
+	                  <a herf class="pull-left thumb-sm avatar m-r">
+	                    <img src="img/a7.jpg" alt="..." class="img-circle">
+	                    <i class="away b-white bottom"></i>
+	                  </a>
+	                  <div class="clear">
+	                    <div><a href>Folisise Chosielie</a></div>
+	                    <small class="text-muted">Musician, Player</small>
+	                  </div>
+	                </li>
+	              </ul>
+	            </div>
+	            <div class="panel b-a">
+	              <h4 class="font-thin padder">Latest Tweets</h4>
+	              <ul class="list-group">
+	                <li class="list-group-item">
+	                    <p>Wellcome <a href class="text-info">@Drew Wllon</a> and play this web application template, have fun1 </p>
+	                    <small class="block text-muted"><i class="fa fa-fw fa-clock-o"></i> 2 minuts ago</small>
+	                </li>
+	                <li class="list-group-item">
+	                    <p>Morbi nec <a href class="text-info">@Jonathan George</a> nunc condimentum ipsum dolor sit amet, consectetur</p>
+	                    <small class="block text-muted"><i class="fa fa-fw fa-clock-o"></i> 1 hour ago</small>
+	                </li>
+	                <li class="list-group-item">                     
+	                    <p><a href class="text-info">@Josh Long</a> Vestibulum ullamcorper sodales nisi nec adipiscing elit. Morbi id neque quam. Aliquam sollicitudin venenatis</p>
+	                    <small class="block text-muted"><i class="fa fa-fw fa-clock-o"></i> 2 hours ago</small>
+	                </li>
+	              </ul>
+	            </div>
+	            <div class="panel b-light clearfix">
+	              <div class="panel-body">
+	                <a href class="thumb pull-left m-r">
+	                  <img src="img/a0.jpg" class="img-circle">
+	                </a>
+	                <div class="clear">
+	                  <a href class="text-info">@Mike Mcalidek <i class="fa fa-twitter"></i></a>
+	                  <small class="block text-muted">2,415 followers / 225 tweets</small>
+	                  <a href class="btn btn-xs btn-success m-t-xs">Follow</a>
+	                </div>
+	              </div>
+	            </div>
+	          </div>
+	        </div>
+	      </div>
+	    <!-- PASTE above -->
+	  </div>
+    
+    <!-- /content -->
+
+    <!-- aside right -->
+    <div class="app-aside-right pos-fix no-padder w-md w-auto-xs bg-white b-l animated fadeInRight hide">
+      <div class="vbox">
+        <div class="wrapper b-b b-t b-light m-b">
+          <a href class="pull-right text-muted text-md" data-toggle="class:show" data-target=".app-aside-right"><i class="icon-close"></i></a>
+          Chat
+        </div>
+        <div class="row-row">
+          <div class="cell">
+            <div class="cell-inner padder">
+              <!-- chat list -->
+              <div class="m-b">
+                <a href class="pull-left thumb-xs avatar"><img src="img/a2.jpg" alt="..."></a>
+                <div class="clear">
+                  <div class="pos-rlt wrapper-sm b b-light r m-l-sm">
+                    <span class="arrow left pull-up"></span>
+                    <p class="m-b-none">Hi John, What's up...</p>
+                  </div>
+                  <small class="text-muted m-l-sm"><i class="fa fa-ok text-success"></i> 2 minutes ago</small>
+                </div>
+              </div>
+              <div class="m-b">
+                <a href class="pull-right thumb-xs avatar"><img src="img/a3.jpg" class="img-circle" alt="..."></a>
+                <div class="clear">
+                  <div class="pos-rlt wrapper-sm bg-light r m-r-sm">
+                    <span class="arrow right pull-up arrow-light"></span>
+                    <p class="m-b-none">Lorem ipsum dolor :)</p>
+                  </div>
+                  <small class="text-muted">1 minutes ago</small>
+                </div>
+              </div>
+              <div class="m-b">
+                <a href class="pull-left thumb-xs avatar"><img src="img/a2.jpg" alt="..."></a>
+                <div class="clear">
+                  <div class="pos-rlt wrapper-sm b b-light r m-l-sm">
+                    <span class="arrow left pull-up"></span>
+                    <p class="m-b-none">Great!</p>
+                  </div>
+                  <small class="text-muted m-l-sm"><i class="fa fa-ok text-success"></i>Just Now</small>
+                </div>
+              </div>
+              <!-- / chat list -->
+            </div>
+          </div>
+        </div>
+        <div class="wrapper m-t b-t b-light">
+          <form class="m-b-none">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Say something">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button">SEND</button>
+              </span>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- / aside right -->
+
+    
+  </div>
+</block>
+<block name="myjs">
+
+  	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-2.1.4.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script type="text/javascript" src="__PUBLIC__/js/bootstrap.min.js"></script>
+  	
+</block>

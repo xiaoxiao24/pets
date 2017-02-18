@@ -24,7 +24,7 @@
 	      	<h2>欢迎来到领养中心</h2><br>
 	      	<foreach name='info' item='v'>
 	      	<div>
-		      	<img src="__UPLOAD__/img/pets-thumb/<{$v.picname}>" width=150 height=80 alt="" class="img_inner fleft">
+		      	<img src="__UPLOAD__/img/pets-thumb/<{$v.picname}>" width=150 height=100 alt="" class="img_inner fleft">
 		      	<div class="extra_wrapper style1">
 		      	<table>
 		      		<tr>
@@ -49,42 +49,30 @@
 		      			<td><{$v.ctime|date='Y-m-d',###}></td>
 		      		</tr>
 		      	</table>
-
+		      	<div> 简 介 :<{$v.descr}></div>
 		      	</div>
 		      	<div class="clear"></div>
-	      	</div>
+	      	</div><br>
 	      	</foreach>
 		      	
 
 	      <a href="#" class="btn">More</a>
 	    </div>
 	    <div class="grid_5 prefix_1">
-	       	<h2 class="ic1">Latest News</h2>
+	       	<h2 class="ic1">宠物天地</h2>
 	       	<ul class="list">
+	       	<foreach name='post' item='v'>
 	         	<li>
-	           		<span><time datetime="2013-01-01">27<span>APR</span></time></span>
+	           		<span><a href=""><img src="__UPLOAD__/img/avatar-thumb/<{$v.picname}>"></a></span>
 	             	<div class="extra_wrapper">
-	           			<div class="col1"><a href="#">Duis posuere consectetur pellentesqe;</a><time datetime="2013-01-01">April 27.03.13</time>
+	           			<div class="col1"><a href="#"><{$v.name}></a><div>等级：<{$v.exp|grade}></div><time><{$v.ctime|date='Y-m-d H:i:s',###}></time>
 	           			</div>
-	           			Sed nisi turpis, pellentesque at ultrices in dapibus in magna. Nunc easi diam risus,placerat ut scelerisque  suscipit eu ante. Nullam vitae dolor ullcper felises
+	           			<{$v.content}>
 	           		</div>
 	         	</li>
-	         	<li>
-	           	<span class="cnt">
-	            	<time datetime="2013-01-01">28<span>APR</span></time></span> 
-	            	<div class="extra_wrapper">
-	           			<div class="col1"><a href="#">Kuuis posuere consectetur pellentes;</a><time datetime="2013-01-01">April 28.03.13</time></div>
-	           			Eed nisi turpis, pellentesque at ultrices in dapibus in magna. Nunc easi diam risulacerat ut scelerisque et suscipit eu ante. Nullam vitae dolor ullcper felises. 
-	           		</div>
-	         	</li>
-	         	<li>
-	           		<span><time datetime="2013-01-01">29<span>APR</span></time></span> 
-	           		<div class="extra_wrapper">
-	       				<div class="col1"><a href="#">Opuis posuere honsectetur pellentesyt;</a><time datetime="2013-01-01">April 29.03.13</time></div>
-	       				Koed nisi turpis, pellentesque at ultrices in dapibus in magna. Nunc easi diam risujo placerat ut scelerisque et suscipit eu ante. Ullam vitae dolor ullcper felises. 
-	       			</div>
-	         	</li>
+	        </foreach>	
 	       	</ul>
+	       	<a href="#" class="btn">More</a>
 	     	</div>
 	    </div>
 	</div>
