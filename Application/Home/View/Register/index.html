@@ -77,7 +77,9 @@
                     </div>
                 </center>
             </div>
-            
+            <div class='col-md-4'>
+                <img  style='margin-top: 100px' src="__PUBLIC__/imgs/images/c.jpg">
+            </div>
         </div>
     </div>
 </div>
@@ -162,23 +164,23 @@
                 },
                 verify: {
                     required: true,
-                    // remote: {
-                    //     url: "<{:U('Register/doadd')}>",
-                    //     type: "post",
-                    //     dataType: "json",
-                    //     data: {
-                    //         verify: function() {
-                    //             return $("#verify").val();
-                    //         }
-                    //     },
-                    //     dataFilter: function(data) {
-                    //         if(data){
-                    //             return false;
-                    //         }else{
-                    //             return true;
-                    //         }
-                    //     },
-                    // },
+                    remote: {
+                        url: "<{:U('Register/doadd')}>",
+                        type: "post",
+                        dataType: "json",
+                        data: {
+                            verify: function() {
+                                return $("#verify").val();
+                            }
+                        },
+                        dataFilter: function(data) {
+                            if(data){
+                                return false;
+                            }else{
+                                return true;
+                            }
+                        },
+                    },
                 },
             },
             messages: {
@@ -203,7 +205,7 @@
                 },
                 verify: {
                     required: '请您填写验证码',
-                    // remote: '验证码错误',
+                    remote: '验证码错误',
                 },
             },
 

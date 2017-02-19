@@ -1,4 +1,4 @@
-<!-- <!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
@@ -23,11 +23,10 @@
 	<link rel="stylesheet" type="text/css" href="__PUBLIC__/H-ui/static/h-ui.admin/skin/default/skin.css" id="skin" />
 	<link rel="stylesheet" type="text/css" href="__PUBLIC__/H-ui/static/h-ui.admin/css/style.css" />
 </head>
-<body> -->
-<extend name='Pets:index'/>
-<block name='main'>
-	<!-- <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> <{$title}> <span class="c-gray en">&gt;</span> <{$part}><a class="btn btn-success radius r" style="margin-left:720px;line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
-	</nav> -->
+<body>
+
+	<nav class="breadcrumb" style='width:100%'><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> <{$title}> <span class="c-gray en">&gt;</span> <{$part}><a class="btn btn-success radius r" style="margin-left:720px;line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
+	</nav>
 <div style="background-color: white;" class="widget-box">
 	<div style="background-color: #f3f4f3;border:none;color:black;" class="widget-header header-color-blue2">
 		<h4 class="lighter smaller">分类树</h4>
@@ -112,6 +111,6 @@ var treeDataSource = new DataSourceTree({data: tree_data_list});
 		});
 	});
 </script>
-</block>
-<!-- </body> -->
-<!-- </html> -->
+
+</body>
+</html>

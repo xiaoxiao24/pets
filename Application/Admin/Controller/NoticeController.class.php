@@ -14,7 +14,7 @@ class NoticeController extends AdminController
     {
         $data = M('notice')->select();
         $this->assign('data',$data);
-        $this->assign('title',公告管路);
+        $this->assign('title',公告管理);
         $this->assign('part',公告列表);
         $this->display();
     }

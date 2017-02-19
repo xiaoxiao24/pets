@@ -1,0 +1,15 @@
+.cc{
+	height:40px;
+}
+
+.cc .prev{
+	position: relative;
+	top:-105px;
+	left:-10px;
+}
+
+.cc .next{
+	position: relative;
+	top:-105px;
+	left:10px;
+}

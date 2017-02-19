@@ -617,6 +617,7 @@ address dd span {
 /************Footer***********/
 
 footer {
+	background-color: #eee;
 	display: block;
 	padding: 56px 0;
 	font-size: 12px;
@@ -656,14 +657,18 @@ footer {
 	margin-left: 11px;
 }
 
-footer p {
-	margin-bottom: 0;
-	padding-top: 6px;
+footer li{
+	float: left;
+	height: 40px;
 }
 
-
-
-footer address {
-	line-height: 18px;
-	margin-top: -1px;
+/*.radios{
+	width: 360px;
+	height: 34px;
 }
+.radios .radio-box{
+	width:120px;
+	height: 34px;
+	float: left;
+
+}*/

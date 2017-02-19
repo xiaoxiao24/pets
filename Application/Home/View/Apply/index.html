@@ -1,0 +1,175 @@
+<extend name="Public:base"/>
+
+<block name='head'>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="">
+    <meta name="author" content="">
+    
+    <title>申请发布宠物领养消息</title>
+    <link rel="icon" href="__PUBLIC__/imgs/images/favicon.ico">
+    <link rel="shortcut icon" href="__PUBLIC__/imgs/images/favicon.ico" />
+    <link rel="stylesheet" href="__PUBLIC__/css/style.css">
+    <link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet">
+</block>
+
+<block name="main">
+    
+    
+    <!-- /////////////////////////////////////////Content -->
+    <div id="page-content" class="archive-page container">
+        <div class="">
+            <div class="row">
+                <div id="main-content" class="col-md-8">
+                    <center>
+                        <div class="box">
+                            <div class="heading"><h3>我也有宠物需要领养</h3></div><br><br>
+                            <form action="<{:U('Apply/doadd')}>" method="post" class="form-horizontal" role="form" id="form-pet">
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 col-sm-offset-1 control-label">宠物类型</label>
+                                    <div class="col-sm-6">
+                                        <select id='typeid' class="select" size="1" name="typeid" style='width:360px;height:34px;'>
+											<option value="">--请选择--</option>
+											<volist name="list" id="vo">
+												<option value="<{$vo.id}>" <if condition='$vo.pid eq 0'>disabled</if>>
+													<{$vo.html}><{$vo.name}>
+												</option>
+											</volist>
+										</select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 col-sm-offset-1 control-label">宠物昵称</label>
+                                    <div class="col-sm-6">
+                                        <input style='width:360px;height:34px;' type="text" class="input-text" value="" placeholder="" id="name" name="name">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 col-sm-offset-1 control-label">性别</label>
+                                    <div class="col-sm-6">
+                                        <div class="radio-box" style='width:110px;height:34px;float: left;'>
+											<input name="sex" type="radio" id="sex-1" value="1">
+											<label for="sex-1">公</label>
+										</div>
+										<div class="radio-box" style='width:110px;height:34px;float: left;'>
+											<input type="radio" id="sex-2" name="sex" value="0">
+											<label for="sex-2">母</label>
+										</div>
+										<div class="radio-box" style='width:110px;height:34px;float: left;'>
+											<input type="radio" id="sex-3" name="sex" value="2" checked>
+											<label for="sex-3">保密</label>
+										</div>
+									</div>
+                                
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 col-sm-offset-1 control-label">上传头像</label>
+                                    <div class="col-sm-6">
+                                        <input style='width:360px;height:34px;' type="file" name="picname">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 col-sm-offset-1 control-label">简介</label>
+                                    <div class="col-sm-6">
+                                        <textarea name="descr" id='descr' cols="48" rows="5" class="textarea"  placeholder="说点什么...最少输入10个字符" onKeyUp="textarealength(this,200)"></textarea>
+									
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <div class="col-sm-offset-3 col-sm-6">
+                                      <button type="submit" class="btn btn-primary btn-block">提交</button>
+                                  </div>
+                              </div>
+                              <br><br><br><br>
+                        </form>
+                    </div>
+                </center>
+            </div>
+            <div class='col-md-4'>
+            	<img  style='margin-top: 100px' src="__PUBLIC__/imgs/images/c.jpg">
+            </div>
+        </div>
+    </div>
+</div>
+</block>
+<block name="myjs">
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="__PUBLIC__/js/jquery-2.1.4.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="__PUBLIC__/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/H-ui/lib/jquery.validation/1.14.0/jquery.validate.min.js"></script> 
+    <script type="text/javascript" src="__PUBLIC__/H-ui/lib/jquery.validation/1.14.0/validate-methods.js"></script> 
+    <script type="text/javascript" src="__PUBLIC__/H-ui/lib/jquery.validation/1.14.0/messages_zh.min.js"></script> 
+
+    <!-- JS -->
+
+  <script>
+  $(function(){
+  		// $('.skin-minimal input').iCheck({
+	   //      checkboxClass: 'icheckbox-blue',
+	   //      radioClass: 'iradio-blue',
+	   //      increaseArea: '20%'
+	   //  });
+
+        $("#form-pet").validate({
+            rules:{
+        	typeid: {
+                required: true,
+              
+            },
+        	name: {
+        		required: true,
+        		remote: {
+				    url: "<{:U('Apply/doadd')}>",     //后台处理程序
+				    type: "post",               //数据发送方式
+				    dataType: "json",           //接受数据格式   
+				    data: {                     //要传递的数据
+				        name: function() {
+				            return $("#name").val();
+				        }
+				    },
+                    dataFilter: function(data, type) { 
+                        if(data){
+                            return false;
+                        }else{
+                            return true;
+                        } 
+                    }, 
+				},
+        	},
+            descr: {
+                required: true,
+                rangelength: [10,200],
+            },
+            
+        },
+        messages: {
+            typeid: {
+                required: "请选择宠物类别",
+            },
+            name: {
+                required: "请输入宠物名称",
+            },
+            descr: {
+                required: "简介长度不正确",
+            },
+            
+        },
+        onkeyup:false,
+        focusCleanup:true,
+        success:"valid",
+        submitHandler:function(form){
+            // $(form).ajaxSubmit();
+            // var index = parent.layer.getFrameIndex(window.name);
+            // //parent.$('.btn-refresh').click();
+            // parent.layer.close(index);
+            form.submit();
+        }
+    });
+});
+
+</script>
+</block>
