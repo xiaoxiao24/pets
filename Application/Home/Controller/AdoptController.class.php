@@ -166,7 +166,7 @@ class AdoptController extends HomeController
         $infos = urlencode($infos);
         $url = 'http://apis.baidu.com/txapi/weixin/wxhot?num=10&rand=1&word='.$infos.'&page=1&src=%E4%BA%BA%E6%B0%91%E6%97%A5%E6%8A%A5';
         $header = array(
-            'apikey: b848d17197e4ead6adc43f2af62b4ac8',
+            'apikey: c7d6375287125e39a083e2c6e9372840',
         );
         // 添加apikey到header
         curl_setopt($ch, CURLOPT_HTTPHEADER  , $header);

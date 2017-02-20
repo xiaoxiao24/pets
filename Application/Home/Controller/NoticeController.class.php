@@ -8,7 +8,7 @@ class NoticeController extends HomeController
     	$notice = M('notice')->where('state=1')->order('ctime desc')->limit(5)->select();
 
     	// 分页
-        $page = M('notice')->where('state=1')->count();
+        $count = M('notice')->where('state=1')->count();
 
         $Page = new \Think\Page($count,5);// 实例化分页类 传入总记录数和每页显示的记录数
 

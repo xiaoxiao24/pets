@@ -1,0 +1,154 @@
+<extend name="Public:base"/>
+
+<block name='head'>
+    <meta charset="utf-8" />
+	<meta name="description" content="app, web app, responsive, responsive layout, admin, admin panel, admin dashboard, flat, flat ui, ui kit, AngularJS, ui route, charts, widgets, components" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+	<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+	<title>我的好友</title>
+    <link rel="icon" href="__PUBLIC__/imgs/images/favicon.ico">
+    <link rel="shortcut icon" href="__PUBLIC__/imgs/images/favicon.ico" />
+    <link rel="stylesheet" href="__PUBLIC__/css/style.css">
+	<link rel="stylesheet" href="__PUBLIC__/css/bootstrap.css" type="text/css" />
+	<link rel="stylesheet" href="__PUBLIC__/css/app.css" type="text/css" />
+</block>
+
+<block name="main">
+	
+<div class='row' style="background:url(__UPLOAD__/img/bg-thumb/<{$Think.session.home_user.bg}>) center center; background-size:cover">
+	<div class='col-xs-2 col-md-2'></div>
+    <div class="col-xs-8 col-md-8">
+      <div>
+        <div class="wrapper-lg bg-white-opacity">
+          <div class="row m-t">
+            <div class="col-sm-7">
+              <a href class="thumb-lg pull-left m-r">
+                <img src="__UPLOAD__/img/avatar-thumb/<{$Think.session.home_user.picname}>" class="img-circle">
+              </a>
+              <div class="clear m-b">
+                <div class="m-b m-t-sm">
+                  <span class="h3 text-black"><{$Think.session.home_user.name}></span>
+                  <small class="m-l"><{$Think.session.home_user.exp|grade}></small>
+                </div>
+                
+              </div>
+            </div>
+            <div class="col-sm-5">
+              <div class="pull-right pull-none-xs text-center">
+              	<a href class="m-b-md inline m">
+                  <span class="h3 block font-bold"><{$pic_count}></span>
+                  <small>相册</small>
+                </a>
+                <a href class="m-b-md inline m">
+                  <span class="h3 block font-bold"><{$fans_count}></span>
+                  <small>好友</small>
+                </a>
+                <a href class="m-b-md inline m">
+                  <span class="h3 block font-bold"><{$post_count}></span>
+                  <small>动态</small>
+                </a>
+                <a href class="m-b-md inline m">
+                  <span class="h3 block font-bold"><{$col_count}></span>
+                  <small>收藏</small>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="wrapper bg-white b-b">
+        <ul class="nav nav-pills nav-sm">
+          <li ><a href='<{:U("User/index")}>'>动态</a></li>
+          <li><a href='<{:U("Picture/index")}>'>相册</a></li>
+          <li><a href='<{:U("Fans/index")}>'>好友</a></li>
+          <li class="active"><a href='<{:U("Fans/news")}>'>消息</a></li>
+        </ul>
+      </div>
+      <if condition="$fans eq null">
+      <div id='com' style='width:1000px;height:200px;font-size: 24px;color:#fff;line-height: 200px;text-align: center;'>
+          <div class="hot_feed_blank">
+        
+            还没有消息，去<a href="<{:U('Index/index')}>">逛逛</a>
+            &nbsp;
+        
+        </div>
+          </div> 
+       <else/>
+      	<foreach name='fans' item='v'>
+        <div class='row'>
+        	<input type="hidden" name="uid" id='uid' value="$v.selfid">
+        	<div class='col-xs-3 col-md-3'><img src="__UPLOAD__/img/avatar-thumb/<{$v.picname}>"></div>
+        	<div class='col-xs-3 col-md-5'><{$v.name}>申请加你为好友</div>
+        	<div class='actionbtn col-xs-3 col-md-2'>
+        	<if condition='$v.status eq 0'>
+	        	<a href="javascript:;" onclick="sure()">同意</a><a href="javascript:;" onclick="confuse()">拒绝</a>
+	        <elseif condition='$v.status eq 1'/>
+	        	<a href="javascript:;">已同意</a>
+	        <elseif condition='$v.status eq 2'/>
+	        	<a href="javascript:;">已拒绝</a>
+	        </if>
+	        </div>
+        </div>
+		</foreach>
+	    </div> 
+	    <{$page}>
+	    </if>
+    </div>	        
+ 
+  </div>
+</block>
+<block name="myjs">
+
+  	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-2.1.4.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script type="text/javascript" src="__PUBLIC__/js/bootstrap.min.js"></script>
+    <script src="__PUBLIC__/js/bootstrap.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/H-ui/lib/layer/2.1/layer.js"></script>
+
+    <script>
+    
+    function confuse() {
+        
+        var uid = $('#uid').val();
+        $.ajax({
+            type:"POST",
+            url: "<{:U('Fans/confuse')}>",
+            data: 'uid='+uid,
+            success: function(data){
+                if (data) {
+                    $('.actionbtn').html('<a href="javascript:;">已拒绝</a>');
+                } else {
+                    layer.open({
+                      title: '拒绝申请'
+                      ,content: '拒绝申请失败'
+                    }); 
+                }
+            }
+        });
+    }
+
+    function sure() {
+        
+        var uid = $('#uid').val();
+        $.ajax({
+            type:"POST",
+            url: "<{:U('Fans/sure')}>",
+            data: 'uid='+uid,
+            success: function(data){
+                if (data) {
+                    $('.actionbtn').html('<a href="javascript:;">已同意</a>');
+
+                } else {
+                    layer.open({
+                      title: '同意申请'
+                      ,content: '同意申请失败'
+                    }); 
+                }
+            }
+        });
+    }
+    
+    
+    </script>
+</block>

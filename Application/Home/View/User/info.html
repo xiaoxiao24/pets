@@ -1,0 +1,157 @@
+<extend name="Public:base"/>
+
+<block name='head'>
+    <meta charset="utf-8" />
+	<meta name="description" content="app, web app, responsive, responsive layout, admin, admin panel, admin dashboard, flat, flat ui, ui kit, AngularJS, ui route, charts, widgets, components" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+	<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+	<title>我的资料</title>
+    <link rel="icon" href="__PUBLIC__/imgs/images/favicon.ico">
+    <link rel="shortcut icon" href="__PUBLIC__/imgs/images/favicon.ico" />
+    <link rel="stylesheet" href="__PUBLIC__/css/style.css">
+	<link rel="stylesheet" href="__PUBLIC__/css/bootstrap.css" type="text/css" />
+	<link rel="stylesheet" href="__PUBLIC__/css/app.css" type="text/css" />
+</block>
+
+<block name="main">
+	
+<div class='row' style="background:url(__UPLOAD__/img/bg-thumb/<{$Think.session.home_user.bg}>) center center; background-size:cover">
+	<div class='col-xs-2 col-md-2'></div>
+    <div class="col-xs-8 col-md-8">
+      <div>
+        <div class="wrapper-lg bg-white-opacity">
+          <div class="row m-t">
+            <div class="col-sm-7">
+              <div class='col-md-4'>
+                <a href="<{:U('User/info')}>"><img src="__UPLOAD__/img/avatar-thumb/<{$Think.session.home_user.picname}>" class="img-circle"></a>
+              </div>
+              <div class="col-sm-8s">
+                <div class="m-b m-t-sm">
+                  <small class="m-l">昵称：<{$Think.session.home_user.name}></small><br>
+                  <small class="m-l">等级：<{$Think.session.home_user.exp|grade}></small><br>
+                  <small class="m-l">简介：<{$Think.session.home_user.descr}></small>
+                </div>
+                
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="pull-right pull-none-xs text-center">
+              	<a href class="m-b-md inline m">
+                  <span class="h3 block font-bold"><{$pic_count}></span>
+                  <small>相册</small>
+                </a>
+                <a href class="m-b-md inline m">
+                  <span class="h3 block font-bold"><{$fans_count}></span>
+                  <small>好友</small>
+                </a>
+                <a href class="m-b-md inline m">
+                  <span class="h3 block font-bold"><{$post_count}></span>
+                  <small>动态</small>
+                </a>
+                <a href class="m-b-md inline m">
+                  <span class="h3 block font-bold"><{$col_count}></span>
+                  <small>收藏</small>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="wrapper bg-white b-b">
+        <ul class="nav nav-pills nav-sm">
+          <li class="active"><a href='<{:U("User/info")}>'>更新个人资料</a></li>
+          <li><a href='<{:U("User/pwd")}>'>修改密码</a></li>
+          <li><a href='<{:U("User/head")}>'>头像设置</a></li>
+        </ul>
+      </div><br>
+      <div class='row'>
+      <div class='col-md-2'></div>
+      <div class="col-md-8">
+          <form id="form-user-edit" class="setting-profile-form" method="POST" action="<{:U('User/save')}>" style='font-size: 20px;'> 
+              <div class='row'>
+                <div class="col-md-3">性别:</div>
+                <div class="col-md-8">
+                    <input name="sex" id="passport-sex-1" type="radio" value="1" <if condition="$user.sex eq '1'">checked</if> /> <label class="profile-gender" for="passport-sex-1">男</label> 
+                      <input name="sex" id="passport-sex-2" type="radio" value="0" <if condition="$user.sex eq '0'">checked</if> /> <label for="passport-sex-2" class="profile-gender">女</label> 
+                      <input name="sex" id="passport-sex-3" type="radio" value="2" <if condition="$user.sex eq '2'">checked</if> /> <label for="passport-sex-2" class="profile-gender">保密</label> 
+                </div>
+              </div><br>
+              <div class='row'>
+                <div class="col-md-3">邮编:</div>
+                <div class="col-md-8">
+                    <input type="text" style='width:270px' id="code" name="code" value="<{$user.code}>"> 
+                </div>
+              </div> <br>
+              <div class='row'>
+                <div class="col-md-3">生日:</div>
+                <div class="col-md-8">
+                    <input type="date" style='width:270px' name="birthday" value="<{$user.birthday|date='Y-m-d',###}>">
+                </div>
+              </div> <br>
+               <div class='row'>
+                <div class="col-md-3">个人简介:</div>
+                <div class="col-md-8">
+                    <textarea name="descr" cols="25" rows="5" id="descr" class="mod-cus-input mod-cus-input-4"><{$user.descr}></textarea>
+                </div>
+              </div> <br> 
+                 
+              <input type="hidden" name="id" value="<{$user.id}>"> 
+              <input type="submit" class="btn btn-info" style='width:270px;margin-left: 150px;' value="保存" /><br><br><br>
+            </form>
+          </div>
+          </div>
+      </div>
+    </div>	        
+ 
+  </div>
+</block>
+<block name="myjs">
+
+  	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-2.1.4.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script type="text/javascript" src="__PUBLIC__/js/bootstrap.min.js"></script>
+  	<script type="text/javascript" src="__PUBLIC__/H-ui/lib/jquery/1.9.1/jquery.min.js"></script> 
+    <script type="text/javascript" src="__PUBLIC__/H-ui/lib/jquery.validation/1.14.0/jquery.validate.min.js"></script> 
+    <script type="text/javascript" src="__PUBLIC__/H-ui/lib/jquery.validation/1.14.0/validate-methods.js"></script> 
+    <script type="text/javascript" src="__PUBLIC__/H-ui/lib/jquery.validation/1.14.0/messages_zh.min.js"></script> 
+    <block name="myjs">
+    <script>
+      $(function () {
+        // 邮政编码验证   
+        jQuery.validator.addMethod("isZipCode", function(value, element) {   
+            var tel = /^[0-9]{6}$/;
+            return this.optional(element) || (tel.test(value));
+        }, "请正确填写您的邮政编码");
+
+        $('#form-user-edit').validate({
+          rules: {
+            birthday: {
+              dateISO: true,
+            },
+            code: {
+              isZipCode: true,
+            },
+          },
+
+          submitHandler:function(form){
+            form.submit();
+          },
+
+        });
+
+        $("#descr").keyup(function(){
+          var len = $(this).val().length;
+          if(len > 100){
+            $(this).val($(this).val().substring(0,100));
+            var num = 100;
+          }else{      
+            var num = len;
+          }
+          $("#word").text(num);
+        });
+
+      });
+
+    </script>
+</block>

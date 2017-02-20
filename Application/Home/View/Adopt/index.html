@@ -17,7 +17,10 @@
 </block>
 
 <block name="main">
-	<div class="content pt1"><div class="ic"></div>
+<div class="content pt1">
+  <div id='adopt-box'>
+    <p align="center"><MARQUEE scrollDelay=80 border="1"><b class='glyphicon glyphicon-volume-up'></b>欢迎来到宠物之家宠物领养中心，如果想要领养宠物，则加发布者为好友私聊哦！！</MARQUEE></p>
+  </div>
   <div class="container_12">
      <div class="grid_7">
       <h2>领养中心</h2><br>
@@ -176,19 +179,31 @@
 
 <script type="text/javascript">
 
+var dir=2;               //每步移动像素，大＝快
+var speed=50;              //循环周期（毫秒）大＝慢
+demo2.innerHTML=demo1.innerHTML;
+function Marquee(){       //正常移动
+  if (dir>0  && (demo2.offsetWidth-demo.scrollLeft)<=0) demo.scrollLeft=0
+  if (dir<0 &&(demo.scrollLeft<=0)) demo.scrollLeft=demo2.offsetWidth
+  demo.scrollLeft+=dir
+  demo.onmouseover=function() {clearInterval(MyMar)}             //暂停移动
+  demo.onmouseout=function() {MyMar=setInterval(Marquee,speed)}  //继续移动
+}
+var MyMar=setInterval(Marquee,speed);
+    
+
 /*二级分类启用*/
 function start(obj){
+    $(obj).parent().parent().parent().parent().find('.actionbtn').css('display','block');
     $(obj).parent().html('<a style=\'margin-left: 10px;color:#999;\' class=\'glyphicon glyphicon-chevron-down close\' href="javascript:;" onClick="stop(this)" ></a>'); 
 
-    // $('.actionbtn').css('display','block');
-    $(obj).parent().parent().parent().next().css('display','block');
 }
 
 
 /*二级分类关闭*/
 function stop(obj){
+    $(obj).parent().parent().parent().parent().find('.actionbtn').css('display','none');
     $(obj).parent().html('<a style=\'margin-left: 10px;color:#999;\' class=\'glyphicon glyphicon-chevron-up start\' href="javascript:;" onClick="start(this)" ></a>'); 
-    $(obj).parent().parent().parent().next().css('display','none');
 }
 
 /*取消好友关系*/ 
@@ -231,6 +246,13 @@ function closebtn() {
           return false;
       }
       var uid = $('#uid').val();
+      if (selfid == uid) {
+          layer.open({
+            title: '加好友'
+            ,content: '不能添加自己为好友'
+          });
+          return false;
+      }
       $.ajax({
           type:"POST",
           url: "<{:U('Fans/startbtn')}>",

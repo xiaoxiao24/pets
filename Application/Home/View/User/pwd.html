@@ -1,0 +1,141 @@
+<extend name="Public:base"/>
+
+<block name='head'>
+    <meta charset="utf-8" />
+	<meta name="description" content="app, web app, responsive, responsive layout, admin, admin panel, admin dashboard, flat, flat ui, ui kit, AngularJS, ui route, charts, widgets, components" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+	<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+	<title>我的资料</title>
+    <link rel="icon" href="__PUBLIC__/imgs/images/favicon.ico">
+    <link rel="shortcut icon" href="__PUBLIC__/imgs/images/favicon.ico" />
+    <link rel="stylesheet" href="__PUBLIC__/css/style.css">
+	<link rel="stylesheet" href="__PUBLIC__/css/bootstrap.css" type="text/css" />
+	<link rel="stylesheet" href="__PUBLIC__/css/app.css" type="text/css" />
+</block>
+
+<block name="main">
+	
+<div class='row' style="background:url(__UPLOAD__/img/bg-thumb/<{$Think.session.home_user.bg}>) center center; background-size:cover">
+	<div class='col-xs-2 col-md-2'></div>
+    <div class="col-xs-8 col-md-8">
+      <div>
+        <div class="wrapper-lg bg-white-opacity">
+          <div class="row m-t">
+            <div class="col-sm-7">
+              <div class='col-md-4'>
+                <a href="<{:U('User/info')}>"><img src="__UPLOAD__/img/avatar-thumb/<{$Think.session.home_user.picname}>" class="img-circle"></a>
+              </div>
+              <div class="col-sm-8s">
+                <div class="m-b m-t-sm">
+                  <small class="m-l">昵称：<{$Think.session.home_user.name}></small><br>
+                  <small class="m-l">等级：<{$Think.session.home_user.exp|grade}></small><br>
+                  <small class="m-l">简介：<{$Think.session.home_user.descr}></small>
+                </div>
+                
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="pull-right pull-none-xs text-center">
+              	<a href class="m-b-md inline m">
+                  <span class="h3 block font-bold"><{$pic_count}></span>
+                  <small>相册</small>
+                </a>
+                <a href class="m-b-md inline m">
+                  <span class="h3 block font-bold"><{$fans_count}></span>
+                  <small>好友</small>
+                </a>
+                <a href class="m-b-md inline m">
+                  <span class="h3 block font-bold"><{$post_count}></span>
+                  <small>动态</small>
+                </a>
+                <a href class="m-b-md inline m">
+                  <span class="h3 block font-bold"><{$col_count}></span>
+                  <small>收藏</small>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="wrapper bg-white b-b">
+        <ul class="nav nav-pills nav-sm">
+          <li><a href='<{:U("User/info")}>'>更新个人资料</a></li>
+          <li class="active"><a href='<{:U("User/pwd")}>'>修改密码</a></li>
+          <li><a href='<{:U("User/head")}>'>头像设置</a></li>
+        </ul>
+      </div><br>
+      <div class='row'>
+      <div class='col-md-2'></div>
+      <div class="col-md-8">
+          <form id="form-user-edit" class="setting-profile-form" method="POST" action="<{:U('User/pwdsave')}>" style='font-size: 20px;'> 
+              <div class='row'>
+                <div class="col-md-3">原密码:</div>
+                <div class="col-md-8">
+                    <input type="password" id="prepasswd" name="prepasswd">
+                </div>
+              </div><br>
+              <div class='row'>
+                <div class="col-md-3">新密码:</div>
+                <div class="col-md-8">
+                    <input type="password" id="passwd" name="passwd" placeholder="输入6~14位"> 
+                </div>
+              </div> <br>
+              <div class='row'>
+                <div class="col-md-3">确认密码:</div>
+                <div class="col-md-8">
+                    <input type="password" id="confirmpasswd" name="confirmpasswd" placeholder="输入6~14位">
+                </div>
+              </div> <br>
+               
+              <input type="hidden" name="id" value="<{$user.id}>"> 
+              <input type="submit" class="btn btn-info" style='width:270px;margin-left: 150px;' value="保存" /><br><br><br>
+            </form>
+          </div>
+          </div>
+      </div>
+    </div>	        
+ 
+  </div>
+</block>
+<block name="myjs">
+<script>
+    $(function () {
+
+    $('#form-user-passwd').validate({
+      rules: {
+        prepasswd: {
+          required: true,
+        },
+        passwd: {
+          required: true,
+          rangelength: [6,14],
+        },
+        confirmpasswd: {
+          required: true,
+          equalTo: "#passwd",
+        },
+      },
+
+      messages: {
+        prepasswd: {
+          required: "请您填写原密码",
+        },
+        passwd: {
+          required: '请您填写密码',
+          rangelength: '密码长度不合法',
+        },
+        confirmpasswd: {
+          required: '请您填写确认密码',
+          equalTo: '两次密码输入不一致',              
+        },
+      },
+
+      submitHandler:function(form){
+        form.submit();
+      },
+
+    });
+
+  });
+</script>
+</block>

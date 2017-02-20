@@ -1,0 +1,99 @@
+<extend name="Public:base"/>
+
+<block name='head'>
+    <meta charset="utf-8" />
+	<meta name="description" content="app, web app, responsive, responsive layout, admin, admin panel, admin dashboard, flat, flat ui, ui kit, AngularJS, ui route, charts, widgets, components" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+	<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+	<title><{$info.name}>资料</title>
+    <link rel="icon" href="__PUBLIC__/imgs/images/favicon.ico">
+    <link rel="shortcut icon" href="__PUBLIC__/imgs/images/favicon.ico" />
+    <link rel="stylesheet" href="__PUBLIC__/css/style.css">
+	<link rel="stylesheet" href="__PUBLIC__/css/bootstrap.css" type="text/css" />
+	<link rel="stylesheet" href="__PUBLIC__/css/app.css" type="text/css" />
+</block>
+
+<block name="main">
+	
+<div class='row' style="background:url(__UPLOAD__/img/bg-thumb/<{$info.bg}>) center center; background-size:cover">
+	<div class='col-xs-2 col-md-2'></div>
+    <div class="col-xs-8 col-md-8">
+      <div>
+        <div class="wrapper-lg bg-white-opacity">
+          <div class="row m-t">
+            <div class="col-sm-7">
+              <a href class="thumb-lg pull-left m-r">
+                <img src="__UPLOAD__/img/avatar-thumb/<{$info.picname}>" class="img-circle">
+              </a>
+              <div class="clear m-b">
+                <div class="m-b m-t-sm">
+                  <span class="h3 text-black"><{$info.name}></span>
+                  <small class="m-l"><{$info.exp|grade}></small>
+                </div>
+                
+              </div>
+            </div>
+            <div class="col-sm-5">
+              <div class="pull-right pull-none-xs text-center">
+              	<a href class="m-b-md inline m">
+                  <span class="h3 block font-bold"><{$pic_count}></span>
+                  <small>相册</small>
+                </a>
+                <a href class="m-b-md inline m">
+                  <span class="h3 block font-bold"><{$fans_count}></span>
+                  <small>好友</small>
+                </a>
+                <a href class="m-b-md inline m">
+                  <span class="h3 block font-bold"><{$post_count}></span>
+                  <small>动态</small>
+                </a>
+                <a href class="m-b-md inline m">
+                  <span class="h3 block font-bold"><{$col_count}></span>
+                  <small>收藏</small>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="wrapper bg-white b-b">
+        <ul class="nav nav-pills nav-sm">
+          <li  class="active"><a href='<{:U("Fans/fans")}>'>动态</a></li>
+          <li><a href='<{:U("Fans/pic")}>'>相册</a></li>
+        </ul>
+      </div>
+      <if condition="$pics eq null">
+		  <div id='com' style='width:1000px;height:200px;font-size: 24px;color:#fff;line-height: 200px;text-align: center;'>
+	    	<div class="hot_feed_blank">
+	    
+	        还没有相册
+	    
+	    </div>
+        </div> 
+		 <else/>
+		<div class="clearfix u-f-wrap" id="forum_group_wrap" style='font-size: 24px;color:blue;'>
+		共有<{$pic_count}>张相片<br><br>
+		<foreach name='pics' item='v'>
+		    <div class="row">
+		        <div class="col-xs-6 col-md-3">
+		            <div class="zoom-container">
+		            <img src="__UPLOAD__/img/pic-thumb/<{$v.picname}>" class="img-rounded"></div><br>
+		            
+		        </div>    
+		    </div>
+		</foreach>
+		</div> 
+		<{$page}>
+		</if>
+    </div>	        
+ 
+  </div>
+</block>
+<block name="myjs">
+
+  	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-2.1.4.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script type="text/javascript" src="__PUBLIC__/js/bootstrap.min.js"></script>
+  	
+</block>
