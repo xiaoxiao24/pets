@@ -115,7 +115,21 @@ class UserController extends HomeController
     // 密码显示
     public function pwd()
     {
-        $this->display('User:pwd');
+        // 相册
+        $pic_count = M('picture')->where('uid='.session('home_user.id'))->count();
+        // 收藏
+        $col_count = M('collection')->where('selfid='.session('home_user.id'))->count();
+        // 动态
+        $post_count = M('post')->where('uid='.session('home_user.id').' and state=1')->count();
+        // 好友
+        $fans_count = M('fans')->where('status=1 and selfid='.session('home_user.id'))->count();
+
+        $this->assign('fans_count', $fans_count);
+        $this->assign('post_count', $post_count);
+        $this->assign('pic_count', $pic_count);
+        $this->assign('col_count', $col_count);
+
+        $this->display();
     }
 
     // 密码修改操作
@@ -140,7 +154,20 @@ class UserController extends HomeController
     */ 
     public function head()
     {
-        $this->display('User:head');
+       // 相册
+        $pic_count = M('picture')->where('uid='.session('home_user.id'))->count();
+        // 收藏
+        $col_count = M('collection')->where('selfid='.session('home_user.id'))->count();
+        // 动态
+        $post_count = M('post')->where('uid='.session('home_user.id').' and state=1')->count();
+        // 好友
+        $fans_count = M('fans')->where('status=1 and selfid='.session('home_user.id'))->count();
+
+        $this->assign('fans_count', $fans_count);
+        $this->assign('post_count', $post_count);
+        $this->assign('pic_count', $pic_count);
+        $this->assign('col_count', $col_count);
+        $this->display();
     }
 
     // 头像更新操作
@@ -175,5 +202,77 @@ class UserController extends HomeController
         }
     }
 
-    
+    // 背景更新操作
+    public function bg()
+    {
+        // var_dump(session('home_user'));die;
+        $data = M('bg')->select();
+        $this->assign('data',$data);
+        $this->display();
+    }
+
+    // 背景更新
+    public function bgsave()
+    {
+        // 未获取图片id
+        if (empty(I('get.id'))) {
+            $this->redirect('User/index',5,'更新失败');
+            exit;
+        }
+
+        $picname = M('bg')->field('picname bg')->where('id='.I('get.id'))->find();
+        // var_dump($picname);die;
+        $data = M('user')->where('id='.session('home_user.id'))->save($picname);
+        $_SESSION['home_user']['bg'] = $picname['bg'];
+        $this->display('User/index');
+    }
+
+    /*
+        留言板
+    */ 
+    public function word()
+    {
+       
+        $datas = M('word')->field('u.id, u.picname, w.content, w.ctime')->table('pet_user u, pet_word w')->where('w.selfid=u.id w.uid='.session('home_user.id'))->order('w.ctime desc')->page($_GET['p'],10)->select();
+            // 分页
+        $count = M('word')->where('uid='.session('home_user.id')）->count();
+
+        $Page = new \Think\Page($count,10);// 实例化分页类 传入总记录数和每页显示的记录数
+
+        $Page->setConfig('first','首页');
+        $Page->setConfig('last','尾页');
+        $Page->setConfig('prev','上一页');
+        $Page->setConfig('next','下一页');
+        
+        $Page->setConfig('theme','
+            <nav>
+              <ul class="pagination">
+                <li>%FIRST%</li>
+                <li>%UP_PAGE%</li>
+                <li>%LINK_PAGE%</li>
+                <li>%DOWN_PAGE%</li>
+                <li>%END%</li>
+              </ul>
+            </nav>
+        ');
+
+        $show = $Page->show();// 分页显示输出
+        $this->assign('page',$show);
+        $this->assign('datas',$datas);
+
+        // 相册
+        $pic_count = M('picture')->where('uid='.session('home_user.id'))->count();
+        // 收藏
+        $col_count = M('collection')->where('selfid='.session('home_user.id'))->count();
+        // 动态
+        $post_count = M('post')->where('uid='.session('home_user.id').' and state=1')->count();
+        // 好友
+        $fans_count = M('fans')->where('status=1 and selfid='.session('home_user.id'))->count();
+
+        $this->assign('fans_count', $fans_count);
+        $this->assign('post_count', $post_count);
+        $this->assign('pic_count', $pic_count);
+        $this->assign('col_count', $col_count);
+        $this->display();
+    }
 }

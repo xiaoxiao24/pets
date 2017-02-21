@@ -26,7 +26,7 @@
 <body>
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> <{$title}> <span class="c-gray en">&gt;</span> <{$part}> <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
-    <div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="member_add('添加轮播图','<{:U('Carousel/addview')}>','','510')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加轮播图</a></span> <span class="r">共有数据：<strong><{$num}></strong> 条</span> </div>
+    <div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="member_add('添加背景图','<{:U('Bg/add')}>','400','310')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加背景图</a></span> <span class="r">共有数据：<strong><{$num}></strong> 条</span> </div>
     <div class="mt-20">
 	<table class="table table-border table-bordered table-hover table-bg table-sort">
 		<thead>
@@ -37,10 +37,10 @@
 				<th style="display: none;"><input type="text"></th>
 				<th style="display: none;"><input type="text"></th>
 				<th>ID</th>
-				<th>宠物昵称</th>
+				<th style="display: none;"></th>
 				<th>图片</th>
-				<th>状态</th>
-				<th>操作</th>
+				<th  style="display: none;"></th>
+				<th  style="display: none;"></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -53,23 +53,12 @@
 					<td style="display: none;"><input type="text"></td>
 					<td><{$vo.id}></td>
 					<!-- <td><{$vo.bid}></td> -->
-					<td><u style="cursor:pointer" class="text-primary" onclick="member_show('<{$vo.pid}>','<{:U('Pets/show')}>?id=<{$vo.pid}>','<{$vo.id}>','400','450')"><{$vo.name}></u></td>
+					<td  style="display: none;"></td>
 					<td>
-						<img style="width:80px;height:80px;" src="__UPLOAD__/img/carousel-thumb/<{$vo.picname}>" alt="">
+						<img style="width:200px;height:80px;" src="__UPLOAD__/img/bg-thumb/<{$vo.picname}>" alt="">
 					</td>
-					<td class="td-status">
-						<if condition="$vo.state eq '0'"><span class="label label-error radius">已停用</span>
-						<elseif condition="$vo.state eq '1'" /><span class="label label-success radius">已启用</span>
-						</if>
-					</td>
-					<td class="td-manage">
-						<if condition="$vo.state eq '0'"><a style="text-decoration:none" onClick="member_start(this,<{$vo.id}>)" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe6e1;</i></a>
-						<elseif condition="$vo.state eq '1'" /><a style="text-decoration:none" onClick="member_stop(this,<{$vo.id}>)" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a> 
-						<if condition="$num gt 6">
-							<a href="<{:U('Carousel/del',array('id'=>$vo['id']))}>">删除</a>
-						</if>
-						</if>
-					</td>
+					<td  style="display: none;"></td>
+					<td  style="display: none;"></td>
 				</tr>
 			</foreach>		
 		</tbody>
@@ -104,46 +93,9 @@ $(function(){
 	});
 });
 
-/*图片-停用*/
-function member_stop(obj,id){
-	layer.confirm('确认要停用吗？',function(index){
-		$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="member_start(this,'+id+')" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe6e1;</i></a>');
-		$(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">已停用</span>');
-		$(obj).remove();
-		layer.msg('已停用!',{icon: 5,time:1000});
-	});
-
-	$.ajax({
-		type: 'POST',
-		url: "<{:U('Carousel/Stop')}>",
-		data: "id="+id,
-	});
-}
-
-/*图片-启用*/
-function member_start(obj,id){
-	layer.confirm('确认要启用吗？',function(index){
-		$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="member_stop(this,'+id+')" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a>');
-		$(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已启用</span>');
-		$(obj).remove();
-		layer.msg('已启用!',{icon: 6,time:1000});
-	});
-
-		$.ajax({
-		type: 'POST',
-		url: "<{:U('Carousel/Start')}>",
-		data: "id="+id,
-	});
-}
-
 /*用户-添加*/
 function member_add(title,url,w,h){
     layer_show(title,url,w,h);
-}
-
-/*用户-查看*/
-function member_show(title,url,id,w,h){
-	layer_show(title,url,w,h);
 }
 
 </script> 

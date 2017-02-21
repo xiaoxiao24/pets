@@ -53,30 +53,32 @@
       
      <div class="grid_4 prefix_1">
        <h2 class="ic1">天气预报</h2>
-       <if condition="$daily eq null">
+       <if condition="$weather eq null">
        <div class="list1">
            <span></span>查无数据!</div>
         <else/>
-           
+        
        <ul class="list1">
          <li>
            <span></span>
              <div class="extra_wrapper">
-           <div class="col1">城市:<{$city}></div></div>
+           <div class="col1" style='font-size: 20px;color:#999;'>城市:<{$city}></div></div>
          </li>
-         <volist name="daily" id="t">
+         <volist name="weather" id="t">
          <li>
-           <span class="cnt"></span><div class="extra_wrapper">
-           <div class="col1"><a href="#">天气:<{$t->text_day}> 转 <{$t->text_night}></a></div></div>
+           <span class="cnt"></span><{$t.date}>
+           <!-- <div class="extra_wrapper"> -->
+            <div class="col1" style='position: relative;left:80px;top:5px;color:#999;font-size: 13px;'><p>天气:<{$t.cond.txt_d}> 转  <{$t.cond.txt_n}></p> <{$t.tmp.max}>℃ ~<{$t.tmp.min}>℃</div>
+           <!-- </div> -->
          </li>
-         <li>
+         <!-- <li>
            <span></span> <div class="extra_wrapper">
            <div class="col1"><a href="#">气温:<{$t->low}>℃ ~<{$t->high}>℃</a></div></div>
          </li>
          <li>
            <span class="cnt"></span> <div class="extra_wrapper">
            <div class="col1"><a href="#">日期:<{$t->date}></a></div></div>
-         </li>
+         </li> -->
          
         </volist> 
        </ul>

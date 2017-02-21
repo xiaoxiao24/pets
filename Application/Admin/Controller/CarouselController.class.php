@@ -80,7 +80,7 @@ class CarouselController extends AdminController
           if($_FILES['picname']['name']!=''){
             $config = array (
                 'maxSize' => 3145728,
-                'rootPath' => './Upload/img/pets/',
+                'rootPath' => './Upload/img/carousel/',
                 'saveName' => array('uniqid',''),
                 'exts' => array('jpg', 'gif', 'png', 'jpeg'),
                 'autoSub' => true,
@@ -96,10 +96,10 @@ class CarouselController extends AdminController
               // 上传成功 获取文件信息
               $path = $info['savepath'].$info['savename'];
               $image = new \Think\Image();
-              $image->open("./Upload/img/pets/".$path);
+              $image->open("./Upload/img/carousel/".$path);
               // 按照原图的比例生成一个最大为350*235的缩略图并保存为thumb.jpg
               $path = time().$info['savename'];
-              $image->thumb(960, 583, \Think\Image::IMAGE_THUMB_FIXED)->save('./Upload/img/pets-thumb/'.$path);
+              $image->thumb(960, 583, \Think\Image::IMAGE_THUMB_FIXED)->save('./Upload/img/carousel-thumb/'.$path);
             }
           }
 

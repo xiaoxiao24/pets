@@ -14,8 +14,9 @@
 </block>
 
 <block name="main">
-	
+
 <div class='row' style="background:url(__UPLOAD__/img/bg-thumb/<{$Think.session.home_user.bg}>) center center; background-size:cover">
+  
 	<div class='col-xs-2 col-md-2'></div>
     <div class="col-xs-8 col-md-8">
       <div>
@@ -27,9 +28,11 @@
               </div>
               <div class="col-sm-8s">
                 <div class="m-b m-t-sm">
+                  <a href="<{:U('User/bg')}>" target='_black' style='color:blue;position: relative;left:600px;bottom: 40px;'>更新背景图片</a><br>
                   <small class="m-l">昵称：<{$Think.session.home_user.name}></small><br>
                   <small class="m-l">等级：<{$Think.session.home_user.exp|grade}></small><br>
-                  <small class="m-l">简介：<{$Think.session.home_user.descr}></small>
+                  <small class="m-l">简介：<{$Think.session.home_user.descr}></small><br>
+                  <small class="m-l"><i><u><a href="<{:U('User/info')}>" style='color:blue;'>更新个人资料</a></u></i></small>
                 </div>
                 
               </div>
@@ -63,61 +66,24 @@
           <li><a href='<{:U("Picture/index")}>'>相册</a></li>
           <li><a href='<{:U("Fans/index")}>'>好友</a></li>
           <li><a href='<{:U("Fans/news")}>'>消息</a></li>
+          <li><a href='<{:U("User/word")}>'>留言板</a></li>
         </ul>
       </div>
-      <!-- 发表动态开始 -->
-        <div id='com'>
-            
-            <form action="<{:U('Post/doAdd')}>" method="post">
-                  <input type="hidden" name="uid" value="<{$Think.session.home_user.id}>">       
-            <script id="container" name="content" type="text/plain" style="width:650px;height:220px">
-                </script>
-                <!-- 配置文件 -->
-                <script type="text/javascript" src="__PUBLIC__/ueditor/ueditor.config.js"></script>
-                <!-- 编辑器源码文件 -->
-                <script type="text/javascript" src="__PUBLIC__/ueditor/ueditor.all.js"></script>
-                <!-- 实例化编辑器 -->
-                <script type="text/javascript">
-                    var ue = UE.getEditor('container',{
-                        indentValue:'2em'
-                        ,initialFrameWidth:890  //初始化编辑器宽度,默认1000
-                        ,initialFrameHeight:120  //初始化编辑器高度,默认320
-                        ,zindex:650
-                        , toolbars: [[
-                        'fullscreen', 'undo', 'redo', '|',
-                        'bold', 'italic', 'underline', 'fontborder', 'rowspacingbottom', 'lineheight', '|', 'fontfamily', 'fontsize', '|',
-                        'directionalityltr', 'directionalityrtl', 'indent', '|',
-                        'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|', 
-                        'simpleupload', 'insertimage', 'emotion', 'scrawl', 'insertvideo', 'music', 'attachment', 'map', 'gmap', 'insertframe', '|',
-                        'horizontal', 'date', 'time', 'snapscreen'
-                        ]]
-                        //是否启用元素路径，默认是显示
-                        ,elementPathEnabled :false
-                        ,autoHeightEnabled: false
-                    });
-                </script>
-                <input type="submit" name="" value="提交" class='btn btn-primary'>
-            </form>
-                    
-        </div> 
-            
-		<!-- 发表动态结束-->
-		<hr>
-
-      <div class="padder" style='margin-top: 10px;'>      
-        <div class="streamline b-l b-info m-l-lg m-b padder-v">
+      
+      <div class="padder" style='margin-top: 10px;background: #fff;'>      
+        
           <if condition="$post eq null">
-            <div id='com' style='width:1000px;height:200px;font-size: 24px;color:#fff;line-height: 200px;text-align: center;'>
+            <div id='com' style='width:1000px;height:200px;font-size: 24px;color:#999;line-height: 200px;text-align: center;'>
                 <div class="hot_feed_blank">
               
-                  还没有动态
+                  还没有留言哦
                   
               </div>
                 </div> 
           <else/>
-          <foreach name='post' item='v'>
+          <foreach name='datas' item='v'>
           <div>
-            <a class="pull-left thumb-sm avatar m-l-n-md">
+            <a class="pull-left thumb-sm avatar m-l-n-md" href='<{:U("Fans/fans")}>?id=<{$v.id}>'>
               <img src="__UPLOAD__/img/avatar_thumb/<{$Think.session.home_user.picname}>" alt="...">
             </a>          
             <div class="m-l-lg panel b-a">
@@ -133,14 +99,14 @@
                 <blockquote>
                   <small><{$v.content}></small>
                 </blockquote>
-                <div>Lorem ipsum dolor sit amet, consecteter adipiscing elit...</div>
+                <div></div>
               </div>
             </div>
           </div>
           </foreach>
           </if>
-        </div>
-      </div>
+        
+      </div><br>
     </div>	        
  
   </div>
@@ -151,5 +117,6 @@
     <script type="text/javascript" src="__PUBLIC__/js/jquery-2.1.4.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script type="text/javascript" src="__PUBLIC__/js/bootstrap.min.js"></script>
+
   	
 </block>

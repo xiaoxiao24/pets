@@ -27,9 +27,11 @@
               </div>
               <div class="col-sm-8s">
                 <div class="m-b m-t-sm">
+                <a href="<{:U('User/bg')}>" target='_black' style='color:blue;position: relative;left:600px;bottom: 40px;'>更新背景图片</a><br>
                   <small class="m-l">昵称：<{$Think.session.home_user.name}></small><br>
                   <small class="m-l">等级：<{$Think.session.home_user.exp|grade}></small><br>
                   <small class="m-l">简介：<{$Think.session.home_user.descr}></small>
+                  <small class="m-l"><i><u><a href="<{:U('User/info')}>" style='color:blue;'>更新个人资料</a></u></i></small>
                 </div>
                 
               </div>
@@ -64,6 +66,7 @@
           <li class="active"><a href='<{:U("User/head")}>'>头像设置</a></li>
         </ul>
       </div><br>
+      <div style='background-color: #fff;'>
       <div class='row'>
       <div class='col-md-2'></div>
       <div class="col-md-8">
@@ -92,7 +95,7 @@
             </form>
           </div>
           </div>
-      </div>
+      </div><br>
     </div>	        
  
   </div>

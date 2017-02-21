@@ -5,7 +5,7 @@
 	<meta name="description" content="app, web app, responsive, responsive layout, admin, admin panel, admin dashboard, flat, flat ui, ui kit, AngularJS, ui route, charts, widgets, components" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 	<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
-	<title>我的好友</title>
+	<title>我的消息</title>
     <link rel="icon" href="__PUBLIC__/imgs/images/favicon.ico">
     <link rel="shortcut icon" href="__PUBLIC__/imgs/images/favicon.ico" />
     <link rel="stylesheet" href="__PUBLIC__/css/style.css">
@@ -22,13 +22,16 @@
         <div class="wrapper-lg bg-white-opacity">
           <div class="row m-t">
             <div class="col-sm-7">
-              <a href class="thumb-lg pull-left m-r">
-                <img src="__UPLOAD__/img/avatar-thumb/<{$Think.session.home_user.picname}>" class="img-circle">
-              </a>
-              <div class="clear m-b">
+              <div class='col-md-4'>
+                <a href="<{:U('User/info')}>"><img src="__UPLOAD__/img/avatar-thumb/<{$Think.session.home_user.picname}>" class="img-circle"></a>
+              </div>
+              <div class="col-sm-8s">
                 <div class="m-b m-t-sm">
-                  <span class="h3 text-black"><{$Think.session.home_user.name}></span>
-                  <small class="m-l"><{$Think.session.home_user.exp|grade}></small>
+                  <a href="<{:U('User/bg')}>" target='_black' style='color:blue;position: relative;left:600px;bottom: 40px;'>更新背景图片</a><br>
+                  <small class="m-l">昵称：<{$Think.session.home_user.name}></small><br>
+                  <small class="m-l">等级：<{$Think.session.home_user.exp|grade}></small><br>
+                  <small class="m-l">简介：<{$Think.session.home_user.descr}></small><br>
+                  <small class="m-l"><i><u><a href="<{:U('User/info')}>" style='color:blue;'>更新个人资料</a></u></i></small>
                 </div>
                 
               </div>
@@ -64,8 +67,9 @@
           <li class="active"><a href='<{:U("Fans/news")}>'>消息</a></li>
         </ul>
       </div>
+      <div style="background-color: #fff;">
       <if condition="$fans eq null">
-      <div id='com' style='width:1000px;height:200px;font-size: 24px;color:#fff;line-height: 200px;text-align: center;'>
+      <div id='com' style='width:890px;height:200px;font-size: 24px;color:#999;line-height: 200px;text-align: center;'>
           <div class="hot_feed_blank">
         
             还没有消息，去<a href="<{:U('Index/index')}>">逛逛</a>
@@ -90,9 +94,9 @@
 	        </div>
         </div>
 		</foreach>
-	    </div> 
-	    <{$page}>
-	    </if>
+      <{$page}>
+      </if>
+	    </div> <br>
     </div>	        
  
   </div>

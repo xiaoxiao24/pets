@@ -22,13 +22,16 @@
         <div class="wrapper-lg bg-white-opacity">
           <div class="row m-t">
             <div class="col-sm-7">
-              <a href class="thumb-lg pull-left m-r">
-                <img src="__UPLOAD__/img/avatar-thumb/<{$Think.session.home_user.picname}>" class="img-circle">
-              </a>
-              <div class="clear m-b">
+              <div class='col-md-4'>
+                <a href="<{:U('User/info')}>"><img src="__UPLOAD__/img/avatar-thumb/<{$Think.session.home_user.picname}>" class="img-circle"></a>
+              </div>
+              <div class="col-sm-8s">
                 <div class="m-b m-t-sm">
-                  <span class="h3 text-black"><{$Think.session.home_user.name}></span>
-                  <small class="m-l"><{$Think.session.home_user.exp|grade}></small>
+                  <a href="<{:U('User/bg')}>" target='_black' style='color:blue;position: relative;left:600px;bottom: 40px;'>更新背景图片</a><br>
+                  <small class="m-l">昵称：<{$Think.session.home_user.name}></small><br>
+                  <small class="m-l">等级：<{$Think.session.home_user.exp|grade}></small><br>
+                  <small class="m-l">简介：<{$Think.session.home_user.descr}></small><br>
+                  <small class="m-l"><i><u><a href="<{:U('User/info')}>" style='color:blue;'>更新个人资料</a></u></i></small>
                 </div>
                 
               </div>
@@ -66,7 +69,7 @@
       </div>
       
       <if condition="$pics eq null">
-		  <div id='com' style='width:1000px;height:200px;font-size: 24px;color:#fff;line-height: 200px;text-align: center;'>
+		  <div id='com' style='width:1000px;height:200px;font-size: 24px;color:#999;line-height: 200px;text-align: center;background-color: #fff;'>
 	    	<div class="hot_feed_blank">
 	    
 	        还没有相册，去 <a href="javascript:;" onclick="picture_add('添加图片','<{:U('Picture/add',array('id'=>$Think.session.home_user.id))}>','400','300')">添加图片</a>
@@ -75,10 +78,10 @@
 	    </div>
         </div> 
 		 <else/>
-		<div class="clearfix u-f-wrap" id="forum_group_wrap" style='font-size: 24px;color:blue;'>
+		<div class="clearfix u-f-wrap" id="forum_group_wrap" style='font-size: 24px;color:blue;background-color: #fff;'>
 		共有<{$pic_count}>张相片，去<a href="javascript:;" style='font-size: 24px;color:blue;' onclick="picture_add('添加图片','<{:U('Picture/add',array('id'=>$bar['id']))}>','400','300')">添加图片</a><br><br>
 		<foreach name='pics' item='v'>
-		    <div class="row">
+		    <div class="row"'>
 		        <div class="col-xs-6 col-md-3">
 		            <div class="zoom-container">
 		            <img src="__UPLOAD__/img/pic-thumb/<{$v.picname}>" class="img-rounded"></div><br>
@@ -110,5 +113,7 @@
 	function picture_add(title,url,w,h){
 	    layer_show(title,url,w,h);
 	}
+
+  
 	</script>
 </block>

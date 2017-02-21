@@ -134,7 +134,7 @@ class FansController extends HomeController
             
             $new['status'] = 3;
             $up = M('fans')->where('uid='.I('get.uid').' and selfid='.session('home_user')['id'])->update($new);
-            $follow = M('fans')->where('selfid='.I('get.uid').' and uid='.session('home_user')['id'])->update($new);
+            $follow = M('fans')->where('selfid='.I('get.uid').' and uid='.session('home_user')['id'])->save($new);
             if ($follow == false) {
                 $this->ajaxReturn(false);
             } else {

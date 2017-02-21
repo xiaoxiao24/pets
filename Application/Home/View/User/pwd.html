@@ -27,9 +27,11 @@
               </div>
               <div class="col-sm-8s">
                 <div class="m-b m-t-sm">
+                  <a href="<{:U('User/bg')}>" target='_black' style='color:blue;position: relative;left:600px;bottom: 40px;'>更新背景图片</a><br>
                   <small class="m-l">昵称：<{$Think.session.home_user.name}></small><br>
                   <small class="m-l">等级：<{$Think.session.home_user.exp|grade}></small><br>
                   <small class="m-l">简介：<{$Think.session.home_user.descr}></small>
+                  <small class="m-l"><i><u><a href="<{:U('User/info')}>" style='color:blue;'>更新个人资料</a></u></i></small>
                 </div>
                 
               </div>
@@ -64,10 +66,29 @@
           <li><a href='<{:U("User/head")}>'>头像设置</a></li>
         </ul>
       </div><br>
+      <div style='background-color: #fff;'>
       <div class='row'>
       <div class='col-md-2'></div>
       <div class="col-md-8">
           <form id="form-user-edit" class="setting-profile-form" method="POST" action="<{:U('User/pwdsave')}>" style='font-size: 20px;'> 
+              <div class='row'>
+                <div class="col-md-3">手机号:</div>
+                <div class="col-md-8">
+                    <input class='col-sm-12' style='width: 270px;' type="text" class="form-control" name="phone" id="phone" value='<{:session(home_user)["phone"]}>' readonly>
+                    <div class='col-sm-12'>
+                      <a href="javascript:void(0)" class='col-md-6' style="background:#4B97E4;margin-top: 5px;margin-left: -15px;color:#eee;" onclick='sendsms()' id = 'send' class='btn btn-info btn-block btn-sm'>点击发送验证码</a>
+                    </div>
+                </div>
+                
+              </div><br>
+
+              <div class='row'>
+                <div class="col-md-3">验证码:</div>
+                <div class="col-md-8">
+                    <input type="password" style='width: 270px;' class="form-control" name="sms" id="sms">
+                </div>
+              </div><br>
+              <div class='xianshi' style='display: none;'>
               <div class='row'>
                 <div class="col-md-3">原密码:</div>
                 <div class="col-md-8">
@@ -88,17 +109,77 @@
               </div> <br>
                
               <input type="hidden" name="id" value="<{$user.id}>"> 
-              <input type="submit" class="btn btn-info" style='width:270px;margin-left: 150px;' value="保存" /><br><br><br>
+              <input type="submit" class="btn btn-info" style='width:270px;margin-left: 150px;' value="保存" /></div><br><br><br>
             </form>
           </div>
           </div>
+          </div><br>
       </div>
     </div>	        
- 
-  </div>
+
 </block>
 <block name="myjs">
+     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="__PUBLIC__/js/jquery-2.1.4.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="__PUBLIC__/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/H-ui/lib/jquery.validation/1.14.0/jquery.validate.min.js"></script> 
+    <script type="text/javascript" src="__PUBLIC__/H-ui/lib/jquery.validation/1.14.0/validate-methods.js"></script> 
+    <script type="text/javascript" src="__PUBLIC__/H-ui/lib/jquery.validation/1.14.0/messages_zh.min.js"></script> 
+
+    <script type="text/javascript" src="__PUBLIC__/H-ui/lib/layer/2.1/layer.js"></script>
 <script>
+    var timer = null;
+
+     var m = 60;
+     // sendsms();
+    function sendsms(){
+       $.post("<{:U('Phone/sendSms')}>",{'val':"<{:session('home_user')['phone']}>"},function(res){
+            console.log(res);
+            if (res == 'true'){
+                 $('#send').html('已发送,60秒后重新输入');
+                 $('#send').attr('disabled','disabled');
+                 timer = setInterval(demo,1000);
+            }else{
+                layer.tips('发送失败','#smsinput');
+            }
+       })
+        
+    }
+
+    function demo(){ 
+        if (m<=0) {
+             $('#send').html('发送');
+             $('#send').removeAttr('disabled');
+             clearInterval(timer);
+        }else{
+            $('#send').html('已发送,'+m+'秒后重新输入');
+            m--;
+
+        }
+
+    }
+
+    $('#sms').blur(function(){
+        $.ajax({
+            url:'<{:U("Phone/phoneyzm")}>',
+            type: "POST",
+            data: 'sms='+$('#sms').val(),
+            success: function(data){
+                if (data) {
+                    $('.xianshi').css('display','block');
+                    // layer.msg('已发送申请，等待管理员处理');
+                } else {
+                    // layer.msg('验证码输入错误，申请未发送成功');
+                }
+            }
+        });
+// $sms = $('#sms').val();
+        // if ($sms == <{:session('sms')}>) {
+        //     $('#submit').removeAttr('disabled');
+        // }
+    });
+
     $(function () {
 
     $('#form-user-passwd').validate({

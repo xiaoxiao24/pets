@@ -27,42 +27,21 @@
 <![endif]-->
 <!--/meta 作为公共模版分离出去-->
 
-<title>添加用户 - H-ui.admin v2.3</title>
+<title>添加背景图</title>
 <meta name="keywords" content="H-ui.admin v2.3,H-ui网站后台模版,后台模版下载,后台管理系统模版,HTML后台模版下载">
 <meta name="description" content="H-ui.admin v2.3，是一款由国人开发的轻量级扁平化网站后台模板，完全免费开源的网站后台管理系统模版，适合中小型CMS后台系统。">
 </head>
 <body>
 <article class="page-container">
-	<form action="<{:U('Carousel/doadd')}>" method="post" class="form form-horizontal" id="form-member-add" enctype="multipart/form-data">
-		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>宠物昵称：</label>
-			<div class="formControls col-xs-8 col-sm-6">
-
-				<select id='pid' class="select" size="1" name="pid">
-					<option value="">--请选择--</option>
-					<volist name="list" id="vo">
-						<option value="<{$vo.id}>" >
-							<{$vo.name}>
-						</option>
-					</volist>
-				</select>
-			</div><span style="color: red; line-height: 30px;" id="selecttips"></span>
-		</div>
+	<form action="<{:U('Bg/doadd')}>" method="post" class="form form-horizontal" id="form-member-add" enctype="multipart/form-data">
+		
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>上传图片：</label>
 			<div class="formControls col-xs-8 col-sm-6">
 				<input type="file" name="picname">
 			</div>
 		</div>
-		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>状态：</label>
-			<div class="formControls col-xs-8 col-sm-9 skin-minimal">
-				<div class="radio-box">
-					<input name="state" type="radio" id="status-1" checked value='1'>
-					<label for="status-1">启用</label>
-				</div>
-			</div>
-		</div>
+		
 		<div class="row cl">
 			<div class="col-xs-8 col-sm-6 col-xs-offset-4 col-sm-offset-3">
 				<button class="btn btn-primary radius" type="submit" id="submitbtn">&nbsp;&nbsp;提交&nbsp;&nbsp;</button>
@@ -82,34 +61,7 @@
 <script type="text/javascript" src="__PUBLIC__/H-ui/static/h-ui.admin/js/H-ui.admin.js"></script> 
 <!--/_footer /作为公共模版分离出去--> 
 
-<!--请在下方写此页面业务相关的脚本--> 
-<script>
-$(function(){
-	$('#picname').blur(function(){
-		$.ajax({
-			type: 'POST',
-			url: "<{:U('Carousel/doadd')}>",
-			data: 'picname='+$('#picname').val(),
-			success: function(msg){
-	          if(msg){
-	            $('#selecttips').html(msg);
-	          }else{
-	            $('#selecttips').html('');
-	          }
-	        }
-		});
-	});
 
-	$('#submitbtn').click(function(){
-		if($('#pid').val() == ''){
-        	$('#selecttips').html('请选择宠物昵称');
-        	return false;
-     	}
-
-    });
-});
-</script>
-<!--/请在上方写此页面业务相关的脚本-->
 </body>
 </html>
  

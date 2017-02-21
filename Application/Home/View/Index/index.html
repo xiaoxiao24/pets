@@ -127,16 +127,44 @@
 	    </div>
 	    <div class="grid_4 prefix_2">
 	      	<h2 class="ic1">Any Question?</h2>
-	      	<img src="__PUBLIC__/imgs/images/page1_img4.jpg" alt="" class="fleft img_inner">
+	      	<img src="__PUBLIC__/imgs/images/c.jpg" alt="" width='100' class="fleft img_inner">
 	       	<div class="extra_wrapper">
 	         	<div class="cont">
-	           	Call Us Free:  
-	           	<span>+1 800 559 6580</span>
+	           	欢迎留言:  
 	         	</div>
 	        </div>
 	        <div class="clear"></div>
-	        Nunc fringilla, diam sit amet adipi scing bibendum turpis velit feugiat urna, et pharetra neque nisi ac nunc. Viv amus est quam dapibus ullamco rper imperdiet nec euismod ut arcu. Nulla facilisi. Etiam mauris. 
-	    </div>
+	       		<div>
+		          <form action="<{:U('Notice/doAdd')}>" method="post">
+		                
+		                <input type="hidden" name="uid" value="<{$Think.session.home_user.id}>"> 
+		               
+		            <script id="container" name="content" type="text/plain" style="width:650px;height:220px">
+		            </script>
+		            <!-- 配置文件 -->
+		            <script type="text/javascript" src="__PUBLIC__/ueditor/ueditor.config.js"></script>
+		            <!-- 编辑器源码文件 -->
+		            <script type="text/javascript" src="__PUBLIC__/ueditor/ueditor.all.js"></script>
+		            <!-- 实例化编辑器 -->
+		            <script type="text/javascript">
+		                var ue = UE.getEditor('container',{
+		                    indentValue:'2em'
+		                    ,initialFrameWidth:300  //初始化编辑器宽度,默认1000
+		                    ,initialFrameHeight:150  //初始化编辑器高度,默认320
+		                    ,zindex:450
+		                    , toolbars: [[
+		                    'fullscreen', 'undo', 'redo', 'emotion'
+		                    ]]
+		                    //是否启用元素路径，默认是显示
+		                    ,elementPathEnabled :false
+		                    ,autoHeightEnabled: false
+		                });
+		            </script>
+		            <input type="submit" name="" value="提交" id='submit' class='btn btn-primary'>
+		            </form>
+		                    
+		        </div>
+	        </div>
   	</div>
 </div>
 

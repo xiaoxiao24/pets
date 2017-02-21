@@ -46,37 +46,58 @@ class PostController extends HomeController
         $this->assign('type',$type);
 
         // 天气
-        $ch = curl_init();
-        $c= empty($_POST['city'])?'longyan':$_POST['city'];
+        // $ch = curl_init();
+        // $c= empty($_POST['city'])?'longyan':$_POST['city'];
 
-          // var_dump($c);exit;
-        $location = $c;
-        $url = 'http://apis.baidu.com/thinkpage/weather_api/suggestion?location='.$location.'&language=zh-Hans&unit=c&start=0&days=3';
-        $header = array(
-            'apikey: c7d6375287125e39a083e2c6e9372840',
-        );
-        // 添加apikey到header
-        curl_setopt($ch, CURLOPT_HTTPHEADER  , $header);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        // 执行HTTP请求
-        curl_setopt($ch , CURLOPT_URL , $url);
-        $res = curl_exec($ch);
+        //   // var_dump($c);exit;
+        // $location = $c;
+        // $url = 'http://apis.baidu.com/thinkpage/weather_api/suggestion?location='.$location.'&language=zh-Hans&unit=c&start=0&days=3';
+        // $header = array(
+        //     'apikey: c7d6375287125e39a083e2c6e9372840',
+        // );
+        // // 添加apikey到header
+        // curl_setopt($ch, CURLOPT_HTTPHEADER  , $header);
+        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        // // 执行HTTP请求
+        // curl_setopt($ch , CURLOPT_URL , $url);
+        // $res = curl_exec($ch);
 
-        $res = json_decode($res);
-        // dump($res);
-        // exit;
-        $data = $res->results;
+        // $res = json_decode($res);
+        // // dump($res);
+        // // exit;
+        // $data = $res->results;
         
-        $city = $data[0]->location->name;
-        $daily = $data[0]->daily;
-        // dump($daily);
-        $update = $data[0]->last_update;
+        // $city = $data[0]->location->name;
+        // $daily = $data[0]->daily;
+        // // dump($daily);
+        // $update = $data[0]->last_update;
+        
+
+        $event='forecast';
+        $cityname='longyan';
+        $keynum='21d5060274824af3bdb1e896070c7283';
+        
+        
+        $url = "https://free-api.heweather.com/v5/".$event."?key=".$keynum."&city=".$cityname;
+        //  return $url;exit;
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_HEADER, 0);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        $data = curl_exec($curl);
+        curl_close($curl);
+        $Weatherinfo=json_decode($data,true);
+
+        $weather = $Weatherinfo['HeWeather5']['0']['daily_forecast'];
+        $city = $Weatherinfo['HeWeather5']['0']['basic']['city'];
+        
+        // print_r($Weatherinfo['HeWeather5']['0']);die;
         
         // $linklist=M('link')->select();
         // $this->assign('linklist',$linklist);
         $this->assign('city',$city);
-        $this->assign('update',$update);
-        $this->assign('daily',$daily);
+        $this->assign('weather',$weather);
 
         $this->display();
     }
