@@ -28,11 +28,10 @@
             <div class="user">
               <a href=""><img src="__UPLOAD__/img/avatar-thumb/<{$v.upic}>" alt="" height='45' class="img_inner fleft i1"></a><a href=""><{$v.uname}></a><input type="hidden" id="uid" value="<{$v.uid}>"> 
               <if condition='($Think.session.home_user eq "") or ($user eq "")'>
-                  <a href="javascript:;" style='margin-left:100px' onclick="startbtn()"><span class='glyphicon glyphicon-heart'></span>加好友</a>
+                  <a href="javascript:;" style='margin-left:100px' onclick="startbtn()"><span class='glyphicon glyphicon-heart'></span>关注</a>
               <elseif condition='$user eq ""'/>
-                  <a href="javascript:;" style='margin-left:100px'><span class='glyphicon glyphicon-heart'></span>申请中</a>
-              <else/>
-                  <a href="javascript:;" style='margin-left:40px' onclick="closebtn()"><span class='glyphicon glyphicon-ok' ></span>好友 | 取消</a>
+                 
+                  <a href="javascript:;" style='margin-left:40px' onclick="closebtn()"><span class='glyphicon glyphicon-ok' ></span>已关注 | 取消</a>
               </if>
             </div>
 
@@ -103,7 +102,7 @@
         var selfid = '<{:session("home_user")["id"]}>';
         if (uid == "") {
             layer.open({
-              title: '取消好友'
+              title: '取消关注'
               ,content: '请先登录'
             }); 
             return false;
@@ -115,12 +114,12 @@
             data: 'uid='+uid+'&selfid='+selfid,
             success: function(data){
                 if (data) {
-                    $('.actionbtn').html('<a href="javascript:;"  onclick="startbtn()" style=\'margin-left:40px\'><span class=\'glyphicon glyphicon-heart\'></span>加好友</a>');
+                    $('.actionbtn').html('<a href="javascript:;"  onclick="startbtn()" style=\'margin-left:40px\'><span class=\'glyphicon glyphicon-heart\'></span>关注</a>');
                     $('#follow').html(parseInt($('#follow').html())-1);
                 } else {
                     layer.open({
-                      title: '取消好友'
-                      ,content: '取消好友失败'
+                      title: '取消关注'
+                      ,content: '取消关注失败'
                     }); 
                 }
             }
@@ -132,7 +131,7 @@
           // console.log(uid);
           if (selfid == "") {
               layer.open({
-                title: '加好友'
+                title: '关注'
                 ,content: '请先登录'
               });
               return false;
@@ -140,8 +139,8 @@
           var uid = $('#uid').val();
           if (selfid == uid) {
               layer.open({
-                title: '加好友'
-                ,content: '不能添加自己为好友'
+                title: '关注'
+                ,content: '不能关注自己'
               });
               return false;
           }
@@ -151,13 +150,13 @@
               data: 'uid='+uid+'&selfid='+selfid,
               success: function(data){
                   if (data) {
-                      $('.actionbtn').html('<a href="javascript:;"  style="margin-left:40px"><span class="glyphicon glyphicon-ok" ></span>申请中</a>');
+                      $('.actionbtn').html('<a href="javascript:;" style=\'margin-left:40px\' onclick="closebtn()"><span class=\'glyphicon glyphicon-ok\' ></span>已关注 | 取消</a>');
                       $('#follow').html(parseInt($('#follow').html())+1);
 
                   } else {
                       layer.open({
-                        title: '加好友'
-                        ,content: '加好友失败'
+                        title: '关注'
+                        ,content: '关注失败'
                       }); 
                   }
               }

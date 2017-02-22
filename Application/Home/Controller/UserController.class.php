@@ -49,7 +49,7 @@ class UserController extends HomeController
 
         $show = $Page->show();// 分页显示输出
         $this->assign('page',$show);
-        $fans_count = M('fans')->where('status=1 and selfid='.session('home_user.id'))->count();
+        $fans_count = M('fans')->where('selfid='.session('home_user.id'))->count();
 
         foreach ($post as $k => $v) {
             $post[$k]['collect_count'] = M('collection')->where('postid='.$v['id'])->count('id');
@@ -80,7 +80,7 @@ class UserController extends HomeController
         // 动态
         $post_count = M('post')->where('uid='.session('home_user.id').' and state=1')->count();
         // 好友
-        $fans_count = M('fans')->where('status=1 and selfid='.session('home_user.id'))->count();
+        $fans_count = M('fans')->where('selfid='.session('home_user.id'))->count();
 
         $this->assign('fans_count', $fans_count);
         $this->assign('post_count', $post_count);
@@ -122,7 +122,7 @@ class UserController extends HomeController
         // 动态
         $post_count = M('post')->where('uid='.session('home_user.id').' and state=1')->count();
         // 好友
-        $fans_count = M('fans')->where('status=1 and selfid='.session('home_user.id'))->count();
+        $fans_count = M('fans')->where('selfid='.session('home_user.id'))->count();
 
         $this->assign('fans_count', $fans_count);
         $this->assign('post_count', $post_count);
@@ -161,7 +161,7 @@ class UserController extends HomeController
         // 动态
         $post_count = M('post')->where('uid='.session('home_user.id').' and state=1')->count();
         // 好友
-        $fans_count = M('fans')->where('status=1 and selfid='.session('home_user.id'))->count();
+        $fans_count = M('fans')->where('selfid='.session('home_user.id'))->count();
 
         $this->assign('fans_count', $fans_count);
         $this->assign('post_count', $post_count);
@@ -227,52 +227,5 @@ class UserController extends HomeController
         $this->display('User/index');
     }
 
-    /*
-        留言板
-    */ 
-    public function word()
-    {
-       
-        $datas = M('word')->field('u.id, u.picname, w.content, w.ctime')->table('pet_user u, pet_word w')->where('w.selfid=u.id w.uid='.session('home_user.id'))->order('w.ctime desc')->page($_GET['p'],10)->select();
-            // 分页
-        $count = M('word')->where('uid='.session('home_user.id')）->count();
-
-        $Page = new \Think\Page($count,10);// 实例化分页类 传入总记录数和每页显示的记录数
-
-        $Page->setConfig('first','首页');
-        $Page->setConfig('last','尾页');
-        $Page->setConfig('prev','上一页');
-        $Page->setConfig('next','下一页');
-        
-        $Page->setConfig('theme','
-            <nav>
-              <ul class="pagination">
-                <li>%FIRST%</li>
-                <li>%UP_PAGE%</li>
-                <li>%LINK_PAGE%</li>
-                <li>%DOWN_PAGE%</li>
-                <li>%END%</li>
-              </ul>
-            </nav>
-        ');
-
-        $show = $Page->show();// 分页显示输出
-        $this->assign('page',$show);
-        $this->assign('datas',$datas);
-
-        // 相册
-        $pic_count = M('picture')->where('uid='.session('home_user.id'))->count();
-        // 收藏
-        $col_count = M('collection')->where('selfid='.session('home_user.id'))->count();
-        // 动态
-        $post_count = M('post')->where('uid='.session('home_user.id').' and state=1')->count();
-        // 好友
-        $fans_count = M('fans')->where('status=1 and selfid='.session('home_user.id'))->count();
-
-        $this->assign('fans_count', $fans_count);
-        $this->assign('post_count', $post_count);
-        $this->assign('pic_count', $pic_count);
-        $this->assign('col_count', $col_count);
-        $this->display();
-    }
+    
 }

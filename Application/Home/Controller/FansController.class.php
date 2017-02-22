@@ -21,10 +21,10 @@ class FansController extends HomeController
     */
     public function index()
     {
-        $fans = M('fans')->field('f.id, f.uid, u.name, u.sex, u.exp, u.picname')->table('pet_user u, pet_fans f')->where('f.status=1 and f.selfid='.session('home_user.id').' and f.uid=u.id')->order('id desc')->page($_GET['p'],12)->select();
+        $fans = M('fans')->field('f.id, f.uid, u.name, u.sex, u.exp, u.picname')->table('pet_user u, pet_fans f')->where('f.selfid='.session('home_user.id').' and f.uid=u.id')->order('id desc')->page($_GET['p'],12)->select();
            
         // 好友 分页
-        $fans_count = M('fans')->where('status=1 and selfid='.session('home_user.id'))->count();
+        $fans_count = M('fans')->where('selfid='.session('home_user.id'))->count();
         $Page = new \Think\Page($count,12);// 实例化分页类 传入总记录数和每页显示的记录数
 
         $Page->setConfig('first','首页');
@@ -71,10 +71,10 @@ class FansController extends HomeController
     */
     public function news()
     {
-        $news = M('fans')->field('f.id, f.selfid, f.status, u.name, u.picname')->table('pet_user u, pet_fans f')->where('f.status!=3 and f.uid='.session('home_user.id').' and f.selfid=u.id')->order('id desc')->page($_GET['p'],12)->select();
+        $news = M('fans')->field('f.id, f.selfid, f.status, u.name, u.picname')->table('pet_user u, pet_fans f')->where('f.uid='.session('home_user.id').' and f.selfid=u.id')->order('id desc')->page($_GET['p'],12)->select();
            
         // 分页
-        $count = M('fans')->table('pet_user u, pet_fans f')->where('f.status=0 and f.uid='.session('home_user.id').' and f.selfid=u.id')->count();
+        $count = M('fans')->where('uid='.session('home_user.id'))->count();
         $Page = new \Think\Page($count,12);// 实例化分页类 传入总记录数和每页显示的记录数
 
         $Page->setConfig('first','首页');
@@ -98,7 +98,7 @@ class FansController extends HomeController
         $this->assign('page',$show);
 
         // 好友 
-        $fans_count = M('fans')->where('status=1 and selfid='.session('home_user.id'))->count();
+        $fans_count = M('fans')->where('selfid='.session('home_user.id'))->count();
         // 收藏
         $col_count = M('collection')->where('selfid='.session('home_user.id'))->count();
         // 动态
@@ -132,9 +132,8 @@ class FansController extends HomeController
 
         if (IS_AJAX) {
             
-            $new['status'] = 3;
-            $up = M('fans')->where('uid='.I('get.uid').' and selfid='.session('home_user')['id'])->update($new);
-            $follow = M('fans')->where('selfid='.I('get.uid').' and uid='.session('home_user')['id'])->save($new);
+            $follow = M('fans')->where('uid='.I('get.uid').' and selfid='.session('home_user')['id'])->delete();
+            
             if ($follow == false) {
                 $this->ajaxReturn(false);
             } else {
@@ -178,58 +177,58 @@ class FansController extends HomeController
     * @access public        
     * @return void
     */
-    public function sure()
-    {
-        // 未获取好友id
-        if (empty(I('get.uid'))) {
-            $this->display('Public:404');
-            exit;
-        }
+    // public function sure()
+    // {
+    //     // 未获取好友id
+    //     if (empty(I('get.uid'))) {
+    //         $this->display('Public:404');
+    //         exit;
+    //     }
 
-        if (IS_AJAX) {
-            $data['uid'] = I('post.uid');
-            $data['selfid'] = session('home_user')['id'];
-            $data['status'] = 1;
+    //     if (IS_AJAX) {
+    //         $data['uid'] = I('post.uid');
+    //         $data['selfid'] = session('home_user')['id'];
+    //         $data['status'] = 1;
 
-            $new['status'] = 1;
-            $follow = M('fans')->add($data);
-            $up = M('fans')->where('id='.I('get.id'))->update($new);
-            if ($follow == false) {
-                $this->ajaxReturn(false);
-            } else {
-                $this->ajaxReturn(true);
-            }
+    //         $new['status'] = 1;
+    //         $follow = M('fans')->add($data);
+    //         $up = M('fans')->where('id='.I('get.id'))->update($new);
+    //         if ($follow == false) {
+    //             $this->ajaxReturn(false);
+    //         } else {
+    //             $this->ajaxReturn(true);
+    //         }
             
-        }
+    //     }
         
-    }
+    // }
 
     /**
     * 拒绝好友
     * @access public        
     * @return void
     */
-    public function confuse()
-    {
-        // 未获取好友id
-        if (empty(I('get.id'))) {
-            $this->display('Public:404');
-            exit;
-        }
+    // public function confuse()
+    // {
+    //     // 未获取好友id
+    //     if (empty(I('get.id'))) {
+    //         $this->display('Public:404');
+    //         exit;
+    //     }
 
-        if (IS_AJAX) {
+    //     if (IS_AJAX) {
 
-            $new['status'] = 2;
-            $up = M('fans')->where('id='.I('get.id'))->update($new);
-            if ($up == false) {
-                $this->ajaxReturn(false);
-            } else {
-                $this->ajaxReturn(true);
-            }
+    //         $new['status'] = 2;
+    //         $up = M('fans')->where('id='.I('get.id'))->update($new);
+    //         if ($up == false) {
+    //             $this->ajaxReturn(false);
+    //         } else {
+    //             $this->ajaxReturn(true);
+    //         }
             
-        }
+    //     }
         
-    }
+    // }
 
 
     /**
@@ -277,7 +276,7 @@ class FansController extends HomeController
 
         $show = $Page->show();// 分页显示输出
         $this->assign('page',$show);
-        $fans_count = M('fans')->where('status=1 and selfid='.I('get.id'))->count();
+        $fans_count = M('fans')->where('selfid='.I('get.id'))->count();
 
         foreach ($post as $k => $v) {
             $post[$k]['collect_count'] = M('collection')->where('postid='.$v['id'])->count('id');
@@ -336,7 +335,7 @@ class FansController extends HomeController
         // 动态
         $post_count = M('post')->where('uid='.I('get.id').' and state=1')->count();
         // 好友
-        $fans_count = M('fans')->where('status=1 and selfid='.I('get.id'))->count();
+        $fans_count = M('fans')->where('selfid='.I('get.id'))->count();
 
         $this->assign('fans_count', $fans_count);
         $this->assign('post_count', $post_count);

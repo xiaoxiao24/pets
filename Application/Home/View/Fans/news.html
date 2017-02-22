@@ -65,6 +65,7 @@
           <li><a href='<{:U("Picture/index")}>'>相册</a></li>
           <li><a href='<{:U("Fans/index")}>'>好友</a></li>
           <li class="active"><a href='<{:U("Fans/news")}>'>消息</a></li>
+          <li><a href='<{:U("Word/index")}>'>留言板</a></li>
         </ul>
       </div>
       <div style="background-color: #fff;">
@@ -81,16 +82,16 @@
       	<foreach name='fans' item='v'>
         <div class='row'>
         	<input type="hidden" name="uid" id='uid' value="$v.selfid">
-        	<div class='col-xs-3 col-md-3'><img src="__UPLOAD__/img/avatar-thumb/<{$v.picname}>"></div>
-        	<div class='col-xs-3 col-md-5'><{$v.name}>申请加你为好友</div>
+        	<div class='col-xs-3 col-md-3'><a href="<{:U('Fans/fans')}>?id=<{$v.id}>"><img src="__UPLOAD__/img/avatar-thumb/<{$v.picname}>"></a></div>
+        	<div class='col-xs-3 col-md-5'><a href="<{:U('Fans/fans')}>?id=<{$v.id}>"><{$v.name}>已经关注你啦</a></div>
         	<div class='actionbtn col-xs-3 col-md-2'>
-        	<if condition='$v.status eq 0'>
+        	<!-- <if condition='$v.status eq 0'>
 	        	<a href="javascript:;" onclick="sure()">同意</a><a href="javascript:;" onclick="confuse()">拒绝</a>
 	        <elseif condition='$v.status eq 1'/>
 	        	<a href="javascript:;">已同意</a>
 	        <elseif condition='$v.status eq 2'/>
 	        	<a href="javascript:;">已拒绝</a>
-	        </if>
+	        </if> -->
 	        </div>
         </div>
 		</foreach>
@@ -110,49 +111,4 @@
     <script src="__PUBLIC__/js/bootstrap.js"></script>
     <script type="text/javascript" src="__PUBLIC__/H-ui/lib/layer/2.1/layer.js"></script>
 
-    <script>
-    
-    function confuse() {
-        
-        var uid = $('#uid').val();
-        $.ajax({
-            type:"POST",
-            url: "<{:U('Fans/confuse')}>",
-            data: 'uid='+uid,
-            success: function(data){
-                if (data) {
-                    $('.actionbtn').html('<a href="javascript:;">已拒绝</a>');
-                } else {
-                    layer.open({
-                      title: '拒绝申请'
-                      ,content: '拒绝申请失败'
-                    }); 
-                }
-            }
-        });
-    }
-
-    function sure() {
-        
-        var uid = $('#uid').val();
-        $.ajax({
-            type:"POST",
-            url: "<{:U('Fans/sure')}>",
-            data: 'uid='+uid,
-            success: function(data){
-                if (data) {
-                    $('.actionbtn').html('<a href="javascript:;">已同意</a>');
-
-                } else {
-                    layer.open({
-                      title: '同意申请'
-                      ,content: '同意申请失败'
-                    }); 
-                }
-            }
-        });
-    }
-    
-    
-    </script>
 </block>

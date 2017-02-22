@@ -2,7 +2,7 @@
 namespace Home\Model;
 use Think\Model;
 
-class LeftwordModel extends Model{
+class WordModel extends Model{
     
     protected $_validate = array(
         // array(验证字段2,验证规则,错误提示,[验证条件,附加规则,验证时间])

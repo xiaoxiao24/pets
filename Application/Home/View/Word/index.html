@@ -1,0 +1,205 @@
+<extend name="Public:base"/>
+
+<block name='head'>
+    <meta charset="utf-8" />
+	<meta name="description" content="app, web app, responsive, responsive layout, admin, admin panel, admin dashboard, flat, flat ui, ui kit, AngularJS, ui route, charts, widgets, components" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+	<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+	<title>我的留言板</title>
+    <link rel="icon" href="__PUBLIC__/imgs/images/favicon.ico">
+    <link rel="shortcut icon" href="__PUBLIC__/imgs/images/favicon.ico" />
+    <link rel="stylesheet" href="__PUBLIC__/css/style.css">
+	<link rel="stylesheet" href="__PUBLIC__/css/bootstrap.css" type="text/css" />
+	<link rel="stylesheet" href="__PUBLIC__/css/app.css" type="text/css" />
+</block>
+
+<block name="main">
+	
+<div class='row' style="background:url(__UPLOAD__/img/bg-thumb/<{$Think.session.home_user.bg}>) center center; background-size:cover">
+	<div class='col-xs-2 col-md-2'></div>
+    <div class="col-xs-8 col-md-8">
+      <div>
+        <div class="wrapper-lg bg-white-opacity">
+          <div class="row m-t">
+            <div class="col-sm-7">
+              <div class='col-md-4'>
+                <a href="<{:U('User/info')}>"><img src="__UPLOAD__/img/avatar-thumb/<{$Think.session.home_user.picname}>" class="img-circle"></a>
+              </div>
+              <div class="col-sm-8s">
+                <div class="m-b m-t-sm">
+                  <a href="<{:U('User/bg')}>" target='_black' style='color:blue;position: relative;left:600px;bottom: 40px;'>更新背景图片</a><br>
+                  <small class="m-l">昵称：<{$Think.session.home_user.name}></small><br>
+                  <small class="m-l">等级：<{$Think.session.home_user.exp|grade}></small><br>
+                  <small class="m-l">简介：<{$Think.session.home_user.descr}></small><br>
+                  <small class="m-l"><i><u><a href="<{:U('User/info')}>" style='color:blue;'>更新个人资料</a></u></i></small>
+                </div>
+                
+              </div>
+            </div>
+            <div class="col-sm-5">
+              <div class="pull-right pull-none-xs text-center">
+              	<a href class="m-b-md inline m">
+                  <span class="h3 block font-bold"><{$pic_count}></span>
+                  <small>相册</small>
+                </a>
+                <a href class="m-b-md inline m">
+                  <span class="h3 block font-bold"><{$fans_count}></span>
+                  <small>好友</small>
+                </a>
+                <a href class="m-b-md inline m">
+                  <span class="h3 block font-bold"><{$post_count}></span>
+                  <small>动态</small>
+                </a>
+                <a href class="m-b-md inline m">
+                  <span class="h3 block font-bold"><{$col_count}></span>
+                  <small>收藏</small>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="wrapper bg-white b-b">
+        <ul class="nav nav-pills nav-sm">
+          <li ><a href='<{:U("User/index")}>'>动态</a></li>
+          <li><a href='<{:U("Picture/index")}>'>相册</a></li>
+          <li><a href='<{:U("Fans/index")}>'>好友</a></li>
+          <li ><a href='<{:U("Fans/news")}>'>消息</a></li>
+          <li class="active"><a href='<{:U("Word/index")}>'>留言板</a></li>
+        </ul>
+      </div><br>
+      <div style="background-color: #fff;">
+      <if condition="$datas eq null">
+      <div id='com' style='width:890px;height:200px;font-size: 24px;color:#999;line-height: 200px;text-align: center;'>
+          <div class="hot_feed_blank">
+        
+            还没有留言，去<a href="<{:U('Index/index')}>">逛逛</a>
+            &nbsp;
+        
+        </div>
+          </div> 
+       <else/>
+      	<foreach name='datas' item='v'>
+        <div class='row'>
+      		<p style='background-color: #abcfff;width: 96.7%;position: relative;left: 15px;'><{$v.ctime|date='Y-m-d H:i:s',###}></p>
+ 			<div class="col-xs-3 col-md-1"></div>
+        	<div class='col-xs-3 col-md-2'><a href="<{:U('Fans/fans')}>?id=<{$v.id}>"><img src="__UPLOAD__/img/avatar-thumb/<{$v.picname}>" width='60' height='60'></a><br><b><{$v.name}></b></div>
+        	<div class='col-xs-3 col-md-7'><{$v.content}><input type="hidden" name="" class='tid' value="<{$vs.id}>"></div>
+        	<div class='actionbtn col-xs-3 col-md-2'><a href="javascript:;" class='reply' style='width:80px;height:30px;line-height:30px;text-align:center;display:block;'>回复</a></div>
+        </div>
+		</foreach>
+
+      <{$page}>
+      </if>
+	    </div> <br>
+    </div>	        
+ 
+  </div>
+</block>
+<block name="myjs">
+
+  	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-2.1.4.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script type="text/javascript" src="__PUBLIC__/js/bootstrap.min.js"></script>
+    <script src="__PUBLIC__/js/bootstrap.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/H-ui/lib/layer/2.1/layer.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/H-ui/static/h-ui/js/H-ui.js"></script> 
+    <script type="text/javascript" src="__PUBLIC__/H-ui/static/h-ui.admin/js/H-ui.admin.js"></script>
+    <script type="text/javascript">
+    $(function(){
+      $(document).on('click','.reply',function(){
+        if ($(this).text()=='回复') {
+          $(this).text('收起回复');
+          $(this).css('background','#abcdef');
+          $(this).parent().next().css('display','block');
+        } else if ($(this).text()=='收起回复') {
+          $(this).text('回复');
+          $(this).css('background','#fff');
+          $(this).parent().next().css('display','none');
+        }
+      });
+
+      $(document).on('click','.replybtn',function(){
+        // 判断 用户是否登录
+        if('<{:session("home_user")["id"]}>'=='') {
+            layer.open({
+              title: '回复'
+              ,content: '请先登录'
+            });
+            return false;
+        }
+        var placeholder = $(this).prev().prev().attr('placeholder');
+        var tid = $(this).prev().attr('value');
+        // console.log(placeholder);
+
+        var content = $(this).prev().prev().val();
+        // console.log(content);
+        if (content=='') {
+          layer.open({
+              title: '回复'
+              ,content: '请输入回复内容'
+            });
+          
+          return false;
+        }
+         
+        var uid = '<{:session("home_user")["id"]}>';
+        var name = '<{:session("home_user")["name"]}>';
+        var picname = '<{:session("home_user")["picname"]}>';
+        var cmtid =$(this).parent().children('#cmtid').val(); 
+        var obj = $(this);
+
+        $.ajax({
+            type: "POST",
+            url:"<{:U('Reply/doAdd')}>" ,
+            data: "content="+content+"&uid="+uid+"&cmtid="+cmtid+"&to_uid="+tid, 
+            success: function(data){
+                if (data === true) {
+                  // console.log($(obj));
+                  obj.prev().prev().before("<div class='col-md-12' style='margin-top:5px;'><div class='col-md-2'><img width=40 src='__UPLOAD__/img/avatar-thumb/"+picname+"'></div><div class='col-md-8'>"+name+"<span>"+placeholder+':'+content+"</span><input type=\"hidden\"  class='tid' value='"+uid+"'></div><div class='col-md-2'><a href='javascript:;' class='replyname'>回复</a></div></div>");
+                  obj.prev().prev().val('');
+                  obj.prev().prev().attr('placeholder','');
+                  obj.prev().attr('value','');
+                }  else {
+                  layer.open({
+                    title: '回复'
+                    ,content: data
+                  });
+                }
+            }  
+        });
+      });
+
+      $(document).on('click','.replyname',function(){
+          // console.log(placeholder);
+          var tid = $(this).parent().prev().children('.tid').val();
+          if (tid == '<{:session("home_user")["id"]}>') {
+            layer.open({
+              title: '回复'
+              ,content: '不能回复自己'
+            });
+            return false;
+          }
+          var holder = ' 回复 '+$(this).parent().prev().children('#name').html();
+          $(this).parent().parent().parent().find('#content').attr('placeholder',holder);
+          $(this).parent().parent().parent().find('#tid').attr('value',tid);
+      });
+
+    });
+	$('#content').blur(function(){
+        if ($(this).val().length == '') {
+            layer.open({
+              title: '回复'
+              ,content: '请输入回复'
+            });
+        } else if ($(this).val().length > 30) {
+            layer.open({
+              title: '回复'
+              ,content: '回复长度不正确'
+            });
+        }
+    });
+    </script>
+
+</block>

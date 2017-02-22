@@ -50,7 +50,7 @@ class PictureController extends HomeController
         // 动态
         $post_count = M('post')->where('uid='.session('home_user.id').' and state=1')->count();
         // 好友
-        $fans_count = M('fans')->where('status=1 and selfid='.session('home_user.id'))->count();
+        $fans_count = M('fans')->where('selfid='.session('home_user.id'))->count();
 
         $this->assign('fans_count', $fans_count);
         $this->assign('post_count', $post_count);
@@ -113,12 +113,12 @@ class PictureController extends HomeController
     public function del()
     {
         $data['id'] = I('get.picid');
-        $data['bid'] = I('get.id');
+        $data['uid'] = session('home_user')['id'];
         $del = M('picture')->where($data)->delete();
         if ($del>0) {
-            $this->redirect('Barboss:picsView',array('id'=>$data['bid']));
+            $this->redirect('Picture:index');
         } else {
-            $this->redirect('Barboss:picsView',array('id'=>$data['bid']));
+            $this->redirect('Picture:index');
         }
     }
    
