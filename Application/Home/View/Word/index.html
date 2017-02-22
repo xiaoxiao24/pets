@@ -82,10 +82,37 @@
       	<foreach name='datas' item='v'>
         <div class='row'>
       		<p style='background-color: #abcfff;width: 96.7%;position: relative;left: 15px;'><{$v.ctime|date='Y-m-d H:i:s',###}></p>
- 			<div class="col-xs-3 col-md-1"></div>
+ 			    <div class="col-xs-3 col-md-1"></div>
         	<div class='col-xs-3 col-md-2'><a href="<{:U('Fans/fans')}>?id=<{$v.id}>"><img src="__UPLOAD__/img/avatar-thumb/<{$v.picname}>" width='60' height='60'></a><br><b><{$v.name}></b></div>
         	<div class='col-xs-3 col-md-7'><{$v.content}><input type="hidden" name="" class='tid' value="<{$vs.id}>"></div>
         	<div class='actionbtn col-xs-3 col-md-2'><a href="javascript:;" class='reply' style='width:80px;height:30px;line-height:30px;text-align:center;display:block;'>回复</a></div>
+          <div style='display: none;' class='replybox row'>
+                <input type="hidden" name="wid" value='<{$v.id}>' id='wid'>
+                <volist name='v.r' id='vs'>
+                  <div class="col-md-3"></div>
+                  <div class='col-md-9' style='margin-top:5px;background: #abcdef;'>
+                    <div class='col-md-2'><img width=40 src="__UPLOAD__/img/avatar-thumb/<{$vs.picname}>"></div>
+                    <div class='col-md-8'>
+                      <span id='name'><{$vs.name}></span>&nbsp;
+                      <eq name='vs.t' value=""><span> : </span>
+                      <else/>
+                      <span>回复 <volist name='vs.t' id='vt'><{$vt}></volist>：</span>
+                      </eq>
+                     <span><{$vs.content}></span>
+                     <input type="hidden" name="" class='tid' value="<{$vs.id}>">
+                     </div>
+                    <div class='col-md-2'>
+                      <a href="javascript:;" class='replyname'>回复</a>
+                    </div>
+                  </div>
+                </volist>
+                <div class="row">
+                  <div class="col-md-3"></div>
+                  <div class='col-md-7'><input style="width:95%;" type="text" id='content' name="content"  placeholder="" ><input type="hidden" name="" id='tid' value=""></div>
+                  <div class='col-md-2'><a href="javascript:;" class='replybtn'>发送</a></div>
+                </div>
+                
+          </div>
         </div>
 		</foreach>
 
@@ -147,17 +174,17 @@
         var uid = '<{:session("home_user")["id"]}>';
         var name = '<{:session("home_user")["name"]}>';
         var picname = '<{:session("home_user")["picname"]}>';
-        var cmtid =$(this).parent().children('#cmtid').val(); 
+        var wid =$(this).parent().children('#wid').val(); 
         var obj = $(this);
 
         $.ajax({
             type: "POST",
             url:"<{:U('Reply/doAdd')}>" ,
-            data: "content="+content+"&uid="+uid+"&cmtid="+cmtid+"&to_uid="+tid, 
+            data: "content="+content+"&uid="+uid+"&wid="+wid+"&to_uid="+tid, 
             success: function(data){
                 if (data === true) {
                   // console.log($(obj));
-                  obj.prev().prev().before("<div class='col-md-12' style='margin-top:5px;'><div class='col-md-2'><img width=40 src='__UPLOAD__/img/avatar-thumb/"+picname+"'></div><div class='col-md-8'>"+name+"<span>"+placeholder+':'+content+"</span><input type=\"hidden\"  class='tid' value='"+uid+"'></div><div class='col-md-2'><a href='javascript:;' class='replyname'>回复</a></div></div>");
+                  obj.parent().parent().before("<div class=\"col-md-3\"></div><div class='col-md-9' style='margin-top:5px;background: #abcdef;'><div class='col-md-2'><img width=40 src='__UPLOAD__/img/avatar-thumb/"+picname+"'></div><div class='col-md-8'>"+name+"<span>"+placeholder+':'+content+"</span><input type=\"hidden\"  class='tid' value='"+uid+"'></div><div class='col-md-2'><a href='javascript:;' class='replyname'>回复</a></div></div>");
                   obj.prev().prev().val('');
                   obj.prev().prev().attr('placeholder','');
                   obj.prev().attr('value','');

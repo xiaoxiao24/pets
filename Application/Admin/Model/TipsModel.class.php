@@ -7,6 +7,8 @@ class TipsModel extends Model
     protected $_validate = array(
         // array(验证字段2,验证规则,错误提示,[验证条件,附加规则,验证时间])
         array('name','require','请您填写小知识内容'),
+        array('title','require','请您填写标题'),
+        array('title', '0,30', '标题长度不正确', 0, 'length'),
         
     );
 

@@ -19,7 +19,7 @@
 <block name="main">
 <div class="content pt1">
   <div id='adopt-box'>
-    <p align="center"><MARQUEE scrollDelay=80 border="1"><b class='glyphicon glyphicon-volume-up'></b>欢迎来到宠物之家宠物领养中心，如果想要领养宠物，则加发布者为好友私聊哦！！</MARQUEE></p>
+    <p align="center"><MARQUEE scrollDelay=80 border="1"><b class='glyphicon glyphicon-volume-up'></b>欢迎来到宠物之家宠物领养中心，如果想要领养宠物，则加发布者为关注私聊哦！！</MARQUEE></p>
   </div>
   <div class="container_12">
      <div class="grid_7">
@@ -32,11 +32,11 @@
             <div class="user">
               <a href=""><img src="__UPLOAD__/img/avatar-thumb/<{$v.upic}>" alt="" height='45' class="img_inner fleft i1"></a><a href=""><{$v.uname}></a><input type="hidden" id="uid" value="<{$v.uid}>"> 
               <if condition='($Think.session.home_user eq "") or ($user eq "")'>
-                  <a href="javascript:;" style='margin-left:100px' onclick="startbtn()"><span class='glyphicon glyphicon-heart'></span>加好友</a>
+                  <a href="javascript:;" style='margin-left:100px' onclick="startbtn()"><span class='glyphicon glyphicon-heart'></span>关注</a>
               <elseif condition='$user eq ""'/>
                   <a href="javascript:;" style='margin-left:100px'><span class='glyphicon glyphicon-heart'></span>申请中</a>
               <else/>
-                  <a href="javascript:;" style='margin-left:40px' onclick="closebtn()"><span class='glyphicon glyphicon-ok' ></span>好友 | 取消</a>
+                  <a href="javascript:;" style='margin-left:40px' onclick="closebtn()"><span class='glyphicon glyphicon-ok' ></span>已关注 | 取消</a>
               </if>
             </div>
 
@@ -206,12 +206,12 @@ function stop(obj){
     $(obj).parent().html('<a style=\'margin-left: 10px;color:#999;\' class=\'glyphicon glyphicon-chevron-up start\' href="javascript:;" onClick="start(this)" ></a>'); 
 }
 
-/*取消好友关系*/ 
+/*取消关注关系*/ 
 function closebtn() {
     var selfid = '<{:session("home_user")["id"]}>';
     if (uid == "") {
         layer.open({
-          title: '取消好友'
+          title: '取消关注'
           ,content: '请先登录'
         }); 
         return false;
@@ -223,24 +223,24 @@ function closebtn() {
         data: 'uid='+uid+'&selfid='+selfid,
         success: function(data){
             if (data) {
-                $('.actionbtn').html('<a href="javascript:;"  onclick="startbtn()" style=\'margin-left:40px\'><span class=\'glyphicon glyphicon-heart\'></span>加好友</a>');
+                $('.actionbtn').html('<a href="javascript:;"  onclick="startbtn()" style=\'margin-left:40px\'><span class=\'glyphicon glyphicon-heart\'></span>关注</a>');
                 $('#follow').html(parseInt($('#follow').html())-1);
             } else {
                 layer.open({
-                  title: '取消好友'
-                  ,content: '取消好友失败'
+                  title: '取消关注'
+                  ,content: '取消关注失败'
                 }); 
             }
         }
     });
   }
-/*申请成为好友*/ 
+/*申请成为关注*/ 
   function startbtn() {
       var selfid = '<{:session("home_user")["id"]}>';
       // console.log(uid);
       if (selfid == "") {
           layer.open({
-            title: '加好友'
+            title: '关注'
             ,content: '请先登录'
           });
           return false;
@@ -248,8 +248,8 @@ function closebtn() {
       var uid = $('#uid').val();
       if (selfid == uid) {
           layer.open({
-            title: '加好友'
-            ,content: '不能添加自己为好友'
+            title: '关注'
+            ,content: '不能添加自己为关注'
           });
           return false;
       }
@@ -264,8 +264,8 @@ function closebtn() {
 
               } else {
                   layer.open({
-                    title: '加好友'
-                    ,content: '加好友失败'
+                    title: '关注'
+                    ,content: '关注失败'
                   }); 
               }
           }

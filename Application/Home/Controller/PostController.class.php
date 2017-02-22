@@ -101,4 +101,24 @@ class PostController extends HomeController
 
         $this->display();
     }
+
+    public function save()
+    {
+        $data = $_POST;
+        
+        $post = D("Post"); // 实例化User对象
+        if (!$post->create($data)){ 
+            $this->error($post->getError());
+        }else{
+            // 执行添加
+            if ($post->add() > 0) {
+                $exps = M('User')->where('id='.$data['uid'])->find();
+                $exp['exp']=10+$exps['exp'];
+                M('User')->where('id='.$data['uid'])->save($exp);
+                $this->success('添加成功', U('User/index'));
+            } else {
+                $this->error('添加失败');
+            }   
+        }
+    }
 }

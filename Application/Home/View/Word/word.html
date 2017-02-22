@@ -58,50 +58,45 @@
       </div>
       <div class="wrapper bg-white b-b">
         <ul class="nav nav-pills nav-sm">
-          <li  class="active"><a href='<{:U("Fans/fans")}>'>动态</a></li>
+          <li><a href='<{:U("Fans/fans")}>'>动态</a></li>
           <li><a href='<{:U("Fans/pic")}>'>相册</a></li>
-          <li><a href='<{:U("Word/word")}>'>留言</a></li>
+          <li  class="active"><a href='<{:U("Word/word")}>'>留言</a></li>
         </ul>
       </div>
-      <div class="padder" style='margin-top: 10px;background-color: #fff;'>      
-        <div class="streamline b-l b-info m-l-lg m-b padder-v">
-          <if condition="$post eq null">
-            <div id='com' style='width:1000px;height:200px;font-size: 24px;color:#999;line-height: 200px;text-align: center;'>
-                <div class="hot_feed_blank">
-              
-                  还没有动态
-                  
-              </div>
-                </div> 
-          <else/>
-          <foreach name='post' item='v'>
-          <div>
-            <a class="pull-left thumb-sm avatar m-l-n-md">
-              <img src="__UPLOAD__/img/avatar_thumb/<{$info.picname}>" alt="...">
-            </a>          
-            <div class="m-l-lg panel b-a">
-              <div class="panel-heading pos-rlt b-b b-light">
-                <span class="arrow left glyphicon glyphicon-star"></span>
-                <a href><{$v.collect_count}></a>
-                <label class="label bg-light m-l-xs glyphicon glyphicon-comment"><{$v.reply_count}></label> 
-                <span class="text-muted m-l-sm pull-right">
-                  <{$v.ctime}>
-                </span>
-              </div>
-              <div class="panel-body">
-                <blockquote>
-                  <small><{$v.content}></small>
-                </blockquote>
-                <div>Lorem ipsum dolor sit amet, consecteter adipiscing elit...</div>
-              </div>
-            </div>
-          </div>
-          </foreach>
-          </if>
-        </div>
-      </div><br>
-    </div>	        
+      <!-- 发表留言开始 -->
+        <div id='com'>
+            
+            <form action="<{:U('Word/wordsave')}>" method="post">
+                  <input type="hidden" name="uid" value="<{$Think.session.home_user.id}>">       
+            <script id="container" name="content" type="text/plain" style="width:650px;height:220px">
+                </script>
+                <!-- 配置文件 -->
+                <script type="text/javascript" src="__PUBLIC__/ueditor/ueditor.config.js"></script>
+                <!-- 编辑器源码文件 -->
+                <script type="text/javascript" src="__PUBLIC__/ueditor/ueditor.all.js"></script>
+                <!-- 实例化编辑器 -->
+                <script type="text/javascript">
+                    var ue = UE.getEditor('container',{
+                        indentValue:'2em'
+                        ,initialFrameWidth:890  //初始化编辑器宽度,默认1000
+                        ,initialFrameHeight:120  //初始化编辑器高度,默认320
+                        ,zindex:650
+                        , toolbars: [[
+                        'fullscreen', 'undo', 'redo', 'emotion'
+                        ]]
+                        //是否启用元素路径，默认是显示
+                        ,elementPathEnabled :false
+                        ,autoHeightEnabled: false
+                    });
+                </script>
+                <input type="submit" name="" value="提交" class='btn btn-primary'>
+            </form>
+                    
+        </div> 
+            
+    <!-- 发表留言结束--><br>        
  
+		</div> 
   </div>
 </block>
 <block name="myjs">

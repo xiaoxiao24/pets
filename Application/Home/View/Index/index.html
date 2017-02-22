@@ -72,7 +72,7 @@
 	         	</li>
 	        </foreach>	
 	       	</ul>
-	       	<a href="#" class="btn">More</a>
+	       	<a href="<{:U('Post/index')}>" class="btn">More</a>
 	     	</div>
 	    </div>
 	</div>
@@ -118,12 +118,12 @@
   	<div class="container_12">
 	    <div class="grid_6">
 	      <h2>养宠小知识</h2><br>
-	      <foreach name='tips' item='v'>
+	      <foreach name='tips' item='v' key='k'>
 	      <div>
-	      <{$v.content}>
+	      <u><a href="<{:U('Tips/detail')}>?id=<{$v.id}>"><{$v.title}></a></u>
 	      </div> <br>
 	      </foreach>
-	      <a href="#" class="btn">More</a>
+	      <a href="<{:U('Tips/index')}>" class="btn">More</a>
 	    </div>
 	    <div class="grid_4 prefix_2">
 	      	<h2 class="ic1">Any Question?</h2>

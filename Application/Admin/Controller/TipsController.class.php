@@ -14,7 +14,7 @@ class TipsController extends AdminController
     {
         $data = M('tips')->select();
         $this->assign('data',$data);
-        $this->assign('title',小知识管路);
+        $this->assign('title',小知识管理);
         $this->assign('part',小知识列表);
         $this->display();
     }

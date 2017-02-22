@@ -10,19 +10,21 @@ use \Think\Controller;
 */
 class WordController extends HomeController
 {
-    public function _initialize()
+    public function word()
     {
-        date_default_timezone_set('PRC');
-        if(empty(session('home_user'))){
-            $this->error('请先登录', U('Login/index'));
-        }
+       $this->display();
+        
     }
 
     /*
 		用户留言操作
     */ 
-    public function save()
+    public function wordsave()
     {   
+        if(empty(session('home_user'))){
+            $this->error('请先登录', U('Login/index'));
+        }
+
         $data = $_POST;
         
         $post = D("Word"); // 实例化User对象
@@ -34,7 +36,7 @@ class WordController extends HomeController
                 $exps = M('User')->where('id='.$data['uid'])->find();
                 $exp['exp']=10+$exps['exp'];
                 M('User')->where('id='.$data['uid'])->save($exp);
-                $this->success('添加成功', U('Notice/index'));
+                $this->success('添加成功', U('Fans/pic'));
             } else {
                 $this->error('添加失败');
             }   
@@ -46,6 +48,9 @@ class WordController extends HomeController
     */ 
     public function index()
     {
+        if(empty(session('home_user'))){
+            $this->error('请先登录', U('Login/index'));
+        }
        
         $datas = M('word')->field('u.id, u.name, u.picname, w.content, w.ctime')->table('pet_user u, pet_word w')->where('w.selfid=u.id and w.uid='.session('home_user.id'))->order('w.ctime desc')->page($_GET['p'],10)->select();
             // 分页

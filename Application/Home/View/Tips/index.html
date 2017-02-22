@@ -1,0 +1,45 @@
+<extend name="Public:base"/>
+
+<block name='head'>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+	<title>宠物小知识</title>
+    <link rel="icon" href="__PUBLIC__/imgs/images/favicon.ico">
+    <link rel="shortcut icon" href="__PUBLIC__/imgs/images/favicon.ico" />
+    <link rel="stylesheet" href="__PUBLIC__/css/style.css">
+    <link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet">
+</block>
+
+<block name="main">
+	<div class="page1_block nb">
+       <div class="container_12">
+		    <div class="grid_7">
+		    	<h2 class="ic1">宠物小知识</h2>
+		        <foreach name='tips' item='v'>
+		        	<div>
+				      <u><a href="<{:U('Tips/detail')}>?id=<{$v.id}>"><{$v.title}></a></u>
+				    </div> <br>
+		        </foreach>
+		        <{$page}>
+		    </div>
+
+		    <div class="grid_4 prefix_1">
+		           <h2 class="ic1">公告</h2>
+		           <ul class="list l1">
+		           <foreach name='notice' item='v' key='k'>
+		            <li> <span>
+		              <{$v.id}>
+		              </span>
+		               <div class="extra_wrapper">
+		                <div class="col1"><{$v.ctime|date='Y-m-d H:i:s',###}></div>
+		                <{$v.content}></div>
+		            </li>
+		          </foreach>
+		          </ul>
+		          <{$page}>
+		         </div>
+		  </div>
+     </div>
+
+</block>
+

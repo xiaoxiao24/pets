@@ -1,0 +1,45 @@
+<extend name="Public:base"/>
+
+<block name='head'>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+	<title>宠物小知识</title>
+    <link rel="icon" href="__PUBLIC__/imgs/images/favicon.ico">
+    <link rel="shortcut icon" href="__PUBLIC__/imgs/images/favicon.ico" />
+    <link rel="stylesheet" href="__PUBLIC__/css/style.css">
+    <link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet">
+</block>
+
+<block name="main">
+<div class="container">
+	<div class="row">
+		<div class="col-xs-12 col-md-12">
+			<center><h1><{$detail.title}></h1></center>
+			<p class="text-center"><{$detail.ctime|date='Y-m-d H:i:s',###}></p>
+		</div>
+		<div class="col-xs-12 col-md-12">
+			<{$detail.content}>
+		</div>
+	</div>
+</div>
+	
+</block>
+
+<block name="myjs">
+
+    <script src="__PUBLIC__/js/jquery-2.1.4.min.js"></script>
+    <script src="__PUBLIC__/js/bootstrap.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/layui/layui.js"></script>
+    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":["mshare","qzone","tsina","weixin","renren","tqq","tqf","douban","thx","fbook","twi","linkedin"],"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"1","bdPos":"right","bdTop":"100"},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+    <script type="text/javascript" src="__PUBLIC__/H-ui/lib/layer/2.1/layer.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/H-ui/static/h-ui/js/H-ui.js"></script> 
+    <script type="text/javascript" src="__PUBLIC__/H-ui/static/h-ui.admin/js/H-ui.admin.js"></script>
+<script type="text/javascript" src="__PUBLIC__/H-ui/lib/jquery/1.9.1/jquery.min.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/H-ui/lib/layer/2.1/layer.js"></script>
+<script type="text/javascript" src="__PUBLIC__/H-ui/lib/laypage/1.2/laypage.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/H-ui/lib/My97DatePicker/WdatePicker.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/H-ui/lib/datatables/1.10.0/jquery.dataTables.min.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/H-ui/static/h-ui/js/H-ui.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/H-ui/static/h-ui.admin/js/H-ui.admin.js"></script>
+</block>
+

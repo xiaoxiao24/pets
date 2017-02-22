@@ -69,14 +69,51 @@
           <li><a href='<{:U("Word/index")}>'>留言板</a></li>
         </ul>
       </div>
-      
+      <!-- 发表动态开始 -->
+        <div id='com'>
+            
+            <form action="<{:U('Post/save')}>" method="post">
+                  <input type="hidden" name="uid" value="<{$Think.session.home_user.id}>">       
+            <script id="container" name="content" type="text/plain" style="width:650px;height:220px">
+                </script>
+                <!-- 配置文件 -->
+                <script type="text/javascript" src="__PUBLIC__/ueditor/ueditor.config.js"></script>
+                <!-- 编辑器源码文件 -->
+                <script type="text/javascript" src="__PUBLIC__/ueditor/ueditor.all.js"></script>
+                <!-- 实例化编辑器 -->
+                <script type="text/javascript">
+                    var ue = UE.getEditor('container',{
+                        indentValue:'2em'
+                        ,initialFrameWidth:890  //初始化编辑器宽度,默认1000
+                        ,initialFrameHeight:120  //初始化编辑器高度,默认320
+                        ,zindex:650
+                        , toolbars: [[
+                        'fullscreen', 'undo', 'redo', '|',
+                        'bold', 'italic', 'underline', 'fontborder', 'rowspacingbottom', 'lineheight', '|', 'fontfamily', 'fontsize', '|',
+                        'directionalityltr', 'directionalityrtl', 'indent', '|',
+                        'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|', 
+                        'simpleupload', 'insertimage', 'emotion', 'scrawl', 'insertvideo', 'music', 'attachment', 'map', 'gmap', 'insertframe', '|',
+                        'horizontal', 'date', 'time', 'snapscreen'
+                        ]]
+                        //是否启用元素路径，默认是显示
+                        ,elementPathEnabled :false
+                        ,autoHeightEnabled: false
+                    });
+                </script>
+                <input type="submit" name="" value="提交" class='btn btn-primary'>
+            </form>
+                    
+        </div> 
+            
+    <!-- 发表动态结束-->
+   
       <div class="padder" style='margin-top: 10px;background: #fff;'>      
         
           <if condition="$post eq null">
-            <div id='com' style='width:1000px;height:200px;font-size: 24px;color:#999;line-height: 200px;text-align: center;'>
+            <div  style='width:1000px;height:200px;font-size: 24px;color:#999;line-height: 200px;text-align: center;'>
                 <div class="hot_feed_blank">
               
-                  还没有动态哦，去 <a href="#post">发表</a>
+                  还没有动态哦，去 <a href="#com">发表</a>
                   
               </div>
                 </div> 
