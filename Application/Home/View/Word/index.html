@@ -65,7 +65,15 @@
           <li><a href='<{:U("Picture/index")}>'>相册</a></li>
           <li><a href='<{:U("Fans/index")}>'>好友</a></li>
           <li ><a href='<{:U("Fans/news")}>'>消息</a></li>
-          <li class="active"><a href='<{:U("Word/index")}>'>留言板</a></li>
+          <li class="nav_son active"><a href='<{:U("Word/index")}>?status=2' >留言板</a>
+              <div id="list" style='display: none;background-color: #19A9D5;position: relative;'>
+                <ul>
+                  <li><a href='<{:U("Word/index")}>?status=1' style='color:white;'>我的留言</a></li>
+                  <li><a href='<{:U("Word/index")}>?status=2' style='color:white;'>留言板</a></li>
+                </ul>
+              </div>
+          </li>
+          <li><a href='<{:U("Apply/list")}>'>申请</a></li>
         </ul>
       </div><br>
       <div style="background-color: #fff;">
@@ -79,43 +87,46 @@
         </div>
           </div> 
        <else/>
+       
       	<foreach name='datas' item='v'>
         <div class='row'>
       		<p style='background-color: #abcfff;width: 96.7%;position: relative;left: 15px;'><{$v.ctime|date='Y-m-d H:i:s',###}></p>
- 			    <div class="col-xs-3 col-md-1"></div>
+ 			    <div class="col-xs-3 col-md-1"><if condition='$status eq 1'>
+                    <span style='font-size: 28px;color:#abcdee'>To</span></if></div>
         	<div class='col-xs-3 col-md-2'><a href="<{:U('Fans/fans')}>?id=<{$v.id}>"><img src="__UPLOAD__/img/avatar-thumb/<{$v.picname}>" width='60' height='60'></a><br><b><{$v.name}></b></div>
-        	<div class='col-xs-3 col-md-7'><{$v.content}><input type="hidden" name="" class='tid' value="<{$vs.id}>"></div>
+        	<div class='col-xs-3 col-md-7'><{$v.content}></div>
         	<div class='actionbtn col-xs-3 col-md-2'><a href="javascript:;" class='reply' style='width:80px;height:30px;line-height:30px;text-align:center;display:block;'>回复</a></div>
           <div style='display: none;' class='replybox row'>
-                <input type="hidden" name="wid" value='<{$v.id}>' id='wid'>
+                <input type="hidden" name="wid" value='<{$v.wid}>' id='wid'>
                 <volist name='v.r' id='vs'>
+                
                   <div class="col-md-3"></div>
-                  <div class='col-md-9' style='margin-top:5px;background: #abcdef;'>
-                    <div class='col-md-2'><img width=40 src="__UPLOAD__/img/avatar-thumb/<{$vs.picname}>"></div>
-                    <div class='col-md-8'>
-                      <span id='name'><{$vs.name}></span>&nbsp;
-                      <eq name='vs.t' value=""><span> : </span>
-                      <else/>
-                      <span>回复 <volist name='vs.t' id='vt'><{$vt}></volist>：</span>
-                      </eq>
-                     <span><{$vs.content}></span>
-                     <input type="hidden" name="" class='tid' value="<{$vs.id}>">
-                     </div>
+                  <div class='col-md-8' style='background: #abcdef;'>
+                    
                     <div class='col-md-2'>
-                      <a href="javascript:;" class='replyname'>回复</a>
+                    <img width=40 src="__UPLOAD__/img/avatar-thumb/<{$vs.picname}>">
+                    
                     </div>
+                    <div class='col-md-6'>
+                      <span id='name'><{$vs.name}></span>&nbsp;
+                      <span> : </span>
+                      
+                     <span><{$vs.content}></span>
                   </div>
+                  <div class="col-md-4"><{$vs.ctime|date='Y-m-d H:i:s',###}></div>
+                  </div>
+                  <!-- <div class='col-md-1'></div> -->
                 </volist>
-                <div class="row">
+                
+                <!-- <div class="row"> -->
                   <div class="col-md-3"></div>
-                  <div class='col-md-7'><input style="width:95%;" type="text" id='content' name="content"  placeholder="" ><input type="hidden" name="" id='tid' value=""></div>
-                  <div class='col-md-2'><a href="javascript:;" class='replybtn'>发送</a></div>
-                </div>
+                  <div class='col-md-7'><input style="width:95%;" type="text" id='content' name="content" ></div>
+                  <div class='col-md-1'><a href="javascript:;" class='replybtn'>发送</a></div>
+                <!-- </div><br> -->
                 
           </div>
         </div>
 		</foreach>
-
       <{$page}>
       </if>
 	    </div> <br>
@@ -134,6 +145,14 @@
     <script type="text/javascript" src="__PUBLIC__/H-ui/static/h-ui/js/H-ui.js"></script> 
     <script type="text/javascript" src="__PUBLIC__/H-ui/static/h-ui.admin/js/H-ui.admin.js"></script>
     <script type="text/javascript">
+    $('.nav_son').hover(
+      function () {
+        $(this).children('#list').css('display','block');
+      },
+       function () {
+        $(this).children('#list').css('display','none');
+      }
+    );
     $(function(){
       $(document).on('click','.reply',function(){
         if ($(this).text()=='回复') {
@@ -156,11 +175,8 @@
             });
             return false;
         }
-        var placeholder = $(this).prev().prev().attr('placeholder');
-        var tid = $(this).prev().attr('value');
-        // console.log(placeholder);
-
-        var content = $(this).prev().prev().val();
+    
+        var content = $(this).parent().prev().children('#content').val();
         // console.log(content);
         if (content=='') {
           layer.open({
@@ -174,20 +190,22 @@
         var uid = '<{:session("home_user")["id"]}>';
         var name = '<{:session("home_user")["name"]}>';
         var picname = '<{:session("home_user")["picname"]}>';
-        var wid =$(this).parent().children('#wid').val(); 
+        var wid =$('#wid').val(); 
         var obj = $(this);
+        console.log(uid);
+        console.log(name);
+        console.log(picname);
+        console.log(wid);
 
         $.ajax({
             type: "POST",
             url:"<{:U('Reply/doAdd')}>" ,
-            data: "content="+content+"&uid="+uid+"&wid="+wid+"&to_uid="+tid, 
+            data: "content="+content+"&uid="+uid+"&wid="+wid, 
             success: function(data){
                 if (data === true) {
                   // console.log($(obj));
-                  obj.parent().parent().before("<div class=\"col-md-3\"></div><div class='col-md-9' style='margin-top:5px;background: #abcdef;'><div class='col-md-2'><img width=40 src='__UPLOAD__/img/avatar-thumb/"+picname+"'></div><div class='col-md-8'>"+name+"<span>"+placeholder+':'+content+"</span><input type=\"hidden\"  class='tid' value='"+uid+"'></div><div class='col-md-2'><a href='javascript:;' class='replyname'>回复</a></div></div>");
-                  obj.prev().prev().val('');
-                  obj.prev().prev().attr('placeholder','');
-                  obj.prev().attr('value','');
+                  obj.parent().prev().prev().before("<div class=\"col-md-3\"></div><div class='col-md-8' style='margin-top:5px;background: #abcdef;'><div class='col-md-2'><img width=40 src='__UPLOAD__/img/avatar-thumb/"+picname+"'></div><div class='col-md-6'>"+name+"<span>:"+content+"</span></div></div>");
+                  obj.parent().prev().children('#content').val('');
                 }  else {
                   layer.open({
                     title: '回复'
@@ -196,21 +214,6 @@
                 }
             }  
         });
-      });
-
-      $(document).on('click','.replyname',function(){
-          // console.log(placeholder);
-          var tid = $(this).parent().prev().children('.tid').val();
-          if (tid == '<{:session("home_user")["id"]}>') {
-            layer.open({
-              title: '回复'
-              ,content: '不能回复自己'
-            });
-            return false;
-          }
-          var holder = ' 回复 '+$(this).parent().prev().children('#name').html();
-          $(this).parent().parent().parent().find('#content').attr('placeholder',holder);
-          $(this).parent().parent().parent().find('#tid').attr('value',tid);
       });
 
     });
@@ -227,6 +230,8 @@
             });
         }
     });
+
+
     </script>
 
 </block>

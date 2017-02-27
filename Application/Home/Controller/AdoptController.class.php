@@ -132,28 +132,39 @@ class AdoptController extends HomeController
     {
        
         if($_POST){
-            $ch = curl_init();
+           
+            $ch = curl_init();  
+            $apikey = "8e7c1adccc704ee89f6796def9201d8a";
+            
+
             $info = $_POST['info'];
-            $info = urlencode($info);
+            var_dump($info);
+            // $info = urlencode($info);
             // $apikey = "c7d6375287125e39a083e2c6e9372840";
-            $url = 'http://apis.baidu.com/turing/turing/turing?key=879a6cb3afb84dbf4fc84a1df2ab7319&info='.$info;
-            $header = array(
-                'apikey: b848d17197e4ead6adc43f2af62b4ac8',
-            );
+            $url = 'http://www.tuling123.com/openapi/ap/?key='.$aplikey;
+            curl_setopt ($ch, CURLOPT_URL, $url);
+            curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
+            $file_contents = curl_exec($ch);
+            curl_close($ch);
+            // $header = array(
+            //     'apikey: b848d17197e4ead6adc43f2af62b4ac8',
+            // );
             // 添加apikey到header
-            curl_setopt($ch, CURLOPT_HTTPHEADER  , $header);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            // 执行HTTP请求
-            curl_setopt($ch , CURLOPT_URL , $url);
-            $res = curl_exec($ch);
-            $res = json_decode($res);
+            // curl_setopt($ch, CURLOPT_HTTPHEADER  , $url);
+            // curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            
+            // $res = curl_exec($ch);
+            $res = json_decode($file_contents,true);
+            var_dump($res);
             $data = $res->text_array;
             $news = $data[0]->text;
+            var_dump($news);
             $this->assign('news',$news);
          }
          $this->display();
     }
 
+    
     public function weixi()
     {
         $this->display();
@@ -161,24 +172,37 @@ class AdoptController extends HomeController
     //微信精选接口
     public function wx()
     {
-        $ch = curl_init();
-        $infos = '随便';
-        $infos = urlencode($infos);
-        $url = 'http://apis.baidu.com/txapi/weixin/wxhot?num=10&rand=1&word='.$infos.'&page=1&src=%E4%BA%BA%E6%B0%91%E6%97%A5%E6%8A%A5';
-        $header = array(
-            'apikey: c7d6375287125e39a083e2c6e9372840',
-        );
-        // 添加apikey到header
-        curl_setopt($ch, CURLOPT_HTTPHEADER  , $header);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        // 执行HTTP请求
-        curl_setopt($ch , CURLOPT_URL , $url);
-        $res = curl_exec($ch);
-        $res = json_decode($res);
-        $infos = $res->newslist;
-        // var_dump($info);
+        $apikey = "c7d6375287125e39a083e2c6e9372840";
+        $num = 20; //返回数量
+        $word = '宠物';
+        $url = 'http://api.tianapi.com/wxnew/?key='.$apikey.'&num='.$num.'&rand=1&word='.$word.'&page=1&src=%E4%BA%BA%E6%B0%91%E6%97%A5%E6%8A%A5';     //API接口
+        $ch = curl_init();  
+        $timeout = 5;
+        curl_setopt ($ch, CURLOPT_URL, $url);
+        curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+        $file_contents = curl_exec($ch);
+        curl_close($ch);
+
+        $res = json_decode($file_contents,true);
+        // var_dump($res);
+        $infos = $res['newslist'];
+        // var_dump($infos);
         $this->assign('infos',$infos);
        
         $this->display('Adopt/wx');
+    }
+
+
+    public function pet()
+    {
+        if (empty(I('get.id'))) {
+            $this->display('Public:404');
+            exit;
+        }
+
+        $info = M('info')->field('t.name tname, i.name, i.sex, i.descr, i.state, i.ctime, i.uid, i.picname, u.name uname, u.picname upic, u.bg')->table('pet_type t, pet_info i, pet_user u')->where('i.id='.I('get.id').' and t.id= i.typeid and u.id=i.uid')->find();
+        $this->assign('info',$info);
+        $this->display();
     }
 }

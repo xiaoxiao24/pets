@@ -7,7 +7,8 @@
     <link rel="shortcut icon" href="__PUBLIC__/imgs/images/favicon.ico" />
     <link rel="stylesheet" href="__PUBLIC__/css/style.css">
     <link rel="stylesheet" href="__PUBLIC__/css/slider.css">
-    <!-- <link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Owl Carousel Assets -->
     
      <!--[if lt IE 8]>
        <div style=' clear: both; text-align:center; position: relative;'>
@@ -47,21 +48,7 @@
     <script type="text/javascript" src="__PUBLIC__/H-ui/static/h-ui/js/H-ui.js"></script> 
     <script type="text/javascript" src="__PUBLIC__/H-ui/static/h-ui.admin/js/H-ui.admin.js"></script>
 
-    <script type="text/javascript">
-
-    function search()
-    {
-       $.post("<{:U('Type/dosearch')}>", {'name': $('#name').val()}, function(data) {
-            if(data === false) {
-                alert("没有找到相关的宠物，");
-            } else {
-                window.location.href="<{:U("Search/dosearch")}>?name="+$('#name').val();
-            }
-            
-       });
-    }
-
-</script>
+    
     </block>
 </body>
 </html>

@@ -65,7 +65,15 @@
           <li><a href='<{:U("Picture/index")}>'>相册</a></li>
           <li class="active"><a href='<{:U("Fans/index")}>'>好友</a></li>
           <li><a href='<{:U("Fans/news")}>'>消息</a></li>
-          <li><a href='<{:U("Word/index")}>'>留言板</a></li>
+          <li class="nav_son"><a href='<{:U("Word/index")}>?status=2' >留言板</a>
+              <div id="list" style='display: none;background-color: #19A9D5;position: relative;left:5px;'>
+                <ul>
+                  <li><a href='<{:U("Word/index")}>?status=1' style='color:white;'>我的留言</a></li>
+                  <li><a href='<{:U("Word/index")}>?status=2' style='color:white;'>留言板</a></li>
+                </ul>
+              </div>
+          </li>
+          <li><a href='<{:U("Apply/list")}>'>申请</a></li>
         </ul>
       </div>
       <div style='background-color: #fff;'>
@@ -81,13 +89,13 @@
        <else/>
       <foreach name='fans' item='v'>
         <div class="blog">
-          <img src="__UPLOAD__/img/avatar-thumb/<{$v.picname}>" alt="" height='90' class="img_inner fleft i1">
+          <a href="<{:U('Fans/Fans')}>?id=<{$v.uid}>" target='_black'><img src="__UPLOAD__/img/avatar-thumb/<{$v.picname}>" alt="" height='90' class="img_inner fleft i1"></a>
           <div class="extra_wrapper">
             <div class="text2 col2">
               <table>
                 <tr>
                   <td> 昵 称 : </td>
-                  <td><{$v.name}></td>
+                  <td><a href="<{:U('Fans/Fans')}>?id=<{$v.uid}>" target='_black'><{$v.name}></a></td>
                 </tr>
                 <tr>
                   <td> 性 别 : </td>
@@ -123,4 +131,14 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script type="text/javascript" src="__PUBLIC__/js/bootstrap.min.js"></script>
   	
+    <script type="text/javascript">
+      $('.nav_son').hover(
+      function () {
+        $(this).children('#list').css('display','block');
+      },
+       function () {
+        $(this).children('#list').css('display','none');
+      }
+    );
+    </script>
 </block>

@@ -389,7 +389,7 @@ header h1 a img {
 
 .page1_block {
 	background: url(../images/page1_bg.png) 0 bottom repeat-x #f9f9f9;
-	padding-bottom: 102px;
+	/*padding-bottom: 102px;*/
 	border-bottom: 1px solid #dadada;
 }
 

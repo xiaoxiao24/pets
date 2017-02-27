@@ -1,0 +1,271 @@
+<extend name="Public:base"/>
+
+<block name='head'>
+    <meta charset="utf-8" />
+	<meta name="description" content="app, web app, responsive, responsive layout, admin, admin panel, admin dashboard, flat, flat ui, ui kit, AngularJS, ui route, charts, widgets, components" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+	<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+	<title>我的申请</title>
+    <link rel="icon" href="__PUBLIC__/imgs/images/favicon.ico">
+    <link rel="shortcut icon" href="__PUBLIC__/imgs/images/favicon.ico" />
+    <link rel="stylesheet" href="__PUBLIC__/css/style.css">
+	<link rel="stylesheet" href="__PUBLIC__/css/bootstrap.css" type="text/css" />
+	<link rel="stylesheet" href="__PUBLIC__/css/app.css" type="text/css" />
+</block>
+
+<block name="main">
+	
+<div class='row' style="background:url(__UPLOAD__/img/bg-thumb/<{$Think.session.home_user.bg}>) center center; background-size:cover">
+	<div class='col-xs-2 col-md-2'></div>
+    <div class="col-xs-8 col-md-8">
+      <div>
+        <div class="wrapper-lg bg-white-opacity">
+          <div class="row m-t">
+            <div class="col-sm-7">
+              <div class='col-md-4'>
+                <a href="<{:U('User/info')}>"><img src="__UPLOAD__/img/avatar-thumb/<{$Think.session.home_user.picname}>" class="img-circle"></a>
+              </div>
+              <div class="col-sm-8s">
+                <div class="m-b m-t-sm">
+                  <a href="<{:U('User/bg')}>" target='_black' style='color:blue;position: relative;left:600px;bottom: 40px;'>更新背景图片</a><br>
+                  <small class="m-l">昵称：<{$Think.session.home_user.name}></small><br>
+                  <small class="m-l">等级：<{$Think.session.home_user.exp|grade}></small><br>
+                  <small class="m-l">简介：<{$Think.session.home_user.descr}></small><br>
+                  <small class="m-l"><i><u><a href="<{:U('User/info')}>" style='color:blue;'>更新个人资料</a></u></i></small>
+                </div>
+                
+              </div>
+            </div>
+            <div class="col-sm-5">
+              <div class="pull-right pull-none-xs text-center">
+              	<a href class="m-b-md inline m">
+                  <span class="h3 block font-bold"><{$pic_count}></span>
+                  <small>相册</small>
+                </a>
+                <a href class="m-b-md inline m">
+                  <span class="h3 block font-bold"><{$fans_count}></span>
+                  <small>好友</small>
+                </a>
+                <a href class="m-b-md inline m">
+                  <span class="h3 block font-bold"><{$post_count}></span>
+                  <small>动态</small>
+                </a>
+                <a href class="m-b-md inline m">
+                  <span class="h3 block font-bold"><{$col_count}></span>
+                  <small>收藏</small>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="wrapper bg-white b-b">
+        <ul class="nav nav-pills nav-sm">
+          <li ><a href='<{:U("User/index")}>'>动态</a></li>
+          <li><a href='<{:U("Picture/index")}>'>相册</a></li>
+          <li><a href='<{:U("Fans/index")}>'>好友</a></li>
+          <li><a href='<{:U("Fans/news")}>'>消息</a></li>
+          <li class="nav_son"><a href='<{:U("Word/index")}>?status=2' >留言板</a>
+              <div id="list" style='display: none;background-color: #19A9D5;position: relative;left:5px;'>
+                <ul>
+                  <li><a href='<{:U("Word/index")}>?status=1' style='color:white;'>我的留言</a></li>
+                  <li><a href='<{:U("Word/index")}>?status=2' style='color:white;'>留言板</a></li>
+                </ul>
+              </div>
+          </li>
+          <li class="active"><a href='<{:U("Apply/list")}>'>申请</a></li>
+        </ul>
+      </div>
+      <div style="background-color: #fff;">
+      <if condition="$apply eq null">
+      <div id='com' style='width:890px;height:200px;font-size: 24px;color:#999;line-height: 200px;text-align: center;'>
+          <div class="hot_feed_blank">
+        
+            还没有申请需要领养的宠物哦，去<a href="<{:U('Apply/index')}>">申请</a>
+            &nbsp;
+        
+        </div>
+          </div> 
+       <else/>
+      	<foreach name='apply' item='v'>
+        <div class='row'>
+      	<if condition='$v.begstate eq 0'>
+      		<p style='background-color: #abcfff;width: 96.7%;position: relative;left: 15px;'>状态：申请中。。。&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;申请时间：<{$v.atime|date='Y-m-d H:i:s',###}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="<{:U('Apply/del')}>">取消发布</a></p>
+          <div style='position: relative;left:20px;width:90%;'>
+            <a href="<{:U('Adopt/pet')}>?id=<{$v.id}>" target='_blank'><img src="__UPLOAD__/img/pets-thumb/<{$v.picname}>" width=100 height=100 alt="" class="img_inner fleft"></a>
+            <div class="extra_wrapper style1">
+            <table>
+              <tr>
+                <td> 昵 称 : </td>
+                <td><a href="<{:U('Adopt/pet')}>?id=<{$v.id}>" target='_blank'><{$v.name}></a></td>
+              </tr>
+              <tr>
+                <td> 性 别 : </td>
+                <td>
+                  <if condition='$v.sex eq 0'>母
+                  <elseif condition='$v.sex eq 1'/>公
+                  <elseif condition='$v.sex eq 2'/>保密
+                  </if> 
+                </td>
+              </tr>
+              <tr>
+                <td> 类 型 : </td>
+                <td><{$v.tname}></td>
+              </tr>
+              <tr>
+                <td> 发布时间: </td>
+                <td style='width:100px;'><{$v.ctime|date='Y-m-d',###}></td>
+              </tr>
+            </table>
+            
+            </div>
+            <div class="clear"></div>
+          </div><br>
+      	<elseif condition='$v.begstate eq 1'/>
+      		<p style='background-color: #abcfff;width: 96.7%;position: relative;left: 15px;'>状态：已拒绝。。。&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;申请时间：<{$v.atime|date='Y-m-d H:i:s',###}></p>
+          <div style='position: relative;left:20px;width:90%;'>
+            <img src="__UPLOAD__/img/pets-thumb/<{$v.picname}>" width=100 height=100 alt="" class="img_inner fleft">
+            <div class="extra_wrapper style1">
+            <table>
+              <tr>
+                <td> 昵 称 : </td>
+                <td><{$v.name}></td>
+              </tr>
+              <tr>
+                <td> 性 别 : </td>
+                <td>
+                  <if condition='$v.sex eq 0'>母
+                  <elseif condition='$v.sex eq 1'/>公
+                  <elseif condition='$v.sex eq 2'/>保密
+                  </if> 
+                </td>
+              </tr>
+              <tr>
+                <td> 类 型 : </td>
+                <td><{$v.tname}></td>
+              </tr>
+              <tr>
+                <td> 发布时间: </td>
+                <td style='width:100px;'><{$v.ctime|date='Y-m-d',###}></td>
+              </tr>
+            </table>
+            
+            </div>
+            <div class="clear"></div>
+          </div><br>
+      	<elseif condition='($v.begstate eq 2) and ($v.state eq 1)'/>
+      			<p style='background-color: #abcfff;width: 96.7%;position: relative;left: 15px;'>状态：已领养(已发布)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;申请时间：<{$v.atime|date='Y-m-d H:i:s',###}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;发布时间：<{$v.ctime|date='Y-m-d H:i:s',###}></p>
+            <div style='position: relative;left:20px;width:90%;'>
+            <a href="<{:U('Adopt/pet')}>?id=<{$v.id}>" target='_blank'><img src="__UPLOAD__/img/pets-thumb/<{$v.picname}>" width=100 height=100 alt="" class="img_inner fleft"></a>
+            <div class="extra_wrapper style1">
+            <table>
+              <tr>
+                <td> 昵 称 : </td>
+                <td><a href="<{:U('Adopt/pet')}>?id=<{$v.id}>" target='_blank'><{$v.name}></a></td>
+              </tr>
+              <tr>
+                <td> 性 别 : </td>
+                <td>
+                  <if condition='$v.sex eq 0'>母
+                  <elseif condition='$v.sex eq 1'/>公
+                  <elseif condition='$v.sex eq 2'/>保密
+                  </if> 
+                </td>
+              </tr>
+              <tr>
+                <td> 类 型 : </td>
+                <td><{$v.tname}></td>
+              </tr>
+              <tr>
+                <td> 发布时间: </td>
+                <td style='width:100px;'><{$v.ctime|date='Y-m-d',###}></td>
+              </tr>
+            </table>
+           
+            </div>
+            <div class="clear"></div>
+          </div><br>
+      	<elseif condition='($v.state eq 2) and ($v.begstate eq 2)'/>
+      			<p style='background-color: #abcfff;width: 96.7%;position: relative;left: 15px;'>状态：可领养(已发布)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;申请时间：<{$v.atime|date='Y-m-d H:i:s',###}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;发布时间：<{$v.ctime|date='Y-m-d H:i:s',###}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:;" onclick="ok(this,<{$v.id}>)">已领养</a></p>
+            <div style='position: relative;left:20px;width:90%;'>
+            <a href="<{:U('Adopt/pet')}>?id=<{$v.id}>" target='_blank'><img src="__UPLOAD__/img/pets-thumb/<{$v.picname}>" width=100 height=100 alt="" class="img_inner fleft"></a>
+            <div class="extra_wrapper style1">
+            <table>
+              <tr>
+                <td> 昵 称 : </td>
+                <td><a href="<{:U('Adopt/pet')}>?id=<{$v.id}>" target='_blank'><{$v.name}></a></td>
+              </tr>
+              <tr>
+                <td> 性 别 : </td>
+                <td>
+                  <if condition='$v.sex eq 0'>母
+                  <elseif condition='$v.sex eq 1'/>公
+                  <elseif condition='$v.sex eq 2'/>保密
+                  </if> 
+                </td>
+              </tr>
+              <tr>
+                <td> 类 型 : </td>
+                <td><{$v.tname}></td>
+              </tr>
+              <tr>
+                <td> 发布时间: </td>
+                <td style='width:100px;'><{$v.ctime|date='Y-m-d',###}></td>
+              </tr>
+            </table>
+            
+            </div>
+            <div class="clear"></div>
+          </div><br>
+      	</if>
+        	
+        </div>
+		</foreach>
+      <{$page}>
+      </if>
+	    </div> <br>
+    </div>	        
+ 
+  </div>
+</block>
+<block name="myjs">
+
+  	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-2.1.4.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script type="text/javascript" src="__PUBLIC__/js/bootstrap.min.js"></script>
+    <script src="__PUBLIC__/js/bootstrap.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/H-ui/lib/layer/2.1/layer.js"></script>
+    <script type="text/javascript">
+    	/*已领养*/
+		function ok(obj,id){
+		    layer.confirm('确认要已领养吗？',function(index){
+		        $.ajax({
+		            type: 'POST',
+		            url: "<{:U('Adopt/del')}>",
+		            data: "id="+id,
+		            success: function(data){
+		                if (data) {
+		                     $(obj).parent().html("状态：已领养(已发布)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;申请时间：<{$v.atime|date='Y-m-d H:i:s',###}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;发布时间：<{$v.ctime|date='Y-m-d H:i:s',###}>");
+		                    layer.msg('已领养!',{icon: 6,time:1000});
+		                } else {
+		                    layer.msg('确认已领养失败!',{icon: 5,time:1000});
+		                }
+		            }
+		        });
+		        
+		    });
+
+		    
+		}
+
+    $('.nav_son').hover(
+      function () {
+        $(this).children('#list').css('display','block');
+      },
+       function () {
+        $(this).children('#list').css('display','none');
+      }
+    );
+  </script>
+</block>

@@ -1,16 +1,17 @@
 <extend name="Public:base"/>
 
+
 <block name='head'>
     <meta charset="utf-8" />
-	<meta name="description" content="app, web app, responsive, responsive layout, admin, admin panel, admin dashboard, flat, flat ui, ui kit, AngularJS, ui route, charts, widgets, components" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-	<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
-	<title><{$info.name}>资料</title>
+  <meta name="description" content="app, web app, responsive, responsive layout, admin, admin panel, admin dashboard, flat, flat ui, ui kit, AngularJS, ui route, charts, widgets, components" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+  <title><{$info.name}>资料</title>
     <link rel="icon" href="__PUBLIC__/imgs/images/favicon.ico">
     <link rel="shortcut icon" href="__PUBLIC__/imgs/images/favicon.ico" />
     <link rel="stylesheet" href="__PUBLIC__/css/style.css">
-	<link rel="stylesheet" href="__PUBLIC__/css/bootstrap.css" type="text/css" />
-	<link rel="stylesheet" href="__PUBLIC__/css/app.css" type="text/css" />
+  <link rel="stylesheet" href="__PUBLIC__/css/bootstrap.css" type="text/css" />
+  <link rel="stylesheet" href="__PUBLIC__/css/app.css" type="text/css" />
 </block>
 
 <block name="main">
@@ -22,15 +23,25 @@
         <div class="wrapper-lg bg-white-opacity">
           <div class="row m-t">
             <div class="col-sm-7">
+              <div class='col-md-4'>
               <a href class="thumb-lg pull-left m-r">
                 <img src="__UPLOAD__/img/avatar-thumb/<{$info.picname}>" class="img-circle">
-              </a>
-              <div class="clear m-b">
+              </a></div>
+              <div class="col-md-8">
                 <div class="m-b m-t-sm">
-                  <span class="h3 text-black"><{$info.name}></span>
-                  <small class="m-l"><{$info.exp|grade}></small>
+                  <small class="m-l">昵称：<{$info.name}></small><br>
+                  <small class="m-l">等级：<{$info.exp|grade}></small><br>
+                  <small class="m-l">简介：<{$info.descr}></small><br>
+                 <input type="hidden" name="uid" value="<{$info.id}>" id='uid'>
+                  <div class='actionbtn'>
+                  <if condition='$follow eq ""'>
+                    <a href="javascript:;" style='margin-left:2px;color:blue;font-size: 18px;' onclick="startbtn()">&nbsp;&nbsp;&nbsp;关注</a>
+                  <else/>
+                    <a href="javascript:;" style='margin-left:40px;color:blue;font-size: 18px;' onclick="closebtn()">&nbsp;&nbsp;&nbsp;已关注 | 取消</a>
+                  </if>
+                  </div>
+                  
                 </div>
-                
               </div>
             </div>
             <div class="col-sm-5">
@@ -58,17 +69,18 @@
       </div>
       <div class="wrapper bg-white b-b">
         <ul class="nav nav-pills nav-sm">
-          <li><a href='<{:U("Fans/fans")}>'>动态</a></li>
-          <li><a href='<{:U("Fans/pic")}>'>相册</a></li>
-          <li  class="active"><a href='<{:U("Word/word")}>'>留言</a></li>
+          <li><a href='<{:U("Fans/fans")}>?id=<{$info.id}>'>动态</a></li>
+          <li><a href='<{:U("Fans/pic")}>?id=<{$info.id}>'>相册</a></li>
+          <li  class="active"><a href='<{:U("Word/word")}>?id=<{$info.id}>'>留言</a></li>
         </ul>
       </div>
       <!-- 发表留言开始 -->
         <div id='com'>
             
             <form action="<{:U('Word/wordsave')}>" method="post">
-                  <input type="hidden" name="uid" value="<{$Think.session.home_user.id}>">       
-            <script id="container" name="content" type="text/plain" style="width:650px;height:220px">
+                  <input type="hidden" name="selfid" value="<{$Think.session.home_user.id}>">       
+                  <input type="hidden" name="uid" value="<{$info.id}>">       
+            <script id="container" name="content" type="text/plain" style="width:890px;height:220px">
                 </script>
                 <!-- 配置文件 -->
                 <script type="text/javascript" src="__PUBLIC__/ueditor/ueditor.config.js"></script>
@@ -79,7 +91,7 @@
                     var ue = UE.getEditor('container',{
                         indentValue:'2em'
                         ,initialFrameWidth:890  //初始化编辑器宽度,默认1000
-                        ,initialFrameHeight:120  //初始化编辑器高度,默认320
+                        ,initialFrameHeight:200  //初始化编辑器高度,默认320
                         ,zindex:650
                         , toolbars: [[
                         'fullscreen', 'undo', 'redo', 'emotion'
@@ -99,11 +111,84 @@
 		</div> 
   </div>
 </block>
+
 <block name="myjs">
 
-  	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script type="text/javascript" src="__PUBLIC__/js/jquery-2.1.4.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script type="text/javascript" src="__PUBLIC__/js/bootstrap.min.js"></script>
-  	
+    
+     <script type="text/javascript" src="__PUBLIC__/H-ui/lib/layer/2.1/layer.js"></script>
+
+
+    <script>
+    
+    /*取消好友关系*/ 
+    function closebtn() {
+        var selfid = '<{:session("home_user")["id"]}>';
+        if (uid == "") {
+            layer.open({
+              title: '取消关注'
+              ,content: '请先登录'
+            }); 
+            return false;
+        }
+        var uid = $('#uid').val();
+        $.ajax({
+            type:"POST",
+            url: "<{:U('Fans/closebtn')}>",
+            data: 'uid='+uid+'&selfid='+selfid,
+            success: function(data){
+                if (data) {
+                    $('.actionbtn').html('<a href="javascript:;"  onclick="startbtn()" style=\'margin-left:2px;color:blue;font-size: 18px;\'>&nbsp;&nbsp;&nbsp;关注</a>');
+                    // $('#follow').html(parseInt($('#follow').html())-1);
+                } else {
+                    layer.open({
+                      title: '取消关注'
+                      ,content: '取消关注失败'
+                    }); 
+                }
+            }
+        });
+      }
+    /*关注*/ 
+      function startbtn() {
+          var selfid = '<{:session("home_user")["id"]}>';
+          // console.log(uid);
+          if (selfid == "") {
+              layer.open({
+                title: '关注'
+                ,content: '请先登录'
+              });
+              return false;
+          }
+          var uid = $('#uid').val();
+          if (selfid == uid) {
+              layer.open({
+                title: '关注'
+                ,content: '不能关注自己'
+              });
+              return false;
+          }
+          $.ajax({
+              type:"POST",
+              url: "<{:U('Fans/startbtn')}>",
+              data: 'uid='+uid+'&selfid='+selfid,
+              success: function(data){
+                  if (data) {
+                      $('.actionbtn').html('<a href="javascript:;" style=\'margin-left:2px;color:blue;font-size: 18px;\' onclick="closebtn()">&nbsp;&nbsp;&nbsp;已关注 | 取消</a>');
+                      // $('#follow').html(parseInt($('#follow').html())+1);
+
+                  } else {
+                      layer.open({
+                        title: '关注'
+                        ,content: '关注失败'
+                      }); 
+                  }
+              }
+          });
+      }
+        
+    </script>
 </block>

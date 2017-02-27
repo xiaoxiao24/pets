@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="__PUBLIC__/css/style.css">
 	<link rel="stylesheet" href="__PUBLIC__/css/bootstrap.css" type="text/css" />
 	<link rel="stylesheet" href="__PUBLIC__/css/app.css" type="text/css" />
+ 
 </block>
 
 <block name="main">
@@ -66,8 +67,16 @@
           <li><a href='<{:U("Picture/index")}>'>相册</a></li>
           <li><a href='<{:U("Fans/index")}>'>好友</a></li>
           <li><a href='<{:U("Fans/news")}>'>消息</a></li>
-          <li><a href='<{:U("Word/index")}>'>留言板</a></li>
-        </ul>
+          <li class="nav_son"><a href='<{:U("Word/index")}>?status=2'>留言板</a>
+              <div id="list" style='display: none;background-color: #19A9D5;position: relative;left:5px;'>
+                <ul>
+                  <li><a href='<{:U("Word/index")}>?status=1' style='color:white;'>我的留言</a></li>
+                  <li><a href='<{:U("Word/index")}>?status=2' style='color:white;'>留言板</a></li>
+                </ul>
+              </div>
+          </li>
+          <li><a href='<{:U("Apply/list")}>'>申请</a></li>
+      </ul>
       </div>
       <!-- 发表动态开始 -->
         <div id='com'>
@@ -118,18 +127,18 @@
               </div>
                 </div> 
           <else/>
-          <foreach name='datas' item='v'>
+          <foreach name='post' item='v'>
           <div>
             <a class="pull-left thumb-sm avatar m-l-n-md" href='<{:U("Fans/fans")}>?id=<{$v.id}>'>
-              <img src="__UPLOAD__/img/avatar_thumb/<{$Think.session.home_user.picname}>" alt="...">
+              <img src="__UPLOAD__/img/avatar-thumb/<{$Think.session.home_user.picname}>" alt="...">
             </a>          
             <div class="m-l-lg panel b-a">
               <div class="panel-heading pos-rlt b-b b-light">
-                <span class="arrow left glyphicon glyphicon-star"></span>
+                <span class="arrow left"></span>
                 <a href><{$v.collect_count}></a>
-                <label class="label bg-light m-l-xs glyphicon glyphicon-comment"><{$v.reply_count}></label> 
+                <label class="label bg-light m-l-xs"><{$v.reply_count}></label> 
                 <span class="text-muted m-l-sm pull-right">
-                  <{$v.ctime}>
+                  <{$v.ctime|date='Y-m-d H:i:s',###}>
                 </span>
               </div>
               <div class="panel-body">
@@ -155,5 +164,14 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script type="text/javascript" src="__PUBLIC__/js/bootstrap.min.js"></script>
 
-  	
+  	<script>
+    $('.nav_son').hover(
+      function () {
+        $(this).children('#list').css('display','block');
+      },
+       function () {
+        $(this).children('#list').css('display','none');
+      }
+    );
+  </script>
 </block>

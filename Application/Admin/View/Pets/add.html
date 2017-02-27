@@ -81,8 +81,35 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>简介：</label>
 			<div class="formControls col-xs-8 col-sm-6">
-				<textarea name="descr" id='descr' cols="" rows="" class="textarea"  placeholder="说点什么...最少输入10个字符" onKeyUp="textarealength(this,200)"></textarea>
-				<p class="textarea-numberbar"><em class="textarea-length">0</em>/200</p>
+				<div id='com'>
+                         
+                    <script id="container" name="descr" type="text/plain" style="width:450px;height:220px">
+                        </script>
+                        <!-- 配置文件 -->
+                        <script type="text/javascript" src="__PUBLIC__/ueditor/ueditor.config.js"></script>
+                        <!-- 编辑器源码文件 -->
+                        <script type="text/javascript" src="__PUBLIC__/ueditor/ueditor.all.js"></script>
+                        <!-- 实例化编辑器 -->
+                        <script type="text/javascript">
+                            var ue = UE.getEditor('container',{
+                                indentValue:'2em'
+                                ,initialFrameWidth:400  //初始化编辑器宽度,默认1000
+                                ,initialFrameHeight:200  //初始化编辑器高度,默认320
+                                ,zindex:650
+                                , toolbars: [[
+                                'fullscreen', 'undo', 'redo', '|',
+                                'bold', 'italic', 'underline', 'fontborder', 'rowspacingbottom', 'lineheight', '|', 'fontfamily', 'fontsize', '|',
+                                'directionalityltr', 'directionalityrtl', 'indent', '|',
+                                'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|', 
+                                'simpleupload', 'insertimage', 'emotion', 'scrawl', 'insertvideo', 'music', 'attachment', 'map', 'gmap', 'insertframe', '|',
+                                'horizontal', 'date', 'time', 'snapscreen'
+                                ]]
+                                //是否启用元素路径，默认是显示
+                                ,elementPathEnabled :false
+                                ,autoHeightEnabled: false
+                            });
+                        </script> 
+                </div> 
 			</div><span style="color: red; line-height: 30px;" id="descrtips"></span>
 		</div>
 		<div class="row cl">
@@ -149,10 +176,7 @@ $(function(){
                     }, 
 				},
         	},
-            descr: {
-                required: true,
-                rangelength: [10,200],
-            },
+            
             
         },
         messages: {
@@ -162,9 +186,7 @@ $(function(){
             name: {
                 required: "请输入宠物名称",
             },
-            descr: {
-                required: "简介长度不正确",
-            },
+           
             
         },
         onkeyup:false,

@@ -9,12 +9,12 @@
                 <div class="menu_block">
                     <nav  class="" >
                         <ul class="sf-menu">
-                            <li class="current"><a href="<{:U('Index/index')}>">首页</a></li>
-                            <li class="with_ul"><a href="<{:U('Notice/index')}>">关于我们</a>
+                            <li class="current"><a href="<{:U('Index/index')}>" target='_blank'>首页</a></li>
+                            <li class="with_ul"><a href="<{:U('Notice/index')}>" target='_blank'>关于我们</a>
                             </li>
-                            <li><a href="<{:U('Adopt/index')}>">领养中心</a></li>
-                            <li><a href="<{:U('Tips/index')}>">小知识</a></li>
-                            <li><a href="<{:U('Post/index')}>">宠物天地 </a></li>
+                            <li><a href="<{:U('Adopt/index')}>" target='_blank'>领养中心</a></li>
+                            <li><a href="<{:U('Tips/index')}>" target='_blank'>小知识</a></li>
+                            <li><a href="<{:U('Post/index')}>" target='_blank'>宠物天地 </a></li>
                             <li><div style="width:180px;margin-left:10px;margin-right:10px;" class="input-group">
                                     <input style="width:160px;" type="text" class="form-control" placeholder="搜索宠物" name="name" id="name"><span class="input-group-btn">
                                     <button class="btn btn-default" style='height: 34px;' type="submit" onclick="search()">搜索</button>
@@ -22,10 +22,10 @@
                                 </div>
                             </li>
                             <if condition='$Think.session.home_user eq ""'>
-                            <li><a href="<{:U('Register/index')}>">注册</a></li>
-                            <li><a href="<{:U('Login/index')}>">登录</a></li>
+                            <li><a href="<{:U('Register/index')}>" target='_blank'>注册</a></li>
+                            <li><a href="<{:U('Login/index')}>" target='_blank'>登录</a></li>
                             <else />
-                            <li><a href="<{:U('User/index')}>"><{$Think.session.home_user.name}></a></li>
+                            <li><a href="<{:U('User/index')}>" target='_blank'><{$Think.session.home_user.name}></a></li>
                             <li><a href="<{:U('Logout/doLogout')}>">退出</a></li>
                             </if>
                         </ul>

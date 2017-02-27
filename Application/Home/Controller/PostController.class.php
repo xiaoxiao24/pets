@@ -46,33 +46,7 @@ class PostController extends HomeController
         $this->assign('type',$type);
 
         // 天气
-        // $ch = curl_init();
-        // $c= empty($_POST['city'])?'longyan':$_POST['city'];
-
-        //   // var_dump($c);exit;
-        // $location = $c;
-        // $url = 'http://apis.baidu.com/thinkpage/weather_api/suggestion?location='.$location.'&language=zh-Hans&unit=c&start=0&days=3';
-        // $header = array(
-        //     'apikey: c7d6375287125e39a083e2c6e9372840',
-        // );
-        // // 添加apikey到header
-        // curl_setopt($ch, CURLOPT_HTTPHEADER  , $header);
-        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        // // 执行HTTP请求
-        // curl_setopt($ch , CURLOPT_URL , $url);
-        // $res = curl_exec($ch);
-
-        // $res = json_decode($res);
-        // // dump($res);
-        // // exit;
-        // $data = $res->results;
         
-        // $city = $data[0]->location->name;
-        // $daily = $data[0]->daily;
-        // // dump($daily);
-        // $update = $data[0]->last_update;
-        
-
         $event='forecast';
         $cityname='longyan';
         $keynum='21d5060274824af3bdb1e896070c7283';

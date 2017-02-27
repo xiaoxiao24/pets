@@ -26,16 +26,11 @@
         <div class="dialogs">
             <div class="itemdiv dialogdiv">
             <div class="user">
-              <a href=""><img src="__UPLOAD__/img/avatar-thumb/<{$v.upic}>" alt="" height='45' class="img_inner fleft i1"></a><a href=""><{$v.uname}></a><input type="hidden" id="uid" value="<{$v.uid}>"> 
-              <if condition='($Think.session.home_user eq "") or ($user eq "")'>
-                  <a href="javascript:;" style='margin-left:100px' onclick="startbtn()"><span class='glyphicon glyphicon-heart'></span>关注</a>
-              <elseif condition='$user eq ""'/>
-                 
-                  <a href="javascript:;" style='margin-left:40px' onclick="closebtn()"><span class='glyphicon glyphicon-ok' ></span>已关注 | 取消</a>
-              </if>
+              <a href="<{:U('Fans/Fans')}>?id=<{$v.uid}>" target='_black'><img src="__UPLOAD__/img/avatar-thumb/<{$v.upic}>" alt="" height='45' class="img_inner fleft i1"></a><a href="<{:U('Fans/fans')}>?id=<{$v.uid}>"><{$v.uname}></a><input type="hidden" id="uid" value="<{$v.uid}>"> 
+              
             </div>
 
-            <div class="body" style='height:100px'>
+            <div class="body" >
               
             <div class="blog">
               <div class="clear"></div><{$v.content}>
@@ -94,75 +89,5 @@
     <script src="__PUBLIC__/js/jquery.equalheights.js"></script>
     <script src="__PUBLIC__/js/jquery.easing.1.3.js"></script>
     <script src="__PUBLIC__/js/jquery.ui.totop.js"></script>
-
-    <script>
-    
-    /*取消好友关系*/ 
-    function closebtn() {
-        var selfid = '<{:session("home_user")["id"]}>';
-        if (uid == "") {
-            layer.open({
-              title: '取消关注'
-              ,content: '请先登录'
-            }); 
-            return false;
-        }
-        var ufid = $('#uid').val();
-        $.ajax({
-            type:"POST",
-            url: "<{:U('Fans/closebtn')}>",
-            data: 'uid='+uid+'&selfid='+selfid,
-            success: function(data){
-                if (data) {
-                    $('.actionbtn').html('<a href="javascript:;"  onclick="startbtn()" style=\'margin-left:40px\'><span class=\'glyphicon glyphicon-heart\'></span>关注</a>');
-                    $('#follow').html(parseInt($('#follow').html())-1);
-                } else {
-                    layer.open({
-                      title: '取消关注'
-                      ,content: '取消关注失败'
-                    }); 
-                }
-            }
-        });
-      }
-    /*申请成为好友*/ 
-      function startbtn() {
-          var selfid = '<{:session("home_user")["id"]}>';
-          // console.log(uid);
-          if (selfid == "") {
-              layer.open({
-                title: '关注'
-                ,content: '请先登录'
-              });
-              return false;
-          }
-          var uid = $('#uid').val();
-          if (selfid == uid) {
-              layer.open({
-                title: '关注'
-                ,content: '不能关注自己'
-              });
-              return false;
-          }
-          $.ajax({
-              type:"POST",
-              url: "<{:U('Fans/startbtn')}>",
-              data: 'uid='+uid+'&selfid='+selfid,
-              success: function(data){
-                  if (data) {
-                      $('.actionbtn').html('<a href="javascript:;" style=\'margin-left:40px\' onclick="closebtn()"><span class=\'glyphicon glyphicon-ok\' ></span>已关注 | 取消</a>');
-                      $('#follow').html(parseInt($('#follow').html())+1);
-
-                  } else {
-                      layer.open({
-                        title: '关注'
-                        ,content: '关注失败'
-                      }); 
-                  }
-              }
-          });
-      }
-        
-    </script>
     
 </block>

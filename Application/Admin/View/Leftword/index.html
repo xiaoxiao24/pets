@@ -24,10 +24,10 @@
                 <td style='display: none;'></td>
                 <td><{$v.id}></td>
                 <td><{$v.content}></td>
-                <td><{$v.name}></td>
+                <td><u style="cursor:pointer" class="text-primary" onclick="member_show('<{$vo.name}>','<{:U('User/info')}>?id=<{$v.id}>','<{$vo.id}>','360','600')"><{$v.name}></u></td>
                 <td style='display: none;'></td>
                 <td style='display: none;'></td>
-                <td style='display: none'><{$v.ctime|date='Y-m-d H:i:s',###}></td>
+                <td><{$v.ctime|date='Y-m-d H:i:s',###}></td>
                 <td style='display: none;'></td>
                 <td style='display: none'></td>
                 <td style='display: none'></td>
@@ -37,4 +37,32 @@
     </table>
     </div>
 </div><!--page-container-->
+<script type="text/javascript">
+$(function(){
+    $('.table-sort').dataTable({
+        "aaSorting": [[ 1, "desc" ]],//默认第几个排序
+        "bStateSave": true,//状态保存
+        "aoColumnDefs": [
+          //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
+          {"orderable":false,"aTargets":[0,8,9]}// 制定列不参与排序
+        ]
+    });
+    $('.table-sort tbody').on( 'click', 'tr', function () {
+        if ( $(this).hasClass('selected') ) {
+            $(this).removeClass('selected');
+        }
+        else {
+            $('tr:selected').removeClass('selected');
+            $(this).addClass('selected');
+        }
+    });
+});
+
+/*用户-查看*/
+function member_show(title,url,id,w,h){
+    layer_show(title,url,w,h);
+}
+
+</script> 
 </block>
+

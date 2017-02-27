@@ -27,44 +27,35 @@
   <img class="avatar size-XL l" src="__UPLOAD__/img/pets-thumb/<{$list.picname}>">
   <dl style="margin-left:80px; color:#fff">
     <dt><span class="f-18"><{$list.name}></span></dt>
-    <dd class="pt-10 f-12" style="margin-left:0"><{$list.descr}></dd>
-  </dl>
-</div>
-<div class="pd-20">
-  <table class="table">
-    <tbody>
+    <dd class="pt-10 f-12" style="margin-left:-10px;">
+    <!-- <{$list.descr}> -->
+    <table class="table">
+    
       <tr>
-        <th class="text-r">宠物类别：</th>
+        <th class="text-r">类别：</th>
         <td><{$type.name}></td>
       </tr>
       <tr>
-        <th class="text-r">宠物昵称：</th>
+        <th class="text-r">昵称：</th>
         <td><{$list.name}></td>
       </tr>
       <tr>
-        <th class="text-r">宠物性别：</th>
-        <td>
-            <if condition='$list.sex eq 0'>母
+        <th class="text-r">性别： </th>
+        <td><if condition='$list.sex eq 0'>母
             <elseif condition='$list.sex eq 1'/>公
             <elseif condition='$list.sex eq 2'/>保密
-            </if>                    
-        </td>
+            </if></td>
       </tr>
       <tr>
-        <th class="text-r">注册时间：</th>
-        <td><{$list.ctime|date="Y-m-d H:i:s",###}></td>
+        <th class="text-r">发布：</th>
+        <td><{$list.ctime|date="Y-m-d",###}></td>
       </tr>
-      <tr>
-        <th class="text-r">状态:</th>
-        <td>
-          <!-- <if condition='$list.state eq 0'>隐藏 -->
-          <if condition='$list.state eq 1'/>已领养
-          <elseif condition='$list.state eq 2'/>可领养
-          </if>
-        </td>
-      </tr>
-    </tbody>
   </table>
+    </dd>
+  </dl>
+</div>
+<div class="pd-20">
+ <{$list.descr}>
 </div>
 <script type="text/javascript" src="__PUBLIC__/H-ui/lib/jquery/1.9.1/jquery.min.js"></script> 
 <script type="text/javascript" src="__PUBLIC__/H-ui/static/h-ui/js/H-ui.js"></script>

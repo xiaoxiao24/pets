@@ -14,10 +14,13 @@ class IndexController extends HomeController
     	// dump($notice);die;
     	$this->assign('notice',$notice[0]);
     	$this->assign('info',$info);
+        $this->assign('first',$data[0]);
     	$this->assign('data',$data);
     	$this->assign('user',$user);
         $this->assign('tips',$tips);
     	$this->assign('post',$post);
+
+        
         $this->display();
     }
 }

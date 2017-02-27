@@ -26,4 +26,16 @@
 	</div>
 	
 </footer>
-
+<script type="text/javascript">
+    function search()
+    {
+       $.post("<{:U('Type/dosearch')}>", {'name': $('#name').val()}, function(data) {
+            if(data === false) {
+                alert("没有找到相关的宠物，");
+            } else {
+                window.location.href="<{:U("Type/index")}>?id="+data;
+            }
+            
+       });
+    }
+</script>

@@ -1,0 +1,221 @@
+<extend name="Public:base"/>
+
+<block name='head'>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+	<title>分类搜索</title>
+    <link rel="icon" href="__PUBLIC__/imgs/images/favicon.ico">
+    <link rel="shortcut icon" href="__PUBLIC__/imgs/images/favicon.ico" />
+    <link rel="stylesheet" href="__PUBLIC__/css/style.css">
+    <!-- <link rel="stylesheet" href="__PUBLIC__/css/style1.css"> -->
+    <link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="__PUBLIC__/assets/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="__PUBLIC__/assets/css/ace.min.css" />
+  <link rel="stylesheet" href="__PUBLIC__/assets/css/ace-rtl.min.css" />
+  <link rel="stylesheet" href="__PUBLIC__/assets/css/ace-skins.min.css" />
+  <script src="__PUBLIC__/assets/js/ace-extra.min.js"></script>
+</block>
+
+<block name="main">
+<div class="content pt1">
+  <div id='adopt-box'>
+    <p align="center"><MARQUEE scrollDelay=80 border="1"><b class='glyphicon glyphicon-volume-up'></b>欢迎来到宠物之家宠物领养中心，如果想要领养宠物，则关注发布者为留言哦！！</MARQUEE></p>
+  </div>
+  <div class="container_12">
+     <div class="grid_7">
+      <h2>分类：<{$name}></h2><br>
+
+      <foreach name='list' item='v'>
+      <div class="widget-body" style='border:0px'>
+        <div class="widget-main no-padding">
+        <div class="dialogs">
+            <div class="itemdiv dialogdiv">
+            <div class="user">
+              <a href="<{:U('Fans/Fans')}>?id=<{$v.uid}>" target='_black'><img src="__UPLOAD__/img/avatar-thumb/<{$v.upic}>" alt="" height='45' class="img_inner fleft i1"></a><a href="<{:U('Fans/Fans')}>?id=<{$v.uid}>" target='_black'><{$v.uname}></a><input type="hidden" id="uid" value="<{$v.uid}>"> 
+              
+            </div>
+
+            <div class="body">
+              
+            <div class="blog">
+              <a href="<{:U('Adopt/pet')}>?id=<{$v.id}>" target='_blank'><img src="__UPLOAD__/img/pets-thumb/<{$v.picname}>" alt="" height='90' class="img_inner fleft i1"></a>
+              <div class="extra_wrapper">
+                <div class="text2 col2">
+                  <table>
+                    <tr>
+                      <td> 昵 称 : </td>
+                      <td><a href="<{:U('Adopt/pet')}>?id=<{$v.id}>" target='_blank'><{$v.name}></a></td>
+                    </tr>
+                    <tr>
+                      <td> 性 别 : </td>
+                      <td>
+                        <if condition='$v.sex eq 0'>母
+                        <elseif condition='$v.sex eq 1'/>公
+                        <elseif condition='$v.sex eq 2'/>保密
+                        </if> 
+                      </td>
+                    </tr>
+                    <tr>
+                      <td> 类 型 : </td>
+                      <td><{$v.tname}></td>
+                    </tr>
+                    <tr>
+                      <td> 发布时间: </td>
+                      <td><{$v.ctime|date='Y-m-d',###}></td>
+                    </tr>
+                  </table>
+                  </div> 
+              </div>
+             
+              <br>
+            </div>
+            </div>
+          </div>
+          </div><!-- /dialogs -->
+          </div><!-- /widget-main -->
+      </div><!-- /widget-body -->
+    </foreach>
+      <{$page}>
+     </div>
+     <div class="grid_4 prefix_1">
+       <h2 class="ic1">发布宠物</h2>
+       
+       <a href='<{:U("Apply/index")}>'  class="btn btn-danger" '>我也有宠物需要领养</a>
+       
+      
+       <h2 class="ic1">宠物分类</h2>
+       <ul class="list1">
+         <foreach name='type' item='v'>
+         <li>
+         <div>
+         <!-- onClick="start(this)" -->
+           <span></span><div class="extra_wrapper">
+           <div class="col1" ><a href="<{:U('Type/index')}>?typeid=<{$v.id}>"><{$v.name}></a><b><a style='margin-left: 10px;color:#999;' class='glyphicon glyphicon-chevron-up start' href="javascript:;" onClick="start(this)"></a></b></div>
+              
+           </div>
+           <div style='margin-left: 5px;display: none;' class='actionbtn'>
+               <ul>
+                 <foreach name='v.se' item='vo'>
+                 <li>
+                   <span  class="cnt"></span><div class="extra_wrapper">
+                   <div style='width: 40px;'><a href="<{:U('Type/index')}>?typeid=<{$vo.id}>"><{$vo.name}></a></div></div>
+                   
+                 </li>
+                 </foreach>
+               </ul><br>
+               </div>
+          </div> 
+         </li>
+         </foreach>
+       </ul>
+       <h2 class="head1">娱乐</h2>
+        <ul class="list1">
+         <li>
+           <span></span>
+             <div class="extra_wrapper">
+           <div class="col1"><a href="javascript:;" onclick="joke('雷人笑话','<{:U('Adopt/joke')}>','450','300')" >雷人笑话</a></div></div>
+         </li>
+         <li>
+           <span></span>
+             <div class="extra_wrapper">
+           <div class="col1"><a href="javascript:;" onclick="word('娱乐花边','<{:U('Adopt/word')}>','600','600')" >娱乐花边</a></div></div>
+         </li>
+         <li>
+           <span></span>
+             <div class="extra_wrapper">
+           <div class="col1"><a href="javascript:;" onclick="member_add('你现在正在和机器人对话','<{:U('Adopt/robot')}>','','350')" >去聊天吧</a></div></div>
+         </li>
+         <li>
+           <span></span>
+             <div class="extra_wrapper">
+           <div class="col1"><a href="javascript:;" onclick="member_add('微信精选','<{:U('Adopt/wx')}>','','500')" >微信精选</a></div></div>
+         </li>
+       </ul>
+     </div>
+   </div>
+  </div>
+</block>
+<block name="myjs">
+
+    <script src="__PUBLIC__/js/jquery-2.1.4.min.js"></script>
+    <script src="__PUBLIC__/js/bootstrap.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/layui/layui.js"></script>
+    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":["mshare","qzone","tsina","weixin","renren","tqq","tqf","douban","thx","fbook","twi","linkedin"],"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"1","bdPos":"right","bdTop":"100"},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+    <script type="text/javascript" src="__PUBLIC__/H-ui/lib/layer/2.1/layer.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/H-ui/static/h-ui/js/H-ui.js"></script> 
+    <script type="text/javascript" src="__PUBLIC__/H-ui/static/h-ui.admin/js/H-ui.admin.js"></script>
+<script type="text/javascript" src="__PUBLIC__/H-ui/lib/jquery/1.9.1/jquery.min.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/H-ui/lib/layer/2.1/layer.js"></script>
+<script type="text/javascript" src="__PUBLIC__/H-ui/lib/laypage/1.2/laypage.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/H-ui/lib/My97DatePicker/WdatePicker.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/H-ui/lib/datatables/1.10.0/jquery.dataTables.min.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/H-ui/static/h-ui/js/H-ui.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/H-ui/static/h-ui.admin/js/H-ui.admin.js"></script>
+    <!-- <script>
+    
+
+    $(function(){
+     $('.close').on('click',function(){
+      $(this).parent().html('<a style=\'margin-left: 10px;color:#999;\' class=\'glyphicon glyphicon-chevron-up start\' href="javascript:;"  ></a>');
+      // console.log($(this).parent().parent().html());    
+      $(this).parent().parent().parent().next().css('display','none');
+    });
+
+   $('.start').on('click',function(){
+     
+      $(this).parent().html('<a style=\'margin-left: 10px;color:#999;\' class=\'glyphicon glyphicon-chevron-down close\' href="javascript:;"  ></a>');
+      // console.log($(this).parent().parent().parent().next().html());
+      $(this).parent().parent().parent().next().css('display','block');
+   });
+
+  });
+    
+    </script> -->
+
+<script type="text/javascript">
+
+var dir=2;               //每步移动像素，大＝快
+var speed=50;              //循环周期（毫秒）大＝慢
+demo2.innerHTML=demo1.innerHTML;
+function Marquee(){       //正常移动
+  if (dir>0  && (demo2.offsetWidth-demo.scrollLeft)<=0) demo.scrollLeft=0
+  if (dir<0 &&(demo.scrollLeft<=0)) demo.scrollLeft=demo2.offsetWidth
+  demo.scrollLeft+=dir
+  demo.onmouseover=function() {clearInterval(MyMar)}             //暂停移动
+  demo.onmouseout=function() {MyMar=setInterval(Marquee,speed)}  //继续移动
+}
+var MyMar=setInterval(Marquee,speed);
+    
+
+/*二级分类启用*/
+function start(obj){
+    $(obj).parent().parent().parent().parent().find('.actionbtn').css('display','block');
+    $(obj).parent().html('<a style=\'margin-left: 10px;color:#999;\' class=\'glyphicon glyphicon-chevron-down close\' href="javascript:;" onClick="stop(this)" ></a>'); 
+
+}
+
+
+/*二级分类关闭*/
+function stop(obj){
+    $(obj).parent().parent().parent().parent().find('.actionbtn').css('display','none');
+    $(obj).parent().html('<a style=\'margin-left: 10px;color:#999;\' class=\'glyphicon glyphicon-chevron-up start\' href="javascript:;" onClick="start(this)" ></a>'); 
+}
+
+
+/*雷人笑话-添加*/
+function joke(title,url,w,h){
+    layer_show(title,url,w,h);
+}
+/*娱乐花边-添加*/
+function word(title,url,w,h){
+    layer_show(title,url,w,h);
+}
+
+/*图灵-添加*/
+function member_add(title,url,w,h){
+    layer_show(title,url,w,h);
+}
+
+</script> 
+
+</block>

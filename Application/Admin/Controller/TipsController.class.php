@@ -98,20 +98,19 @@ class TipsController extends AdminController
     */
     public function doAdd()
     {   
+        $data = $_POST;
+        $data['ctime'] = time();
+
         $tips = D("tips");// 实例化User对象
-        if (!$tips->create()){
-            // 如果创建失败 表示验证没有通过 输出错误提示信息
-            if(IS_AJAX){    
-                $this->ajaxReturn($tips->getError());
-            }else{
-                $this->error($tips->getError());
-            }
+        // var_dump($_POST);die;
+        if (!$tips->create($data)){
+            
+            $this->error($tips->getError());
         }else{
             // 验证通过 可以进行其他数据操作
             if(!IS_AJAX){
                 $id = $tips->add();
                 if($id){
-                    M('tips')->add();
                     $this->success('添加成功');
                 }else{
                     $this->error('添加失败');
@@ -159,5 +158,22 @@ class TipsController extends AdminController
                 }
             }
         }
+    }
+
+    public function detail()
+    {
+        if (empty(I('get.id'))) {
+            $this->display('Public:404');
+            exit;
+        }
+
+        $tips = M('tips')->where('id='.I('get.id'))->find();
+        if (empty($tips)) {
+            $this->display('Public:404');
+            exit;
+        }
+
+        $this->assign('detail',$tips);
+        $this->display();
     }
 }

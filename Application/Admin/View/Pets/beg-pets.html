@@ -26,7 +26,7 @@
                 <td><{$v.id}></td>
                 <td><u style="cursor:pointer" class="text-primary" onclick="member_show('<{$v.uname}>','<{:U(\'User/info\')}>?id=<{$v.uid}>','<{$v.uid}>','360','400')"><{$v.uname}></td>
                 <td><{$v.tname}></td>
-                <td><{$v.name}></u></td>
+                <td><u style="cursor:pointer" class="text-primary" onclick="pets_show('<{$v.name}>','<{:U(\'Pets:show\')}>?id=<{$v.id}>','<{$v.id}>','360','400')"><{$v.name}></u></td>
                 <td>
                     <if condition='$v.sex eq 0'>母
                     <elseif condition='$v.sex eq 1'/>公
@@ -82,7 +82,10 @@ $(function(){
 function member_show(title,url,id,w,h){
     layer_show(title,url,w,h);
 }
-
+/*宠物-查看*/
+function pets_show(title,url,id,w,h){
+    layer_show(title,url,w,h);
+}
 /*请求-拒绝*/
 function pets_stop(obj,id){
     layer.confirm('确认要拒绝吗？',function(index){

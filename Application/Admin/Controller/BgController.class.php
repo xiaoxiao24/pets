@@ -53,7 +53,7 @@ class BgController extends AdminController
 	          $image->open("./Upload/img/bg/".$path);
 	          // 按照原图的比例生成一个最大为350*235的缩略图并保存为thumb.jpg
 	          $path = time().$info['savename'];
-	          $image->thumb(480, 270, \Think\Image::IMAGE_THUMB_FIXED)->save('./Upload/img/bg-thumb/'.$path);
+	          $image->thumb(1000, 600, \Think\Image::IMAGE_THUMB_FIXED)->save('./Upload/img/bg-thumb/'.$path);
 	        }
 	    }
 

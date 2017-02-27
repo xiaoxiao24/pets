@@ -1,7 +1,7 @@
 <?php
 namespace Home\Controller;
 use Think\Controller;
-class AdoptController extends HomeController 
+class ApplyController extends HomeController 
 {
 
     // 申请宠物领养
@@ -25,11 +25,12 @@ class AdoptController extends HomeController
     */
     public function doAdd()
     {
-
+        $data = $_POST;
+        
         //得到数据模型
-        $pets = D('apply');
+        $pets = D('pets');
         //过滤数据,数据验证
-        if (!$pets->create()) {
+        if (!$pets->create($data)) {
             // 如果创建失败 表示验证没有通过 输出错误提示信息
             if(IS_AJAX){   
                 $this->ajaxReturn($pets->getError());
@@ -67,16 +68,14 @@ class AdoptController extends HomeController
                 
                 if($path != ''){
                     $data['picname'] = $path;
-                    $data['name'] = I('post.name');
-                    $data['typeid'] = I('post.typeid');
-                    $data['descr'] = I('post.descr');
+                   
                     $data['state'] = 0;
                     $data['begstate'] = 0;
                     $data['atime'] = time();
                     $data['uid'] = session('home_user')['id']; 
                     // 执行添加
                     if ($pets->add($data) > 0) {
-                        $this->success('添加成功', U('addView'));
+                        $this->success('添加成功', U('index'));
                     } else {
                         $this->error('添加失败');
                     }   
@@ -88,4 +87,48 @@ class AdoptController extends HomeController
         }
     }
 
+    public function list()
+    {
+        $apply = M('info')->field('i.id, i.name, i.sex, i.ctime, i.picname, i.descr, i.state, i.begstate, t.name tname')->table('pet_info i, pet_type t')->where('i.uid='.session('home_user.id').' and t.id=i.typeid')->order('i.id desc')->select();
+        // var_dump($apply);die;
+        $count = M('info')->table('pet_info i, pet_type t')->where('i.uid='.session('home_user.id').' and t.id=i.typeid')->count();
+
+        $Page = new \Think\Page($post_count,10);// 实例化分页类 传入总记录数和每页显示的记录数
+
+        $Page->setConfig('first','首页');
+        $Page->setConfig('last','尾页');
+        $Page->setConfig('prev','上一页');
+        $Page->setConfig('next','下一页');
+        
+        $Page->setConfig('theme','
+            <nav>
+              <ul class="pagination">
+                <li>%FIRST%</li>
+                <li>%UP_PAGE%</li>
+                <li>%LINK_PAGE%</li>
+                <li>%DOWN_PAGE%</li>
+                <li>%END%</li>
+              </ul>
+            </nav>
+        ');
+
+        $show = $Page->show();// 分页显示输出
+        $this->assign('page',$show);
+        $this->assign('apply',$apply);
+        $this->display();
+    }
+
+    public function ok()
+    {
+        if (IS_AJAX) {
+            $data['state'] = 1;
+            $info = M('info')->where('id='.I('post.id'))->save($data);
+            if ($info == false) {
+                $this->ajaxReturn(false);
+                
+            } else {
+                $this->ajaxReturn(true);
+            }
+        }
+    }
 }

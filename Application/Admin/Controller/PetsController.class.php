@@ -20,7 +20,7 @@ class PetsController extends AdminController
     public function index()
     {
         $user = D('pets');
-        $user = $user->field('u.name uname, t.name tname, p.id, p.name, p.descr, p.picname, p.atime, p.state, p.sex')->table('pet_info p, pet_type t, pet_user u')->where('p.typeid=t.id and p.uid=u.id and p.state!=0')->select();
+        $user = $user->field('u.name uname, t.name tname, p.id, p.name, p.descr, p.picname, p.ctime, p.state, p.sex')->table('pet_info p, pet_type t, pet_user u')->where('p.typeid=t.id and p.uid=u.id and p.state!=0')->select();
         $this->assign('title','宠物管理');
         $this->assign('part','宠物列表');
         $this->assign('user',$user);
@@ -84,10 +84,11 @@ class PetsController extends AdminController
     */
     public function doAdd()
     {
+        $data = $_POST;
         //得到数据模型
         $pets = D('pets');
         //过滤数据,数据验证
-        if (!$pets->create()) {
+        if (!$pets->create($data)) {
             // 如果创建失败 表示验证没有通过 输出错误提示信息
             if(IS_AJAX){   
                 $this->ajaxReturn($pets->getError());
@@ -125,11 +126,8 @@ class PetsController extends AdminController
                 
                 if($path != ''){
                     $data['picname'] = $path;
-                    $data['name'] = I('post.name');
-                    $data['typeid'] = I('post.typeid');
-                    $data['descr'] = I('post.descr');
-                    $data['state'] = I('post.state');
-                    $data['begstate'] = 0;
+                    
+                    $data['begstate'] = 3;
                     $data['ctime'] = time();
                     // 执行添加
                     if ($pets->add($data) > 0) {
@@ -256,14 +254,16 @@ class PetsController extends AdminController
                     $this->petsoption='and i.begstate=0';
                     break;
                 case 'allbtn':
-                    $this->petsoption='and i.begstate>=0';
+                    $this->petsoption='and i.begstate<3';
                     break;
                 default:
                     break;
             }
+        } else {
+            $this->petsoption='and i.begstate!=3';
         }
         $data = D('pets');
-        $data = $data->field('u.name uname, t.name tname, i.id, i.name, i.descr, i.picname, i.ctime, i.begstate, i.uid, i.sex')->table('pet_info i, pet_type t, pet_user u')->where("i.typeid=t.id and i.uid=u.id $this->petsoption")->select();
+        $data = $data->field('u.name uname, t.name tname, i.id, i.name, i.descr, i.picname, i.atime, i.begstate, i.uid, i.sex')->table('pet_info i, pet_type t, pet_user u')->where("i.typeid=t.id and i.uid=u.id $this->petsoption")->select();
         $this->assign('data',$data);
        	$this->assign('title','宠物管理');
         $this->assign('part','创建宠物请求');

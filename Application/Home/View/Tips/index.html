@@ -7,38 +7,63 @@
     <link rel="icon" href="__PUBLIC__/imgs/images/favicon.ico">
     <link rel="shortcut icon" href="__PUBLIC__/imgs/images/favicon.ico" />
     <link rel="stylesheet" href="__PUBLIC__/css/style.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/style1.css">
     <link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet">
 </block>
 
 <block name="main">
 	<div class="page1_block nb">
        <div class="container_12">
-		    <div class="grid_7">
+		    <div class="grid_6">
 		    	<h2 class="ic1">宠物小知识</h2>
-		        <foreach name='tips' item='v'>
-		        	<div>
-				      <u><a href="<{:U('Tips/detail')}>?id=<{$v.id}>"><{$v.title}></a></u>
-				    </div> <br>
+		    	<ul class="list1">
+		        <foreach name='tips' item='v' key='k'>
+		        	<li><span class='cnt'>
+		             
+		              </span>
+		               <div class="extra_wrapper">
+		                <div class="col1">
+				      		<u><a href="<{:U('Tips/detail')}>?id=<{$v.id}>" target='_blank'><{$v.title}></a></u>
+				    	</div>
+				    	</div></li>
 		        </foreach>
+		        </ul>
 		        <{$page}>
 		    </div>
 
-		    <div class="grid_4 prefix_1">
-		           <h2 class="ic1">公告</h2>
-		           <ul class="list l1">
-		           <foreach name='notice' item='v' key='k'>
-		            <li> <span>
-		              <{$v.id}>
+		    <div class="grid_6 prefix_1">
+		           <h2 class="ic1">娱乐新闻</h2>
+		           <ul class="list1">
+		           <div>
+		           <foreach name='c' item='v' key='k'>
+		            <li> <span class='cnt'>
+		              
 		              </span>
 		               <div class="extra_wrapper">
-		                <div class="col1"><{$v.ctime|date='Y-m-d H:i:s',###}></div>
-		                <{$v.content}></div>
+		                <div class="col1"><p><a style="font-size:10px;color:#999;" href="<{$v.url}>" target="_blank"><{$v.title}></a></p></div>
+		               </div>
 		            </li>
 		          </foreach>
+		          </div>
 		          </ul>
-		          <{$page}>
-		         </div>
+		          
+		         <h2 class="ic1">微信精选</h2>
+		           <ul class="list1">
+		           <div>
+		           <foreach name='infos' item='v' key='k'>
+		            <li> <span class='cnt'>
+		              
+		              </span>
+		               <div class="extra_wrapper">
+		                <div class="col1"><p><a style="font-size:10px;color:#999;" href="<{$v.url}>" target="_blank"><{$v.title}></a></p></div>
+		               </div>
+		            </li>
+		          </foreach>
+		          </div>
+		          </ul>
+		         
 		  </div>
+
      </div>
 
 </block>

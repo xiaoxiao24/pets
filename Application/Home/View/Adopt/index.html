@@ -19,37 +19,32 @@
 <block name="main">
 <div class="content pt1">
   <div id='adopt-box'>
-    <p align="center"><MARQUEE scrollDelay=80 border="1"><b class='glyphicon glyphicon-volume-up'></b>欢迎来到宠物之家宠物领养中心，如果想要领养宠物，则加发布者为关注私聊哦！！</MARQUEE></p>
+    <p align="center"><MARQUEE scrollDelay=80 border="1"><b class='glyphicon glyphicon-volume-up'></b>欢迎来到宠物之家宠物领养中心，如果想要领养宠物，则关注发布者为留言哦！！</MARQUEE></p>
   </div>
   <div class="container_12">
      <div class="grid_7">
       <h2>领养中心</h2><br>
+      
       <foreach name='lists' item='v'>
       <div class="widget-body" style='border:0px'>
         <div class="widget-main no-padding">
         <div class="dialogs">
             <div class="itemdiv dialogdiv">
             <div class="user">
-              <a href=""><img src="__UPLOAD__/img/avatar-thumb/<{$v.upic}>" alt="" height='45' class="img_inner fleft i1"></a><a href=""><{$v.uname}></a><input type="hidden" id="uid" value="<{$v.uid}>"> 
-              <if condition='($Think.session.home_user eq "") or ($user eq "")'>
-                  <a href="javascript:;" style='margin-left:100px' onclick="startbtn()"><span class='glyphicon glyphicon-heart'></span>关注</a>
-              <elseif condition='$user eq ""'/>
-                  <a href="javascript:;" style='margin-left:100px'><span class='glyphicon glyphicon-heart'></span>申请中</a>
-              <else/>
-                  <a href="javascript:;" style='margin-left:40px' onclick="closebtn()"><span class='glyphicon glyphicon-ok' ></span>已关注 | 取消</a>
-              </if>
+              <a href="<{:U('Fans/Fans')}>?id=<{$v.uid}>" target='_blank'><img src="__UPLOAD__/img/avatar-thumb/<{$v.upic}>" alt="" height='45' class="img_inner fleft i1"></a><a href="<{:U('Fans/Fans')}>?id=<{$v.uid}>" target='_black'><{$v.uname}></a><input type="hidden" id="uid" value="<{$v.uid}>"> 
+              
             </div>
 
             <div class="body">
               
             <div class="blog">
-              <img src="__UPLOAD__/img/pets-thumb/<{$v.picname}>" alt="" height='90' class="img_inner fleft i1">
+              <a href="<{:U('Adopt/pet')}>?id=<{$v.id}>" target='_blank'><img src="__UPLOAD__/img/pets-thumb/<{$v.picname}>" alt="" height='90' class="img_inner fleft i1"></a>
               <div class="extra_wrapper">
                 <div class="text2 col2">
                   <table>
                     <tr>
                       <td> 昵 称 : </td>
-                      <td><{$v.name}></td>
+                      <td><a href="<{:U('Adopt/pet')}>?id=<{$v.id}>" target='_blank'><{$v.name}></a></td>
                     </tr>
                     <tr>
                       <td> 性 别 : </td>
@@ -71,7 +66,7 @@
                   </table>
                   </div> 
               </div>
-              <div class="clear"></div> 简 介 :<{$v.descr}>
+              <!-- <div class="clear"></div> 简 介 :<{$v.descr}> -->
               <br>
             </div>
             </div>
@@ -95,7 +90,7 @@
          <div>
          <!-- onClick="start(this)" -->
            <span></span><div class="extra_wrapper">
-           <div class="col1" ><a href="<{:U('Adopt/index')}>?typeid=<{$v.id}>"><{$v.name}></a><b><a style='margin-left: 10px;color:#999;' class='glyphicon glyphicon-chevron-up start' href="javascript:;" onClick="start(this)"></a></b></div>
+           <div class="col1" ><a href="<{:U('Type/index')}>?id=<{$v.id}>"><{$v.name}></a><b><a style='margin-left: 10px;color:#999;' class='glyphicon glyphicon-chevron-up start' href="javascript:;" onClick="start(this)"></a></b></div>
               
            </div>
            <div style='margin-left: 5px;display: none;' class='actionbtn'>
@@ -103,7 +98,7 @@
                  <foreach name='v.se' item='vo'>
                  <li>
                    <span  class="cnt"></span><div class="extra_wrapper">
-                   <div style='width: 40px;'><a href="<{:U('Adopt/index')}>?typeid=<{$vo.id}>"><{$vo.name}></a></div></div>
+                   <div style='width: 40px;'><a href="<{:U('Type/index')}>?id=<{$vo.id}>"><{$vo.name}></a></div></div>
                    
                  </li>
                  </foreach>
@@ -125,11 +120,11 @@
              <div class="extra_wrapper">
            <div class="col1"><a href="javascript:;" onclick="word('娱乐花边','<{:U('Adopt/word')}>','600','600')" >娱乐花边</a></div></div>
          </li>
-         <li>
+        <!--  <li>
            <span></span>
              <div class="extra_wrapper">
            <div class="col1"><a href="javascript:;" onclick="member_add('你现在正在和机器人对话','<{:U('Adopt/robot')}>','','350')" >去聊天吧</a></div></div>
-         </li>
+         </li> -->
          <li>
            <span></span>
              <div class="extra_wrapper">
@@ -206,72 +201,6 @@ function stop(obj){
     $(obj).parent().html('<a style=\'margin-left: 10px;color:#999;\' class=\'glyphicon glyphicon-chevron-up start\' href="javascript:;" onClick="start(this)" ></a>'); 
 }
 
-/*取消关注关系*/ 
-function closebtn() {
-    var selfid = '<{:session("home_user")["id"]}>';
-    if (uid == "") {
-        layer.open({
-          title: '取消关注'
-          ,content: '请先登录'
-        }); 
-        return false;
-    }
-    var ufid = $('#uid').val();
-    $.ajax({
-        type:"POST",
-        url: "<{:U('Fans/closebtn')}>",
-        data: 'uid='+uid+'&selfid='+selfid,
-        success: function(data){
-            if (data) {
-                $('.actionbtn').html('<a href="javascript:;"  onclick="startbtn()" style=\'margin-left:40px\'><span class=\'glyphicon glyphicon-heart\'></span>关注</a>');
-                $('#follow').html(parseInt($('#follow').html())-1);
-            } else {
-                layer.open({
-                  title: '取消关注'
-                  ,content: '取消关注失败'
-                }); 
-            }
-        }
-    });
-  }
-/*申请成为关注*/ 
-  function startbtn() {
-      var selfid = '<{:session("home_user")["id"]}>';
-      // console.log(uid);
-      if (selfid == "") {
-          layer.open({
-            title: '关注'
-            ,content: '请先登录'
-          });
-          return false;
-      }
-      var uid = $('#uid').val();
-      if (selfid == uid) {
-          layer.open({
-            title: '关注'
-            ,content: '不能添加自己为关注'
-          });
-          return false;
-      }
-      $.ajax({
-          type:"POST",
-          url: "<{:U('Fans/startbtn')}>",
-          data: 'uid='+uid+'&selfid='+selfid,
-          success: function(data){
-              if (data) {
-                  $('.actionbtn').html('<a href="javascript:;"  style="margin-left:40px"><span class="glyphicon glyphicon-ok" ></span>申请中</a>');
-                  $('#follow').html(parseInt($('#follow').html())+1);
-
-              } else {
-                  layer.open({
-                    title: '关注'
-                    ,content: '关注失败'
-                  }); 
-              }
-          }
-      });
-  }
-    
 
 /*雷人笑话-添加*/
 function joke(title,url,w,h){

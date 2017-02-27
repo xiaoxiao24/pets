@@ -65,7 +65,15 @@
           <li><a href='<{:U("Picture/index")}>'>相册</a></li>
           <li><a href='<{:U("Fans/index")}>'>好友</a></li>
           <li class="active"><a href='<{:U("Fans/news")}>'>消息</a></li>
-          <li><a href='<{:U("Word/index")}>'>留言板</a></li>
+          <li class="nav_son"><a href='<{:U("Word/index")}>?status=2'>留言板</a>
+              <div id="list" style='display: none;background-color: #19A9D5;position: relative;left:5px;'>
+                <ul>
+                  <li><a href='<{:U("Word/index")}>?status=1' style='color:white;'>我的留言</a></li>
+                  <li><a href='<{:U("Word/index")}>?status=2' style='color:white;'>留言板</a></li>
+                </ul>
+              </div>
+          </li>
+          <li><a href='<{:U("Apply/list")}>'>申请</a></li>
         </ul>
       </div>
       <div style="background-color: #fff;">
@@ -110,5 +118,16 @@
     <script type="text/javascript" src="__PUBLIC__/js/bootstrap.min.js"></script>
     <script src="__PUBLIC__/js/bootstrap.js"></script>
     <script type="text/javascript" src="__PUBLIC__/H-ui/lib/layer/2.1/layer.js"></script>
+
+    <script type="text/javascript">
+      $('.nav_son').hover(
+      function () {
+        $(this).children('#list').css('display','block');
+      },
+       function () {
+        $(this).children('#list').css('display','none');
+      }
+    );
+    </script>
 
 </block>

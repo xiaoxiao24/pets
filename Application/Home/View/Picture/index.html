@@ -65,19 +65,27 @@
           <li class="active"><a href='<{:U("Picture/index")}>'>相册</a></li>
           <li><a href='<{:U("Fans/index")}>'>好友</a></li>
           <li><a href='<{:U("Fans/news")}>'>消息</a></li>
-          <li><a href='<{:U("Word/index")}>'>留言板</a></li>
+          <li class="nav_son"><a href='<{:U("Word/index")}>?status=2'>留言板</a>
+              <div id="list" style='display: none;background-color: #19A9D5;position: relative;left:5px;'>
+                <ul>
+                  <li><a href='<{:U("Word/index")}>?status=1' style='color:white;'>我的留言</a></li>
+                  <li><a href='<{:U("Word/index")}>?status=2' style='color:white;'>留言板</a></li>
+                </ul>
+              </div>
+          </li>
+          <li><a href='<{:U("Apply/list")}>'>申请</a></li>
         </ul>
       </div>
       
       <if condition="$pics eq null">
-		  <div id='com' style='width:1000px;height:200px;font-size: 24px;color:#999;line-height: 200px;text-align: center;background-color: #fff;'>
+		  <div id='com' style='width:889px;height:200px;font-size: 24px;color:#999;line-height: 200px;text-align: center;background-color: #fff;'>
 	    	<div class="hot_feed_blank">
 	    
 	        还没有相册，去 <a href="javascript:;" onclick="picture_add('添加图片','<{:U('Picture/add',array('id'=>$Think.session.home_user.id))}>','400','300')">添加图片</a>
 	        &nbsp;
 	    
 	    </div>
-        </div> 
+        </div> <br>
 		 <else/>
 		<div class="clearfix u-f-wrap" id="forum_group_wrap" style='font-size: 24px;color:blue;background-color: #fff;'>
 		共有<{$pic_count}>张相片，去<a href="javascript:;" style='font-size: 24px;color:blue;' onclick="picture_add('添加图片','<{:U('Picture/add',array('id'=>$bar['id']))}>','400','300')">添加图片</a><br><br>
@@ -93,9 +101,11 @@
 		</div> 
 		<{$page}>
 		</if>
-    </div>	        
- 
-  </div>
+    </div>       
+ </div>
+
+</div>
+
 </block>
 <block name="myjs">
 
@@ -115,6 +125,15 @@
 	    layer_show(title,url,w,h);
 	}
 
-  
+
+    $('.nav_son').hover(
+      function () {
+        $(this).children('#list').css('display','block');
+      },
+       function () {
+        $(this).children('#list').css('display','none');
+      }
+    );
+
 	</script>
 </block>

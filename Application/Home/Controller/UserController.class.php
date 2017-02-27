@@ -51,10 +51,10 @@ class UserController extends HomeController
         $this->assign('page',$show);
         $fans_count = M('fans')->where('selfid='.session('home_user.id'))->count();
 
-        foreach ($post as $k => $v) {
-            $post[$k]['collect_count'] = M('collection')->where('postid='.$v['id'])->count('id');
-            $post[$k]['reply_count'] = M('reply')->where('postid='.$v['id'])->count('id');
-        }
+        // foreach ($post as $k => $v) {
+        //     $post[$k]['collect_count'] = M('collection')->where('postid='.$v['id'])->count('id');
+        //     $post[$k]['reply_count'] = M('reply')->where('postid='.$v['id'])->count('id');
+        // }
 
         $this->assign('post', $post);
 
