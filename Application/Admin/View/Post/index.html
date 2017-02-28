@@ -18,7 +18,7 @@
                     <th style='display: none;'></th>
                     <th width="80">ID</th>
                     <th width="100">用户名</th>
-                    <th width="100">说说内容</th>
+                    <th width="100">动态内容</th>
                     
                     <th width="150">发布时间</th>
                     
@@ -34,8 +34,8 @@
                     <td style='display: none;''></td>
                     <td style='display: none;'></td>
                     <td><{$v.id}></td>
-                    <td><{$v.content}></td>
                     <td><u style="cursor:pointer" class="text-primary" onclick="member_show('<{$v.uname}>','<{:U(\'User/info\')}>?id=<{$v.uid}>','<{$v.uid}>','360','400')"><{$v.uname}></td>
+                    <td><{$v.content}></td>
                     <td class="text-l"><{$v.ctime|date="Y-m-d H:i:s",###}></td>
                     
                     <td class="td-status">
@@ -56,6 +56,13 @@
     </div><!--page-container-->
 </block>
 <block name='js'>
+<script type="text/javascript" src="__PUBLIC__/H-ui/lib/jquery/1.9.1/jquery.min.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/H-ui/lib/layer/2.1/layer.js"></script>
+<script type="text/javascript" src="__PUBLIC__/H-ui/lib/laypage/1.2/laypage.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/H-ui/lib/My97DatePicker/WdatePicker.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/H-ui/lib/datatables/1.10.0/jquery.dataTables.min.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/H-ui/static/h-ui/js/H-ui.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/H-ui/static/h-ui.admin/js/H-ui.admin.js"></script>
 <script type="text/javascript">
 $(function(){
     $('.table-sort').dataTable({
@@ -83,7 +90,7 @@ function member_show(title,url,id,w,h){
 }
 
 
-/*说说-隐藏*/
+/*动态-隐藏*/
 function post_stop(obj,id){
     layer.confirm('确认要隐藏吗？',function(index){
         $.ajax({
@@ -105,7 +112,7 @@ function post_stop(obj,id){
     });   
 }
 
-/*说说-显示*/
+/*动态-显示*/
 function post_start(obj,id){
     layer.confirm('确认要显示吗？',function(index){
         $.ajax({

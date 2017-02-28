@@ -7,7 +7,7 @@
     <link rel="icon" href="__PUBLIC__/imgs/images/favicon.ico">
     <link rel="shortcut icon" href="__PUBLIC__/imgs/images/favicon.ico" />
     <link rel="stylesheet" href="__PUBLIC__/css/style.css">
-    <!-- <link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet">
 </block>
 
 <block name="main">
@@ -22,7 +22,7 @@
            <div class="clear"></div>
            <h2 style='margin-top: -30px;'>留言版</h2>
            <div>
-          <form action="<{:U('Notice/doAdd')}>" method="post">
+          <form action="<{:U('Notice/doAdd')}>" method="post"  style='margin-bottom: 80px;'>
                 
                 <input type="hidden" name="uid" value="<{$Think.session.home_user.id}>"> 
                
@@ -50,11 +50,11 @@
             <input type="submit" name="" value="提交" id='submit' class='btn btn-primary'>
             </form>
                     
-        </div> 
+        
                     
         <!-- 发表动态结束-->
           </div>
-
+    </div>
     <div class="grid_4 prefix_1">
            <h2 class="ic1">宠物之家公告</h2>
            <ul class="list l1">
