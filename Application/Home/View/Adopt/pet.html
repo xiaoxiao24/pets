@@ -12,7 +12,7 @@
 </block>
 
 <block name="main">
-<div class='row' style="background:url(__UPLOAD__/img/bg-thumb/<{$info.bg}>) center center; background-size:cover">
+<div class='row' style="background:url(__UPLOAD__/img/bg-thumb/<{$info.bg}>) center center; background-size:cover;">
     <div class='col-xs-2 col-md-2'></div>
     <div class="col-xs-8 col-md-8">
       <div>
@@ -32,8 +32,13 @@
             </if></small><br>
                   <small class="m-l">类型：<{$info.tname}></small><br>
                   <small class="m-l">发布时间：<{$info.ctime|date='Y-m-d H:i:s',###}></small><br>
+                  <input type="hidden" name="pid" id='pid' value="<{$info.id}>">
                   <if condition='$info.state eq 2'>
-                    &nbsp;&nbsp;&nbsp;可领养
+                     <div class='actionbtn'>
+                  
+                        <a href="javascript:;" style='margin-left:2px;color:blue;font-size: 18px;' class='btn-primary' onclick="startbtn()">&nbsp;&nbsp;&nbsp;申请领养</a>
+                      
+                      </div>
                   <elseif condition='$info.state eq 1'/>
                    &nbsp;&nbsp;&nbsp;已领养
                   </if>
@@ -79,5 +84,38 @@
 <script type="text/javascript" src="__PUBLIC__/H-ui/lib/datatables/1.10.0/jquery.dataTables.min.js"></script> 
 <script type="text/javascript" src="__PUBLIC__/H-ui/static/h-ui/js/H-ui.js"></script> 
 <script type="text/javascript" src="__PUBLIC__/H-ui/static/h-ui.admin/js/H-ui.admin.js"></script>
+<script type="text/javascript">
+  /*申请*/ 
+      function startbtn() {
+          var uid = '<{:session("home_user")["id"]}>';
+          // console.log(uid);
+          if (uid == "") {
+              layer.open({
+                title: '申请领养'
+                ,content: '请先登录'
+              });
+              return false;
+          }
+          var pid = $('#pid').val();
+          
+          $.ajax({
+              type:"POST",
+              url: "<{:U('Adopt/apply')}>",
+              data: 'uid='+uid+'&pid='+pid,
+              success: function(data){
+                  if (data) {
+                      $('.actionbtn').html('<a href="javascript:;" style=\'margin-left:2px;color:blue;font-size: 18px;\' onclick="closebtn()">&nbsp;&nbsp;&nbsp;申请中。。。</a>');
+                      // $('#follow').html(parseInt($('#follow').html())+1);
+
+                  } else {
+                      layer.open({
+                        title: '申请领养'
+                        ,content: '申请失败'
+                      }); 
+                  }
+              }
+          });
+      }
+</script>
 </block>
 

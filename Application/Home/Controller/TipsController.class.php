@@ -6,6 +6,15 @@ class TipsController extends HomeController
     public function index()
     {
         $tips = M('tips')->field('id, title')->where('state=1')->order('ctime desc')->page($_GET['p'],10)->select();
+        foreach ($tips as $k => $v) {
+            $tips[$k]['count'] = M('collection')->where('tid='.$v['id'])->count();
+            if (empty(session('home_user'))) {
+                $tips[$k]['uid'] = 0;
+            } else {
+                $tips[$k]['uid'] = M('collection')->where('selfid='.session('home_user.id').' and tid='.$v['id'])->find();
+            }
+        }
+        // var_dump($tips);die;
 
         // 分页
         $count = M('tips')->where('state=1')->count();

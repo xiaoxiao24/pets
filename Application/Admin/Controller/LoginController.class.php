@@ -75,6 +75,9 @@ class LoginController extends AdminController
                 $data = $User->where($map)->find();
                 // var_dump($data);die;
 
+                $data = M('user_role')->field('u.id, u.name, u.passwd, u.regtime, u.sex, u.addr, u.code, u.phone, u.descr, u.state, u.picname, u.email, u.exp, u.lastip, u.lastdate, u.loginnum')->table('pet_user_role ur, pet_role r, pet_user u')->where('ur.uid='.$data['id'].' and ur.rid=r.id and r.name!="普通用户" and u.id=ur.uid')->find();
+                // var_dump($data);die;
+
                 // 如果用户名和密码匹配则进入，否则显示错误
                 if ($data) {
                     

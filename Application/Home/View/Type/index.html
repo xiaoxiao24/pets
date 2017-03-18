@@ -90,7 +90,7 @@
          <div>
          <!-- onClick="start(this)" -->
            <span></span><div class="extra_wrapper">
-           <div class="col1" ><a href="<{:U('Type/index')}>?typeid=<{$v.id}>"><{$v.name}></a><b><a style='margin-left: 10px;color:#999;' class='glyphicon glyphicon-chevron-up start' href="javascript:;" onClick="start(this)"></a></b></div>
+           <div class="col1" ><a href="<{:U('Type/index')}>?id=<{$v.id}>"><{$v.name}></a><b><a style='margin-left: 10px;color:#999;' class='glyphicon glyphicon-chevron-up start' href="javascript:;" onClick="start(this)"></a></b></div>
               
            </div>
            <div style='margin-left: 5px;display: none;' class='actionbtn'>
@@ -98,7 +98,7 @@
                  <foreach name='v.se' item='vo'>
                  <li>
                    <span  class="cnt"></span><div class="extra_wrapper">
-                   <div style='width: 40px;'><a href="<{:U('Type/index')}>?typeid=<{$vo.id}>"><{$vo.name}></a></div></div>
+                   <div style='width: 40px;'><a href="<{:U('Type/index')}>?id=<{$vo.id}>"><{$vo.name}></a></div></div>
                    
                  </li>
                  </foreach>

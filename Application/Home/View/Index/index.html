@@ -20,11 +20,11 @@
  </div> 
  <div class="page1_block">
    	<div class="container_12">
-	    <div class="grid_6">
+	    <div class="grid_7">
 	      	<h2>欢迎来到领养中心</h2><br>
 	      	<foreach name='info' item='v'>
-	      	<div>
-		      	<a href="<{:U('Adopt/pet')}>?id=<{$v.id}>" target='_blank'><img src="__UPLOAD__/img/pets-thumb/<{$v.picname}>" width=150 height=100 alt="" class="img_inner fleft"></a>
+	      	<div class="grid_3">
+		      	<a href="<{:U('Adopt/pet')}>?id=<{$v.id}>" target='_blank'><img src="__UPLOAD__/img/pets-thumb/<{$v.picname}>" width=80 height=100 alt="" class="img_inner fleft"></a>
 		      	<div class="extra_wrapper style1">
 		      	<table>
 		      		<tr>
@@ -46,19 +46,19 @@
 		      		</tr>
 		      		<tr>
 		      			<td> 发布时间: </td>
-		      			<td style='width:100px;'><{$v.ctime|date='Y-m-d',###}></td>
+		      			<td><{$v.ctime|date='Y-m-d',###}></td>
 		      		</tr>
 		      	</table>
 		      	
 		      	</div>
 		      	<div class="clear"></div>
-	      	</div><br>
+	      	</div>
 	      	</foreach>
 		      	
-
-	      <a href="<{:U('Adopt/index')}>" class="btn"  target='_blank'>More</a>
+	      <div class='grid_6'>
+	      <a href="<{:U('Adopt/index')}>" class="btn"  target='_blank'>More</a></div>
 	    </div>
-	    <div class="grid_6 prefix_1">
+	    <div class="grid_5 prefix_1">
 	       	<h2 class="ic1">宠物天地</h2>
 	       	<ul class="list">
 	       	<foreach name='post' item='v'>

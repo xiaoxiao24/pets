@@ -35,7 +35,7 @@ class NoticeController extends HomeController
         $this->display();
     }
 
-    // 添加动态
+    // 添加留言
     public function doAdd()
     {
         if (empty($_SESSION['home_user'])) {

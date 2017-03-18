@@ -5,7 +5,7 @@
 	<meta name="description" content="app, web app, responsive, responsive layout, admin, admin panel, admin dashboard, flat, flat ui, ui kit, AngularJS, ui route, charts, widgets, components" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 	<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
-	<title>我的相册</title>
+	<title>我的收藏</title>
     <link rel="icon" href="__PUBLIC__/imgs/images/favicon.ico">
     <link rel="shortcut icon" href="__PUBLIC__/imgs/images/favicon.ico" />
     <link rel="stylesheet" href="__PUBLIC__/css/style.css">
@@ -38,7 +38,7 @@
             </div>
             <div class="col-sm-5">
               <div class="pull-right pull-none-xs text-center">
-              	<a href='<{:U("Picture/index")}>' class="m-b-md inline m"  style='color:blue;'>
+              	<a href='<{:U("Picture/index")}>' class="m-b-md inline m">
                   <span class="h3 block font-bold"><{$pic_count}></span>
                   <small>相册</small>
                 </a>
@@ -50,7 +50,7 @@
                   <span class="h3 block font-bold"><{$post_count}></span>
                   <small>动态</small>
                 </a> -->
-                <a href='<{:U("Collection/index")}>' class="m-b-md inline m">
+                <a href='<{:U("Collection/index")}>' class="m-b-md inline m"  style='color:blue;'>
                   <span class="h3 block font-bold"><{$col_count}></span>
                   <small>收藏</small>
                 </a>
@@ -61,10 +61,10 @@
       </div>
       <div class="wrapper bg-white b-b">
         <ul class="nav nav-pills nav-sm">
-          <li><a href='<{:U("User/index")}>'>动态</a></li>
-          <!-- <li class="active nav_son"><a href='<{:U("Picture/index")}>'>相册</a></li>
-          <li><a href='<{:U("Fans/index")}>'>好友</a></li> -->
-          <li><a href='<{:U("Fans/news")}>'>消息</a>
+          <li ><a href='<{:U("User/index")}>'>动态</a></li>
+          <!-- <li><a href='<{:U("Picture/index")}>'>相册</a></li>
+          <li class="active"><a href='<{:U("Fans/index")}>'>好友</a></li> -->
+          <li class="nav_son"><a href='<{:U("Fans/news")}>'>消息</a>
               <div id="list" style='display: none;background-color: #19A9D5;position: relative;'>
                 <ul>
                   <li><a href='<{:U("Fans/news")}>?status=1' style='color:white;'>申请消息</a></li>
@@ -72,7 +72,7 @@
                 </ul>
               </div>
           </li>
-          <li class="nav_son"><a href='<{:U("Word/index")}>?status=2'>留言板</a>
+          <li class="nav_son"><a href='<{:U("Word/index")}>?status=2' >留言板</a>
               <div id="list" style='display: none;background-color: #19A9D5;position: relative;left:5px;'>
                 <ul>
                   <li><a href='<{:U("Word/index")}>?status=1' style='color:white;'>我的留言</a></li>
@@ -83,36 +83,30 @@
           <li><a href='<{:U("Apply/list")}>'>申请</a></li>
         </ul>
       </div>
-      
-      <if condition="$pics eq null">
-		  <div id='com' style='width:889px;height:200px;font-size: 24px;color:#999;line-height: 200px;text-align: center;background-color: #fff;'>
-	    	<div class="hot_feed_blank">
-	    
-	        还没有相册，去 <a href="javascript:;" onclick="picture_add('添加图片','<{:U('Picture/add',array('id'=>$Think.session.home_user.id))}>','400','300')">添加图片</a>
-	        &nbsp;
-	    
-	    </div>
-        </div> <br>
-		 <else/>
-		<div class="clearfix u-f-wrap" id="forum_group_wrap" style='font-size: 24px;color:blue;background-color: #fff;'>
-		共有<{$pic_count}>张相片，去<a href="javascript:;" style='font-size: 24px;color:blue;' onclick="picture_add('添加图片','<{:U('Picture/add',array('id'=>$bar['id']))}>','400','300')">添加图片</a><br><br>
-		<foreach name='pics' item='v'>
-		    <div class="row"'>
-		        <div class="col-xs-6 col-md-3">
-		            <div class="zoom-container">
-		            <img src="__UPLOAD__/img/pic-thumb/<{$v.picname}>" class="img-rounded"></div><br>
-		            <span><a href="<{:U('Picture:del',array('id'=>$v['id']))}>">删除</a></span>
-		        </div>    
-		    </div>
-		</foreach>
-		</div> 
-		<{$page}>
-		</if>
-    </div>       
- </div>
+      <div style='background-color: #fff;'>
+      <if condition="$fans eq null">
+      <div id='com' style='width:1000px;height:200px;font-size: 24px;color:#999;line-height: 200px;text-align: center;'>
+          <div class="hot_feed_blank">
+        
+            还没有收藏，去<a href="<{:U('Tips/index')}>">逛逛</a>
+            &nbsp;
+        
+        </div>
+      </div> 
+       <else/>
+      <foreach name='list' item='v'>
+        <div class='col-xs-8 col-md-10'>
+        	<u><a  href="<{:U('Tips/detail')}>?id=<{$v.id}>" target='_blank' style='color: blue;'><{$list.title}></a></u>
+        </div>
+        
+        <div class='col-xs-4 col-md-2'><a href="javascript:;" onclick="coll(<{$v.id}>,this)" style='color: red;'>取消收藏</a></div>
+    </foreach>
 
-</div>
-
+    <{$page}>
+    </if>
+    </div><br>	        
+  </div>
+  </div>
 </block>
 <block name="myjs">
 
@@ -120,20 +114,9 @@
     <script type="text/javascript" src="__PUBLIC__/js/jquery-2.1.4.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script type="text/javascript" src="__PUBLIC__/js/bootstrap.min.js"></script>
-
-	<script type="text/javascript" src="__PUBLIC__/H-ui/lib/layer/2.1/layer.js"></script> 
-	<script type="text/javascript" src="__PUBLIC__/H-ui/static/h-ui/js/H-ui.js"></script> 
-	<script type="text/javascript" src="__PUBLIC__/H-ui/static/h-ui.admin/js/H-ui.admin.js"></script>
-
-	<script>
-
-	/*分类-添加*/
-	function picture_add(title,url,w,h){
-	    layer_show(title,url,w,h);
-	}
-
-
-    $('.nav_son').hover(
+  	
+    <script type="text/javascript">
+      $('.nav_son').hover(
       function () {
         $(this).children('#list').css('display','block');
       },
@@ -142,5 +125,28 @@
       }
     );
 
-	</script>
+     //  取消收藏小知识
+    function delcoll(id,obj) {
+      if ('<{:session("home_user")["id"]}>' == "") {
+            layer.open({
+              title: '取消收藏'
+              ,content: '请先登录'
+            });
+            return false;
+        }
+        var uid = '<{:session("home_user")["id"]}>';
+        $.ajax({
+            type:"POST",
+            url: "<{:U('Collection/delcoll')}>",
+            data: 'selfid='+uid+'&tid='+id,
+            success: function(data){
+                if (data) {
+                   $(obj).remove();
+                } else {
+                    alert(data);
+                }
+            }
+        });
+    }
+    </script>
 </block>

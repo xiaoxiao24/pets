@@ -70,6 +70,7 @@ class PictureController extends HomeController
     public function save()
     {
         $pic = M('picture');
+        
         // 验证通过 可以进行其他数据操作
         if(!empty($_FILES['picname']['tmp_name'])){
             $config = array(

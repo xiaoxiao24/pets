@@ -17,15 +17,22 @@
 		    <div class="grid_6">
 		    	<h2 class="ic1">宠物小知识</h2>
 		    	<ul class="list1">
-		        <foreach name='tips' item='v' key='k'>
-		        	<li><span class='cnt'>
-		             
+		        <foreach name='tips' item='v'>
+		        	<li><span class='cnt' style='color: #fff;font-size: 8px;text-align: center;'>
+		             <{$v.count}>
 		              </span>
 		               <div class="extra_wrapper">
-		                <div class="col1">
-				      		<u><a href="<{:U('Tips/detail')}>?id=<{$v.id}>" target='_blank'><{$v.title}></a></u>
+			                <div class="col1">
+					      		<u><a href="<{:U('Tips/detail')}>?id=<{$v.id}>" target='_blank'><{$v.title}></a></u>
+					      		<if condition='$v.uid eq null'>
+					      		<u><a href="javascript:;" class="glyphicon glyphicon-heart-empty" style='margin-left:50px' onclick="coll(<{$v.id}>,this)"></a></u>
+					      		<else/>
+					      		<u><a href="javascript:;" class="glyphicon glyphicon-heart" style='margin-left:50px' onclick="delcoll(<{$v.id}>,this)"></a></u>
+					      		</if>
+					    	</div>
 				    	</div>
-				    	</div></li>
+
+				    </li>
 		        </foreach>
 		        </ul>
 		        <{$page}>
@@ -65,6 +72,73 @@
 		  </div>
 
      </div>
+
+</block>
+<block name='myjs'>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-2.1.4.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script type="text/javascript" src="__PUBLIC__/js/bootstrap.min.js"></script>
+  	
+     <script type="text/javascript" src="__PUBLIC__/H-ui/lib/layer/2.1/layer.js"></script>
+
+
+<script type="text/javascript">
+
+//  取消收藏小知识
+    function delcoll(id,obj) {
+      if ('<{:session("home_user")["id"]}>' == "") {
+            layer.open({
+              title: '取消收藏'
+              ,content: '请先登录'
+            });
+            return false;
+        }
+        var selfid = '<{:session("home_user")["id"]}>';
+        $.ajax({
+            type:"POST",
+            url: "<{:U('Collection/delcoll')}>",
+            data: 'selfid='+selfid+'&tid='+id,
+            success: function(data){
+                if (data) {
+                   $(obj).parent().html('<a href="javascript:;" class="glyphicon glyphicon-heart-empty" style=\'margin-left:50px\' onclick="coll('+id+',this)"></a>');
+                } else {
+                    alert(data);
+                }
+            }
+        });
+    }
+
+// 收藏小知识
+	function coll(id,obj) {
+        var selfid = '<{:session("home_user")["id"]}>';
+        // console.log(uid);
+        if (selfid == "") {
+            layer.open({
+              title: '收藏'
+              ,content: '请先登录'
+            });
+            return false;
+        }
+        console.log(selfid);
+        console.log(id);
+        $.ajax({
+            type:"POST",
+            url: "<{:U('Collection/coll')}>",
+            data: 'selfid='+selfid+'&tid='+id,
+            success: function(data){
+                if (data) {
+                    $(obj).parent().html('<a href="javascript:;" class="glyphicon glyphicon-heart" style=\'margin-left:50px\' onclick="delcoll('+id+',this)"></a>');
+                } else {
+                    layer.open({
+                      title: '收藏'
+                      ,content: '收藏失败'
+                    }); 
+                }
+            }
+        });
+    }
+</script>
 
 </block>
 

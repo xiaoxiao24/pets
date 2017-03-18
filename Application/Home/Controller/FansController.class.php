@@ -44,13 +44,13 @@ class FansController extends HomeController
         // 收藏
         $col_count = M('collection')->where('selfid='.session('home_user.id'))->count();
         // 动态
-        $post_count = M('post')->where('uid='.session('home_user.id').' and state=1')->count();
+        // $post_count = M('post')->where('uid='.session('home_user.id').' and state=1')->count();
         // 相册
         $pic_count = M('picture')->where('uid='.session('home_user.id'))->count();
         
 
         $this->assign('fans_count', $fans_count);
-        $this->assign('post_count', $post_count);
+        // $this->assign('post_count', $post_count);
         $this->assign('pic_count', $pic_count);
         $this->assign('col_count', $col_count);
         
@@ -69,10 +69,18 @@ class FansController extends HomeController
             $this->error('请先登录', U('Login/index'));
         }
 
-        $news = M('fans')->field('f.id, f.selfid, u.name, u.picname')->table('pet_user u, pet_fans f')->where('f.uid='.session('home_user.id').' and f.selfid=u.id')->order('id desc')->page($_GET['p'],12)->select();
+        if (I('get.status') == 1) {
+            $news = M('info_user')->field('u.id, u.name, u.picname,iu.pid, iu.ctime, i.name iname, i.picname ipic')->table('pet_user u, pet_info_user iu, pet_info i')->where('i.uid='.session('home_user.id').' and iu.pid=i.id and iu.uid=u.id')->order('id desc')->page($_GET['p'],12)->select();
+            $count = M('info_user')->table('pet_info_user iu, pet_info i')->where('iu.uid='.session('home_user.id').' and iu.pid=i.id')->count();
+        } else {
+            $news = M('fans')->field('f.id, f.selfid, u.name, u.picname')->table('pet_user u, pet_fans f')->where('f.uid='.session('home_user.id').' and f.selfid=u.id')->order('id desc')->page($_GET['p'],12)->select();
+            $count = M('fans')->where('uid='.session('home_user.id'))->count();
+        }
+
+       
            
         // 分页
-        $count = M('fans')->where('uid='.session('home_user.id'))->count();
+        
         $Page = new \Think\Page($count,12);// 实例化分页类 传入总记录数和每页显示的记录数
 
         $Page->setConfig('first','首页');
@@ -98,7 +106,7 @@ class FansController extends HomeController
         // 好友 
         $fans_count = M('fans')->where('selfid='.session('home_user.id'))->count();
         // 收藏
-        $col_count = M('collection')->where('selfid='.session('home_user.id'))->count();
+        // $col_count = M('collection')->where('selfid='.session('home_user.id'))->count();
         // 动态
         $post_count = M('post')->where('uid='.session('home_user.id').' and state=1')->count();
         // 相册
@@ -106,11 +114,14 @@ class FansController extends HomeController
         
 
         $this->assign('fans_count', $fans_count);
-        $this->assign('post_count', $post_count);
+        // $this->assign('post_count', $post_count);
         $this->assign('pic_count', $pic_count);
         $this->assign('col_count', $col_count);
+
+        // 1：申请消息 2：被关注消息 
+        $this->assign('state', I('get.status'));
         
-        $this->assign('fans',$fans);
+        $this->assign('news',$news);
         $this->display();
     }
 

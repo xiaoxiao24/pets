@@ -48,7 +48,7 @@ class AdminController extends Controller
         //让超级管理员admin拥有所有权限
         if(session('admin_user.name') != 'admin'){
             //验证操作权限
-            if($mname != 'Personal'){
+            if($mname == 'Node' || $mname == 'System' || $mname == 'Role' || $mname == 'Manager'){
                 if(empty($nodelist[$mname]) || !in_array($aname,$nodelist[$mname])){               
                     $this->display('Public:limit');
                     exit;

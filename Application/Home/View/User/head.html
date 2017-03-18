@@ -23,7 +23,7 @@
           <div class="row m-t">
             <div class="col-sm-7">
               <div class='col-md-4'>
-                <a href="<{:U('User/info')}>"><img src="__UPLOAD__/img/avatar-thumb/<{$Think.session.home_user.picname}>" class="img-circle"></a>
+                <a href="<{:U('User/info')}>"><img src="__UPLOAD__/img/avatar-thumb/<{$Think.session.home_user.picname}>" class="img-circle" ></a>
               </div>
               <div class="col-sm-8s">
                 <div class="m-b m-t-sm">
@@ -38,22 +38,22 @@
             </div>
             <div class="col-sm-4">
               <div class="pull-right pull-none-xs text-center">
-              	<a href class="m-b-md inline m">
+              	<a href='<{:U("Picture/index")}>' class="m-b-md inline m"  style='color:blue;'>
                   <span class="h3 block font-bold"><{$pic_count}></span>
                   <small>相册</small>
                 </a>
-                <a href class="m-b-md inline m">
+                <a href='<{:U("Fans/index")}>' class="m-b-md inline m">
                   <span class="h3 block font-bold"><{$fans_count}></span>
                   <small>好友</small>
                 </a>
-                <a href class="m-b-md inline m">
+                <a href='<{:U("User/index")}>' class="m-b-md inline m">
                   <span class="h3 block font-bold"><{$post_count}></span>
                   <small>动态</small>
                 </a>
-                <!-- <a href class="m-b-md inline m">
+                <a href class="m-b-md inline m">
                   <span class="h3 block font-bold"><{$col_count}></span>
                   <small>收藏</small>
-                </a> -->
+                </a>
               </div>
             </div>
           </div>
@@ -70,7 +70,7 @@
       <div class='row'>
       <div class='col-md-2'></div>
       <div class="col-md-8">
-          <form id="form-user-edit" class="setting-profile-form" method="POST" action="<{:U('User/headsave')}>" style='font-size: 20px;'> 
+          <form id="form-user-edit" class="setting-profile-form" method="POST" action="<{:U('User/headsave')}>" style='font-size: 20px;' enctype="multipart/form-data"> 
               <div class='row'>
                 <div class="col-md-3">头像:</div>
                 <div class="col-md-8">

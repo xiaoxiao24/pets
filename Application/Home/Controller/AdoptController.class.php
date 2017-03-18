@@ -201,8 +201,41 @@ class AdoptController extends HomeController
             exit;
         }
 
-        $info = M('info')->field('t.name tname, i.name, i.sex, i.descr, i.state, i.ctime, i.uid, i.picname, u.name uname, u.picname upic, u.bg')->table('pet_type t, pet_info i, pet_user u')->where('i.id='.I('get.id').' and t.id= i.typeid and u.id=i.uid')->find();
+        $info = M('info')->field('t.name tname, i.id, i.name, i.sex, i.descr, i.state, i.ctime, i.uid, i.picname, u.name uname, u.picname upic, u.bg')->table('pet_type t, pet_info i, pet_user u')->where('i.id='.I('get.id').' and t.id= i.typeid and u.id=i.uid')->find();
         $this->assign('info',$info);
         $this->display();
+    }
+
+    public function apply()
+    {
+        if (empty(I('post.pid'))) {
+            $this->display('Public:404');
+            exit;
+        }
+        if (empty(I('post.uid'))) {
+            $this->display('Public:404');
+            exit;
+        }
+
+        if (IS_AJAX) {
+            $data['uid'] = I('post.uid');
+            $data['pid'] = I('post.pid');
+            $data['ctime'] = time();
+            // 未获取好友id
+            if (empty($data)) {
+                $this->ajaxReturn(false);
+
+            }else{
+                $apply = M('info_user')->add($data);
+            
+                if ($apply == false) {
+                    $this->ajaxReturn(false);
+                } else {
+                    $this->ajaxReturn(true);
+                }
+            }
+            
+        }
+
     }
 }
